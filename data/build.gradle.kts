@@ -31,6 +31,7 @@ dependencies {
     testImplementation(TestLibraries.mockitoKotlin)
     testImplementation(Libraries.daggerAndroid)
     testImplementation(Libraries.daggerSupport)
+    testImplementation(TestLibraries.mockWebServer)
 
     kaptTest(Libraries.daggerCompiler)
     kaptTest(Libraries.daggerProcessor)
