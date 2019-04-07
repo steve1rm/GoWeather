@@ -15,7 +15,6 @@ dependencies {
     implementation(Libraries.gson)
     implementation(Libraries.retrofit2)
     implementation(Libraries.adapterRxjava2)
-    implementation(Libraries.converterSimpleXml)
     implementation(Libraries.daggerAndroid)
     implementation(Libraries.daggerSupport)
     kapt(Libraries.daggerCompiler)

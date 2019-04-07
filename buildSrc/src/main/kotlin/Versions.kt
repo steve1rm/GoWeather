@@ -11,6 +11,7 @@ object Versions {
     const val androidXVersion = "1.0.2"
     const val gsonVersion = "2.8.5"
     const val retrofitVersion = "2.5.0"
+    const val converterGsonVersion = retrofitVersion
     const val daggerAndroidVersion = "2.21"
     const val okhttpVersion = "3.12.1"
     const val rxjavaVersion = "2.2.4"

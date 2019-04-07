@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="baseUrl" translatable="false">http://api.apixu.com/v1/</string>
+</resources>
