@@ -9,9 +9,9 @@ class ForecastRequestImp(private val weatherForecastService: WeatherForecastServ
 
     override fun getWeatherForecast(latitude: Float, longitude: Float, days: Int): Single<WeatherForecastEntity> {
         val queryBuilder = StringBuilder()
-        queryBuilder.append(latitude)
+        queryBuilder.append(latitude.toString())
         queryBuilder.append(",")
-        queryBuilder.append(longitude)
+        queryBuilder.append(longitude.toString())
 
         return weatherForecastService.forecast(apiKey, queryBuilder.toString(), days)
     }

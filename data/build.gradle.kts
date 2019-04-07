@@ -34,4 +34,6 @@ dependencies {
 
     kaptTest(Libraries.daggerCompiler)
     kaptTest(Libraries.daggerProcessor)
+
+    implementation(project(":dicore"))
 }
