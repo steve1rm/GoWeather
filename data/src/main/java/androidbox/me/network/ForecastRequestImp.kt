@@ -8,11 +8,18 @@ class ForecastRequestImp(private val weatherForecastService: WeatherForecastServ
                          private val apiKey: String) : ForecastRequest {
 
     override fun getWeatherForecast(latitude: Float, longitude: Float, days: Int): Single<WeatherForecastEntity> {
-        val queryBuilder = StringBuilder()
-        queryBuilder.append(latitude.toString())
-        queryBuilder.append(",")
-        queryBuilder.append(longitude.toString())
+        val query = buildLocationQuery(latitude, longitude)
 
-        return weatherForecastService.forecast(apiKey, queryBuilder.toString(), days)
+        return weatherForecastService.forecast(apiKey, query, days)
+    }
+
+    private fun buildLocationQuery(latitude: Float, longitude: Float): String {
+        return StringBuilder().let {
+            it.append(latitude)
+            it.append(",")
+            it.append(longitude)
+
+            String(it)
+        }
     }
 }
