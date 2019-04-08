@@ -36,4 +36,6 @@ dependencies {
     kaptTest(Libraries.daggerProcessor)
 
     implementation(project(":dicore"))
+    implementation(project(":domain"))
 }
+

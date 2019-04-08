@@ -1,1 +1,1 @@
-include ':data', ':dicore'
+include ':data', ':dicore', ':domain'
