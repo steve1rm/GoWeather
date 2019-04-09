@@ -1,6 +1,7 @@
 package androidbox.me.network
 
 import androidbox.me.entities.*
+import androidbox.me.mappers.ForecastRequestDomainMapper
 import androidbox.me.mappers.ForecastRequestEntityMapper
 import androidbox.me.network.di.DaggerTestDataComponent
 import com.nhaarman.mockito_kotlin.mock
@@ -24,6 +25,9 @@ class ForecastRequestImpTest {
     @Inject
     lateinit var forecastRequestEntityMapper: ForecastRequestEntityMapper
 
+    @Inject
+    lateinit var forecastRequestDomainMapper: ForecastRequestDomainMapper
+
     @Before
     fun setup() {
         DaggerTestDataComponent
@@ -31,7 +35,12 @@ class ForecastRequestImpTest {
             .build()
             .inject(this)
 
-        forecastRequest = ForecastRequestImp(weatherForecastService, apiKey, forecastRequestEntityMapper)
+        forecastRequest = ForecastRequestImp(
+            weatherForecastService,
+            apiKey,
+            forecastRequestEntityMapper,
+            forecastRequestDomainMapper)
+
         assertThat(forecastRequest).isNotNull
     }
 
