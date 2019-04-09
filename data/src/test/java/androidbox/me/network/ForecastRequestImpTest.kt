@@ -1,14 +1,19 @@
 package androidbox.me.network
 
 import androidbox.me.entities.*
+import androidbox.me.mappers.ForecastRequestEntityMapper
+import androidbox.me.network.di.DaggerTestDataComponent
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Single
+import me.androidbox.models.ForecastRequestModel
+import me.androidbox.models.ForecastRequestModelBuilder
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import javax.inject.Inject
 
 class ForecastRequestImpTest {
 
@@ -16,9 +21,17 @@ class ForecastRequestImpTest {
     private val weatherForecastService: WeatherForecastService = mock()
     private val apiKey = "apikey"
 
+    @Inject
+    lateinit var forecastRequestEntityMapper: ForecastRequestEntityMapper
+
     @Before
     fun setup() {
-        forecastRequest = ForecastRequestImp(weatherForecastService, apiKey)
+        DaggerTestDataComponent
+            .builder()
+            .build()
+            .inject(this)
+
+        forecastRequest = ForecastRequestImp(weatherForecastService, apiKey, forecastRequestEntityMapper)
         assertThat(forecastRequest).isNotNull
     }
 
@@ -31,7 +44,7 @@ class ForecastRequestImpTest {
                     CurrrentEntity(45.5F),
                     ForecastEntity(ForecastDayEntity(emptyList())))))
 
-        forecastRequest.getWeatherForecast(34.858585F, 58.345345F, 5)
+        forecastRequest.getWeatherForecast(createForecastModel())
             .test()
             .assertNoErrors()
             .assertValueCount(1)
@@ -46,11 +59,23 @@ class ForecastRequestImpTest {
         whenever(weatherForecastService.forecast(apiKey, "34.858585,58.345345", 5))
             .thenReturn(Single.error(RuntimeException("runtime exception")))
 
-        forecastRequest.getWeatherForecast(34.858585F, 58.345345F, 5)
+        forecastRequest.getWeatherForecast(createForecastModel())
             .test()
             .assertErrorMessage("runtime exception")
 
         verify(weatherForecastService).forecast(apiKey, "34.858585,58.345345", 5)
         verifyNoMoreInteractions(weatherForecastService)
+    }
+
+    private fun createForecastModel(): ForecastRequestModel {
+        return forecastModel {
+            latitude = 34.858585F
+            longitude = 58.345345F
+            days = 5
+        }
+    }
+
+    private fun forecastModel(func: ForecastRequestModelBuilder.() -> Unit): ForecastRequestModel {
+        return ForecastRequestModelBuilder().apply(func).build()
     }
 }

@@ -8,7 +8,7 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
         return WeatherForecastModel(
             mapToLocationModel(entity.location),
             mapToCurrentModel(entity.current),
-            mapToForecatModel(entity.forecast))
+            mapToForecastModel(entity.forecast))
     }
 
     private fun mapToLocationModel(location: LocationEntity): LocationModel {
@@ -19,7 +19,7 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
         return CurrentModel(current.temperatureInCelsius)
     }
 
-    private fun mapToForecatModel(forecast: ForecastEntity): ForecastModel {
+    private fun mapToForecastModel(forecast: ForecastEntity): ForecastModel {
         return ForecastModel(mapToForecastDay(forecast.forecastDay))
     }
 

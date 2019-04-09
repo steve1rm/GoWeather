@@ -1,6 +1,7 @@
 package androidbox.me.di
 
 import android.content.Context
+import androidbox.me.mappers.ForecastRequestEntityMapper
 import androidbox.me.network.ForecastRequest
 import androidbox.me.network.ForecastRequestImp
 import androidbox.me.network.WeatherForecastService
@@ -25,6 +26,6 @@ class NetworkDataServiceModule {
 
     @Reusable
     @Provides
-    fun provideForecastRequestImp(weatherForecastService: WeatherForecastService, apiKey: String): ForecastRequest =
-        ForecastRequestImp(weatherForecastService, apiKey)
+    fun provideForecastRequestImp(weatherForecastService: WeatherForecastService, apiKey: String, forecastRequestEntityMapper: ForecastRequestEntityMapper): ForecastRequest =
+        ForecastRequestImp(weatherForecastService, apiKey, forecastRequestEntityMapper)
 }

@@ -18,6 +18,6 @@ class MapperModule {
 
     @Reusable
     @Provides
-    fun proviceForecastRequestEntityMapper(): ForecastRequestEntityMapper =
+    fun provideForecastRequestEntityMapper(): ForecastRequestEntityMapper =
             ForecastRequestEntityMapperImp()
 }
