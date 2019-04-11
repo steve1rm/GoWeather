@@ -15,6 +15,7 @@ object Versions {
     const val daggerAndroidVersion = "2.21"
     const val okhttpVersion = "3.12.1"
     const val rxjavaVersion = "2.2.4"
+    const val rxAndroidVersion = "2.1.1"
     const val rxkotlinVersion = "2.3.0"
     const val constraintLayoutVersion = "1.1.3"
 

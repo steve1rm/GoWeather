@@ -28,10 +28,20 @@ android {
 dependencies {
     implementation(Libraries.appCompat)
     implementation(Libraries.constraintLayout)
+    implementation(Libraries.daggerAndroid)
+    implementation(Libraries.daggerSupport)
+    kapt(Libraries.daggerCompiler)
+    kapt(Libraries.daggerProcessor)
+    implementation(Libraries.rxjava)
+    implementation(Libraries.rxAndroid)
+    implementation(Libraries.rxkotlin)
 
+    testImplementation(TestLibraries.assertJ)
     testImplementation(TestLibraries.junit)
     testImplementation(TestLibraries.espressoCore)
     testImplementation(TestLibraries.runner)
 
     implementation(project(":domain"))
+    implementation(project(":data"))
+    implementation(project(":dicore"))
 }
