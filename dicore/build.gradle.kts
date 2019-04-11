@@ -21,5 +21,5 @@ dependencies {
     kapt(Libraries.daggerCompiler)
     kapt(Libraries.daggerProcessor)
 
-    implementation(project(":data"))
+    implementation(project(":presentation"))
 }
