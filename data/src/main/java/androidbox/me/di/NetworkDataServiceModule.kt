@@ -3,13 +3,13 @@ package androidbox.me.di
 import android.content.Context
 import androidbox.me.mappers.ForecastRequestDomainMapper
 import androidbox.me.mappers.ForecastRequestEntityMapper
-import androidbox.me.network.ForecastRequest
 import androidbox.me.network.ForecastRequestImp
 import androidbox.me.network.WeatherForecastService
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import me.androidbox.data.R
+import me.androidbox.interactors.WeatherForecast
 import retrofit2.Retrofit
 
 @Module
@@ -30,6 +30,6 @@ class NetworkDataServiceModule {
     fun provideForecastRequestImp(weatherForecastService: WeatherForecastService,
                                   apiKey: String,
                                   forecastRequestEntityMapper: ForecastRequestEntityMapper,
-                                  forecastRequestDomainMapper: ForecastRequestDomainMapper): ForecastRequest =
+                                  forecastRequestDomainMapper: ForecastRequestDomainMapper): WeatherForecast =
         ForecastRequestImp(weatherForecastService, apiKey, forecastRequestEntityMapper, forecastRequestDomainMapper)
 }

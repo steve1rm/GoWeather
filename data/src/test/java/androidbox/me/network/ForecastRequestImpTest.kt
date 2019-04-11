@@ -9,6 +9,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Single
+import me.androidbox.interactors.WeatherForecast
 import me.androidbox.models.ForecastRequestModel
 import me.androidbox.models.ForecastRequestModelBuilder
 import org.assertj.core.api.Assertions.assertThat
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 class ForecastRequestImpTest {
 
-    private lateinit var forecastRequest: ForecastRequest
+    private lateinit var forecastRequest: WeatherForecast
     private val weatherForecastService: WeatherForecastService = mock()
     private val apiKey = "apikey"
 
@@ -53,7 +54,7 @@ class ForecastRequestImpTest {
                     CurrrentEntity(45.5F),
                     ForecastEntity(ForecastDayEntity(emptyList())))))
 
-        forecastRequest.getWeatherForecast(createForecastModel())
+        forecastRequest.requestWeatherForecast(createForecastModel())
             .test()
             .assertNoErrors()
             .assertValueCount(1)
@@ -68,7 +69,7 @@ class ForecastRequestImpTest {
         whenever(weatherForecastService.forecast(apiKey, "34.858585,58.345345", 5))
             .thenReturn(Single.error(RuntimeException("runtime exception")))
 
-        forecastRequest.getWeatherForecast(createForecastModel())
+        forecastRequest.requestWeatherForecast(createForecastModel())
             .test()
             .assertErrorMessage("runtime exception")
 
