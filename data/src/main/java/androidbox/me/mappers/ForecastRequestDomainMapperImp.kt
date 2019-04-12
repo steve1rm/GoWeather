@@ -20,16 +20,16 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
     }
 
     private fun mapToForecastModel(forecast: ForecastEntity): ForecastModel {
-        return ForecastModel(mapToForecastDay(forecast.forecastDay))
-    }
+        val forecastDayList = mutableListOf<ForecastDayModel>()
 
-    private fun mapToForecastDay(forecastDay: ForecastDayEntity): ForecastDayModel {
-        val dayList = mutableListOf<DayModel>()
-
-        forecastDay.day.forEach {
-            dayList.add(DayModel(it.averageTemperatureInCelsius))
+        forecast.forecastDay.forEach {
+            forecastDayList.add(ForecastDayModel(mapToForecastDay(it.day)))
         }
 
-        return ForecastDayModel(dayList.toList())
+        return ForecastModel(forecastDayList.toList())
+    }
+
+    private fun mapToForecastDay(day: DayEntity): DayModel {
+        return DayModel(day.averageTemperatureInCelsius)
     }
 }

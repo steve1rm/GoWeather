@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android-extensions")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -26,6 +27,7 @@ android {
 }
 
 dependencies {
+    implementation(Libraries.kotlinStdlib)
     implementation(Libraries.appCompat)
     implementation(Libraries.constraintLayout)
     implementation(Libraries.daggerAndroid)
@@ -35,6 +37,11 @@ dependencies {
     implementation(Libraries.rxjava)
     implementation(Libraries.rxAndroid)
     implementation(Libraries.rxkotlin)
+    implementation(Libraries.okhttp)
+    implementation(Libraries.loggingInterceptor)
+    implementation(Libraries.retrofit2)
+    implementation(Libraries.adapterRxjava2)
+    implementation(Libraries.converterGson)
 
     testImplementation(TestLibraries.assertJ)
     testImplementation(TestLibraries.junit)
@@ -43,5 +50,4 @@ dependencies {
 
     implementation(project(":domain"))
     implementation(project(":data"))
-   // implementation(project(":dicore"))
 }

@@ -1,4 +1,4 @@
-package me.androidbox.dicore
+package me.androidbox.presentation.di
 
 import android.content.Context
 import dagger.Module

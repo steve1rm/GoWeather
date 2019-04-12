@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.androidbox.presentation">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
-        android:name="me.androidbox.dicore.GoWeatherApplication"
+        android:name="me.androidbox.presentation.di.GoWeatherApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

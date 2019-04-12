@@ -45,6 +45,7 @@ class ForecastRequestImpTest {
         assertThat(forecastRequest).isNotNull
     }
 
+
     @Test
     fun `should request a 5 day forecast`() {
         whenever(weatherForecastService.forecast(apiKey, "34.858585,58.345345", 5))
@@ -52,7 +53,7 @@ class ForecastRequestImpTest {
                 WeatherForecastEntity(
                     LocationEntity("", "", ""),
                     CurrrentEntity(45.5F),
-                    ForecastEntity(ForecastDayEntity(emptyList())))))
+                    ForecastEntity(emptyList()))))
 
         forecastRequest.requestWeatherForecast(createForecastModel())
             .test()

@@ -15,7 +15,8 @@ class ForecastRequestImp(private val weatherForecastService: WeatherForecastServ
     override fun requestWeatherForecast(forecastRequestModel: ForecastRequestModel): Single<WeatherForecastModel> {
         val forecastRequestEntity = forecastRequestEntityMapper.map(forecastRequestModel)
 
-        val query = buildLocationQuery(forecastRequestEntity.latitude, forecastRequestEntity.longitude)
+        // val query = buildLocationQuery(forecastRequestEntity.latitude, forecastRequestEntity.longitude)
+        val query = "bangkok"
 
         return weatherForecastService.forecast(apiKey, query, forecastRequestEntity.days)
             .map {

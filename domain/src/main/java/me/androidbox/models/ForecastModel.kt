@@ -1,3 +1,3 @@
 package me.androidbox.models
 
-data class ForecastModel(val forecastDay: ForecastDayModel)
+data class ForecastModel(val forecastDay: List<ForecastDayModel> = emptyList())

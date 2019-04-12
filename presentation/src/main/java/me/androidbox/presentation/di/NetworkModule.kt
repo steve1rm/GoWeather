@@ -1,14 +1,17 @@
-package me.androidbox.dicore
+package me.androidbox.presentation.di
 
 import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import me.androidbox.presentation.BuildConfig
+import me.androidbox.presentation.R
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 
 @Module
 class NetworkModule {
@@ -36,6 +39,7 @@ class NetworkModule {
             .build()
     }
 
+    @Named("BaseUrl")
     @Reusable
     @Provides
     fun provideBaseUrl(context: Context): String =
@@ -43,7 +47,7 @@ class NetworkModule {
 
     @Reusable
     @Provides
-    fun provideRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(@Named("BaseUrl") baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)

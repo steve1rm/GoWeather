@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GoWeather</string>
+    <string name="baseUrl" translatable="false">http://api.apixu.com</string>
 </resources>

@@ -11,10 +11,12 @@ import dagger.Reusable
 import me.androidbox.data.R
 import me.androidbox.interactors.WeatherForecast
 import retrofit2.Retrofit
+import javax.inject.Named
 
 @Module
 class NetworkDataServiceModule {
 
+    @Named("ApiKey")
     @Reusable
     @Provides
     fun provideApiKey(context: Context): String =
@@ -28,7 +30,7 @@ class NetworkDataServiceModule {
     @Reusable
     @Provides
     fun provideForecastRequestImp(weatherForecastService: WeatherForecastService,
-                                  apiKey: String,
+                                  @Named("ApiKey") apiKey: String,
                                   forecastRequestEntityMapper: ForecastRequestEntityMapper,
                                   forecastRequestDomainMapper: ForecastRequestDomainMapper): WeatherForecast =
         ForecastRequestImp(weatherForecastService, apiKey, forecastRequestEntityMapper, forecastRequestDomainMapper)
