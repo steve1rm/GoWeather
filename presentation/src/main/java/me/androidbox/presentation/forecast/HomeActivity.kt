@@ -1,4 +1,4 @@
-package me.androidbox.presentation
+package me.androidbox.presentation.forecast
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +10,7 @@ import io.reactivex.schedulers.Schedulers
 import me.androidbox.interactors.WeatherForecastInteractor
 import me.androidbox.models.ForecastRequestModel
 import me.androidbox.models.WeatherForecastModel
+import me.androidbox.presentation.R
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(0F, 0F, 1))
+        weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(0F, 0F, 5))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object: SingleObserver<WeatherForecastModel> {
