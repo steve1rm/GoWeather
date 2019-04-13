@@ -2,7 +2,7 @@ package me.androidbox.presentation.common
 
 import java.lang.ref.WeakReference
 
-class BasePresenterImp<V> : BasePresenter<V> {
+open class BasePresenterImp<V> : BasePresenter<V> {
     private var viewReference: WeakReference<V?>? = null
 
     override fun attachView(view: V?) {

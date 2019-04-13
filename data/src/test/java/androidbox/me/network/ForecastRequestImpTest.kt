@@ -12,6 +12,12 @@ import io.reactivex.Single
 import me.androidbox.interactors.WeatherForecast
 import me.androidbox.models.ForecastRequestModel
 import me.androidbox.models.ForecastRequestModelBuilder
+import okhttp3.HttpUrl
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -76,6 +82,30 @@ class ForecastRequestImpTest {
 
         verify(weatherForecastService).forecast(apiKey, "34.858585,58.345345", 5)
         verifyNoMoreInteractions(weatherForecastService)
+    }
+
+    @Test
+    fun `test the response from mock web server`() {
+        val mockWebServer = MockWebServer()
+        mockWebServer.enqueue(MockResponse().setBody("testing the sending the body response"))
+        mockWebServer.start()
+
+        val baseUrl = mockWebServer.url("api/path")
+        val requestBody = sendRequest(OkHttpClient(), baseUrl)
+        assertThat(requestBody).isEqualToIgnoringCase("testing the sending the body response")
+    }
+
+    private fun sendRequest(okHttpClient: OkHttpClient, base: HttpUrl): String {
+        val body = RequestBody.create(MediaType.parse("text/plain"), "content")
+
+        val request = okhttp3.Request.Builder()
+            .post(body)
+            .url(base)
+            .build()
+
+        val response = okHttpClient.newCall(request).execute()
+
+        return response.body()?.string() ?: "not found"
     }
 
     private fun createForecastModel(): ForecastRequestModel {
