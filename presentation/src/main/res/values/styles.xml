@@ -23,4 +23,20 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
+    <style name="temperature_title">
+        <item name="android:textSize">96sp</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textColor">@color/colorForecast</item>
+    </style>
+
+    <style name="location_name_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">26dp</item>
+        <item name="android:layout_marginBottom">62dp</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textColor">@color/colorForecast</item>
+    </style>
+
 </resources>
