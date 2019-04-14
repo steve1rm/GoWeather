@@ -4,6 +4,6 @@
     android:id="@+id/forecastActivityContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".forecast.HomeActivity">
+    tools:context=".forecast.ForecastActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

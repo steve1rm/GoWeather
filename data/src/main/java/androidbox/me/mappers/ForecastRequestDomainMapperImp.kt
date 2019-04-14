@@ -23,7 +23,9 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
         val forecastDayList = mutableListOf<ForecastDayModel>()
 
         forecast.forecastDay.forEach {
-            forecastDayList.add(ForecastDayModel(mapToForecastDay(it.day)))
+            forecastDayList.add(ForecastDayModel(
+                it.date,
+                mapToForecastDay(it.day)))
         }
 
         return ForecastModel(forecastDayList.toList())

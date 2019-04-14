@@ -14,7 +14,7 @@ import me.androidbox.models.WeatherForecastModel
 import me.androidbox.presentation.R
 import javax.inject.Inject
 
-class HomeActivity : AppCompatActivity() {
+class ForecastActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)

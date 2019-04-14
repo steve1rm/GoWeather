@@ -1,3 +1,5 @@
 package me.androidbox.models
 
-data class ForecastDayModel(val day: DayModel)
+data class ForecastDayModel(
+    val date: String,
+    val day: DayModel)
