@@ -16,7 +16,7 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
     }
 
     private fun mapToCurrentModel(current: CurrrentEntity): CurrentModel {
-        return CurrentModel(current.temperatureInCelsius)
+        return CurrentModel(current.temperatureInCelsius.toInt())
     }
 
     private fun mapToForecastModel(forecast: ForecastEntity): ForecastModel {
