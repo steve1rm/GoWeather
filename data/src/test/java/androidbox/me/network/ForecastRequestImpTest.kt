@@ -21,6 +21,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import java.io.File
 import javax.inject.Inject
 
 class ForecastRequestImpTest {
@@ -87,10 +88,10 @@ class ForecastRequestImpTest {
     @Test
     fun `test the response from mock web server`() {
         val mockWebServer = MockWebServer()
-        mockWebServer.enqueue(MockResponse().setBody("testing the sending the body response"))
+        mockWebServer.enqueue(MockResponse().setBody(getJson("json/fivedayforecast.json")))
         mockWebServer.start()
 
-        val baseUrl = mockWebServer.url("api/path")
+        val baseUrl = mockWebServer.url("json/fivedayforecast.json")
         val requestBody = sendRequest(OkHttpClient(), baseUrl)
         assertThat(requestBody).isEqualToIgnoringCase("testing the sending the body response")
     }
@@ -106,6 +107,13 @@ class ForecastRequestImpTest {
         val response = okHttpClient.newCall(request).execute()
 
         return response.body()?.string() ?: "not found"
+    }
+
+    private fun getJson(path: String): String {
+        val url = this.javaClass.classLoader.getResource(path)
+        val file = File(url.path)
+        return String(file.readBytes())
+
     }
 
     private fun createForecastModel(): ForecastRequestModel {

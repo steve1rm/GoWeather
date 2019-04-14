@@ -1,0 +1,200 @@
+{
+    "location": {
+        "name": "Bangkok",
+        "region": "Krung Thep",
+        "country": "Thailand",
+        "lat": 13.75,
+        "lon": 100.52,
+        "tz_id": "Asia/Bangkok",
+        "localtime_epoch": 1555220937,
+        "localtime": "2019-04-14 12:48"
+    },
+    "current": {
+        "last_updated_epoch": 1555220710,
+        "last_updated": "2019-04-14 12:45",
+        "temp_c": 36.0,
+        "temp_f": 96.8,
+        "is_day": 1,
+        "condition": {
+            "text": "Partly cloudy",
+            "icon": "//cdn.apixu.com/weather/64x64/day/116.png",
+            "code": 1003
+        },
+        "wind_mph": 11.9,
+        "wind_kph": 19.1,
+        "wind_degree": 210,
+        "wind_dir": "SSW",
+        "pressure_mb": 1011.0,
+        "pressure_in": 30.3,
+        "precip_mm": 0.0,
+        "precip_in": 0.0,
+        "humidity": 53,
+        "cloud": 50,
+        "feelslike_c": 44.9,
+        "feelslike_f": 112.7,
+        "vis_km": 10.0,
+        "vis_miles": 6.0,
+        "uv": 9.0,
+        "gust_mph": 13.0,
+        "gust_kph": 20.9
+    },
+    "forecast": {
+        "forecastday": [
+            {
+                "date": "2019-04-14",
+                "date_epoch": 1555200000,
+                "day": {
+                    "maxtemp_c": 36.8,
+                    "maxtemp_f": 98.2,
+                    "mintemp_c": 31.2,
+                    "mintemp_f": 88.2,
+                    "avgtemp_c": 33.6,
+                    "avgtemp_f": 92.4,
+                    "maxwind_mph": 13.4,
+                    "maxwind_kph": 21.6,
+                    "totalprecip_mm": 0.0,
+                    "totalprecip_in": 0.0,
+                    "avgvis_km": 19.8,
+                    "avgvis_miles": 12.0,
+                    "avghumidity": 55.0,
+                    "condition": {
+                        "text": "Partly cloudy",
+                        "icon": "//cdn.apixu.com/weather/64x64/day/116.png",
+                        "code": 1003
+                    },
+                    "uv": 13.6
+                },
+                "astro": {
+                    "sunrise": "06:06 AM",
+                    "sunset": "06:31 PM",
+                    "moonrise": "01:37 PM",
+                    "moonset": "01:48 AM"
+                }
+            },
+            {
+                "date": "2019-04-15",
+                "date_epoch": 1555286400,
+                "day": {
+                    "maxtemp_c": 36.5,
+                    "maxtemp_f": 97.7,
+                    "mintemp_c": 31.3,
+                    "mintemp_f": 88.3,
+                    "avgtemp_c": 33.4,
+                    "avgtemp_f": 92.2,
+                    "maxwind_mph": 12.8,
+                    "maxwind_kph": 20.5,
+                    "totalprecip_mm": 0.0,
+                    "totalprecip_in": 0.0,
+                    "avgvis_km": 19.6,
+                    "avgvis_miles": 12.0,
+                    "avghumidity": 54.0,
+                    "condition": {
+                        "text": "Partly cloudy",
+                        "icon": "//cdn.apixu.com/weather/64x64/day/116.png",
+                        "code": 1003
+                    },
+                    "uv": 12.9
+                },
+                "astro": {
+                    "sunrise": "06:05 AM",
+                    "sunset": "06:31 PM",
+                    "moonrise": "02:37 PM",
+                    "moonset": "02:41 AM"
+                }
+            },
+            {
+                "date": "2019-04-16",
+                "date_epoch": 1555372800,
+                "day": {
+                    "maxtemp_c": 38.7,
+                    "maxtemp_f": 101.7,
+                    "mintemp_c": 31.1,
+                    "mintemp_f": 88.0,
+                    "avgtemp_c": 34.1,
+                    "avgtemp_f": 93.3,
+                    "maxwind_mph": 13.6,
+                    "maxwind_kph": 22.0,
+                    "totalprecip_mm": 0.0,
+                    "totalprecip_in": 0.0,
+                    "avgvis_km": 19.6,
+                    "avgvis_miles": 12.0,
+                    "avghumidity": 52.0,
+                    "condition": {
+                        "text": "Partly cloudy",
+                        "icon": "//cdn.apixu.com/weather/64x64/day/116.png",
+                        "code": 1003
+                    },
+                    "uv": 13.8
+                },
+                "astro": {
+                    "sunrise": "06:05 AM",
+                    "sunset": "06:31 PM",
+                    "moonrise": "03:38 PM",
+                    "moonset": "03:33 AM"
+                }
+            },
+            {
+                "date": "2019-04-17",
+                "date_epoch": 1555459200,
+                "day": {
+                    "maxtemp_c": 38.8,
+                    "maxtemp_f": 101.8,
+                    "mintemp_c": 31.3,
+                    "mintemp_f": 88.3,
+                    "avgtemp_c": 34.4,
+                    "avgtemp_f": 93.8,
+                    "maxwind_mph": 14.3,
+                    "maxwind_kph": 23.0,
+                    "totalprecip_mm": 1.6,
+                    "totalprecip_in": 0.06,
+                    "avgvis_km": 19.6,
+                    "avgvis_miles": 12.0,
+                    "avghumidity": 52.0,
+                    "condition": {
+                        "text": "Moderate or heavy rain shower",
+                        "icon": "//cdn.apixu.com/weather/64x64/day/356.png",
+                        "code": 1243
+                    },
+                    "uv": 13.0
+                },
+                "astro": {
+                    "sunrise": "06:04 AM",
+                    "sunset": "06:31 PM",
+                    "moonrise": "04:36 PM",
+                    "moonset": "04:21 AM"
+                }
+            },
+            {
+                "date": "2019-04-18",
+                "date_epoch": 1555545600,
+                "day": {
+                    "maxtemp_c": 38.2,
+                    "maxtemp_f": 100.8,
+                    "mintemp_c": 31.5,
+                    "mintemp_f": 88.7,
+                    "avgtemp_c": 34.1,
+                    "avgtemp_f": 93.4,
+                    "maxwind_mph": 15.7,
+                    "maxwind_kph": 25.2,
+                    "totalprecip_mm": 0.0,
+                    "totalprecip_in": 0.0,
+                    "avgvis_km": 19.8,
+                    "avgvis_miles": 12.0,
+                    "avghumidity": 56.0,
+                    "condition": {
+                        "text": "Partly cloudy",
+                        "icon": "//cdn.apixu.com/weather/64x64/day/116.png",
+                        "code": 1003
+                    },
+                    "uv": 14.5
+                },
+                "astro": {
+                    "sunrise": "06:03 AM",
+                    "sunset": "06:31 PM",
+                    "moonrise": "05:35 PM",
+                    "moonset": "05:08 AM"
+                }
+            }
+        ]
+    }
+}
