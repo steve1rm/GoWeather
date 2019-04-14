@@ -9,6 +9,8 @@ import me.androidbox.models.WeatherForecastModel
 import me.androidbox.presentation.BaseDelegate
 import me.androidbox.presentation.R
 import me.androidbox.presentation.viewholders.ForecastViewHolder
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ForecastDelegate(private val viewType: Int) : BaseDelegate<ForecastDayModel> {
     override fun getViewType(): Int {
@@ -27,9 +29,17 @@ class ForecastDelegate(private val viewType: Int) : BaseDelegate<ForecastDayMode
     override fun bindViewHolder(holder: RecyclerView.ViewHolder, position: Int, items: List<ForecastDayModel>) {
         if(holder is ForecastViewHolder) {
             holder.run {
-                tvWeekDay.text = items[position].date
+                tvWeekDay.text = getWeekday(items[position].dateEpoch)
                 tvAverageTemperature.text = items[position].day.averageTemperatureInCelsius.toString()
             }
         }
+    }
+
+    private fun getWeekday(date: String): String {
+        val longDate = date.toLong()
+        val simpleDateFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+        val dateFormat = Date(longDate * 1000)
+
+        return simpleDateFormat.format(dateFormat)
     }
 }

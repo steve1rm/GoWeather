@@ -25,6 +25,7 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
         forecast.forecastDay.forEach {
             forecastDayList.add(ForecastDayModel(
                 it.date,
+                it.dateEpoch,
                 mapToForecastDay(it.day)))
         }
 
