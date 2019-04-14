@@ -42,6 +42,7 @@ dependencies {
     implementation(Libraries.retrofit2)
     implementation(Libraries.adapterRxjava2)
     implementation(Libraries.converterGson)
+    implementation(Libraries.recyclerView)
 
     testImplementation(TestLibraries.assertJ)
     testImplementation(TestLibraries.junit)

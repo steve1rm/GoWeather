@@ -20,6 +20,7 @@ object Libraries {
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroidVersion}"
     const val rxkotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxkotlinVersion}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayoutVersion}"
+    const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerViewVersion}"
 }
 
 object TestLibraries {
