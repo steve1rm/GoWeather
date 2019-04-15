@@ -9,6 +9,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.HasServiceInjector
 import dagger.android.support.HasSupportFragmentInjector
+import me.androidbox.presentation.forecast.ForecastActivity
 import javax.inject.Inject
 
 class GoWeatherApplication : Application(), HasActivityInjector, HasSupportFragmentInjector, HasServiceInjector {

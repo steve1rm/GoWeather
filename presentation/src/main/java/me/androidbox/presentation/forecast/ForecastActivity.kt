@@ -2,19 +2,16 @@ package me.androidbox.presentation.forecast
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import dagger.android.AndroidInjection
-import io.reactivex.SingleObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import me.androidbox.interactors.WeatherForecastInteractor
-import me.androidbox.models.ForecastRequestModel
-import me.androidbox.models.WeatherForecastModel
 import me.androidbox.presentation.R
+import me.androidbox.presentation.models.WeatherForecast
+import org.parceler.Parcels
 import javax.inject.Inject
 
-class ForecastActivity : AppCompatActivity() {
+class ForecastActivity : AppCompatActivity(), ForecastView {
+
+    @Inject
+    lateinit var forecastPresenter: ForecastPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -22,11 +19,29 @@ class ForecastActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         startFragment()
+        forecastPresenter.initialize(this)
+        forecastPresenter.requestWeatherForecast()
     }
 
     private fun startFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.forecastActivityContainer, ForecastFragment(), "ForecastFragment")
+        fragmentTransaction.add(R.id.forecastActivityContainer, LoadingFragment(), "ForecastFragment")
         fragmentTransaction.commit()
+    }
+
+    override fun onForecastSuccess(weatherForecast: WeatherForecast) {
+        val bundle = Bundle()
+        val parcelable = Parcels.wrap(weatherForecast)
+        bundle.putParcelable("weatherForecast", parcelable)
+        val forecastFragment = ForecastFragment()
+        forecastFragment.arguments = bundle
+
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.forecastActivityContainer, forecastFragment, "ForecastFragment")
+        fragmentTransaction.commit()
+    }
+
+    override fun onForecastFailure(error: String) {
+        /* change to failure */
     }
 }

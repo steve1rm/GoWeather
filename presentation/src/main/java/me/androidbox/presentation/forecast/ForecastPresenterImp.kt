@@ -7,8 +7,11 @@ import me.androidbox.interactors.WeatherForecastInteractor
 import me.androidbox.models.ForecastRequestModel
 import me.androidbox.models.WeatherForecastModel
 import me.androidbox.presentation.common.BasePresenterImp
+import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 
-class ForecastPresenterImp(private val weatherForecastInteractor: WeatherForecastInteractor) :
+class ForecastPresenterImp(private val weatherForecastInteractor: WeatherForecastInteractor,
+                           private val weatherForecastPresentationMapper: WeatherForecastPresentationMapper)
+    :
     BasePresenterImp<ForecastView>(),
     ForecastPresenter{
 
@@ -34,7 +37,9 @@ class ForecastPresenterImp(private val weatherForecastInteractor: WeatherForecas
     }
 
     private fun onWeatherForecastSuccess(weatherForecastModel: WeatherForecastModel) {
-        getView()?.onForecastSuccess(weatherForecastModel)
+        val weatherForecast = weatherForecastPresentationMapper.map(weatherForecastModel)
+
+        getView()?.onForecastSuccess(weatherForecast)
     }
 
     private fun onWeatherForecastFailure(error: Throwable) {

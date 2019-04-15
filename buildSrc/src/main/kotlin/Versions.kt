@@ -19,6 +19,7 @@ object Versions {
     const val rxkotlinVersion = "2.3.0"
     const val constraintLayoutVersion = "1.1.3"
     const val recyclerViewVersion = "1.0.0"
+    const val parcelerVersion = "1.1.12"
 
     /** Testing */
     const val jUnitVersion = "4.12"

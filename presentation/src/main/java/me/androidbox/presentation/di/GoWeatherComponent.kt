@@ -5,6 +5,7 @@ import androidbox.me.di.NetworkDataServiceModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
+import me.androidbox.presentation.forecast.ForecastActivity
 import javax.inject.Singleton
 
 @Singleton

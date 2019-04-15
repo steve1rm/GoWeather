@@ -43,6 +43,8 @@ dependencies {
     implementation(Libraries.adapterRxjava2)
     implementation(Libraries.converterGson)
     implementation(Libraries.recyclerView)
+    implementation(Libraries.paracelerApi)
+    kapt(Libraries.paraceler)
 
     testImplementation(TestLibraries.assertJ)
     testImplementation(TestLibraries.junit)

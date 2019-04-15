@@ -21,6 +21,8 @@ object Libraries {
     const val rxkotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxkotlinVersion}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayoutVersion}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerViewVersion}"
+    const val paraceler = "org.parceler:parceler:${Versions.parcelerVersion}"
+    const val paracelerApi = "org.parceler:parceler-api:${Versions.parcelerVersion}"
 }
 
 object TestLibraries {

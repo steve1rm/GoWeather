@@ -1,8 +1,8 @@
 package me.androidbox.presentation.forecast
 
-import me.androidbox.models.WeatherForecastModel
+import me.androidbox.presentation.models.WeatherForecast
 
 interface ForecastView {
-    fun onForecastSuccess(weatherForecastModel: WeatherForecastModel)
+    fun onForecastSuccess(weatherForecast: WeatherForecast)
     fun onForecastFailure(error: String)
 }
