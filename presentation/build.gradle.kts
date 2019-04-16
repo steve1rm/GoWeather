@@ -45,6 +45,7 @@ dependencies {
     implementation(Libraries.recyclerView)
     implementation(Libraries.paracelerApi)
     kapt(Libraries.paraceler)
+    implementation(Libraries.supportTransition)
 
     testImplementation(TestLibraries.assertJ)
     testImplementation(TestLibraries.junit)

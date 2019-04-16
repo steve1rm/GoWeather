@@ -20,7 +20,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/include_weather_forecast_header"
         tools:listitem="@layout/weather_forecast_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

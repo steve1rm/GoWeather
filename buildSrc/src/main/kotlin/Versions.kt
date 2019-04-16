@@ -1,6 +1,7 @@
 object Versions {
     /** Android */
     const val buildToolsVersion = "28.0.3"
+    const val androidLibraryVersion = "28.0.0"
     const val minSdkVersion = 16
     const val targetSdkVersion = 27
     const val compileSdkVersion = 28
