@@ -25,6 +25,8 @@ dependencies {
     implementation(Libraries.okhttp)
     implementation(Libraries.loggingInterceptor)
 
+    implementation("com.google.android.gms:play-services-location:16.0.0")
+
     testImplementation(TestLibraries.junit)
     testImplementation(TestLibraries.assertJ)
     testImplementation(TestLibraries.mockitoKotlin)
