@@ -10,8 +10,10 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.FragmentManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.android.AndroidInjection
@@ -21,8 +23,7 @@ import org.parceler.Parcels
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-
-class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener {
+class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener, RetryListener {
 
     @Inject
     lateinit var forecastPresenter: ForecastPresenter
@@ -30,20 +31,24 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener {
     private var fusedLocationProviderClient: FusedLocationProviderClient by Delegates.notNull()
     private var wayLatitude = 0.0
     private var wayLongtitude = 0.0
+    private var fragmentManager: FragmentManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        fragmentManager = supportFragmentManager
+
         if(isLocationServicesEnabled()) {
             getLocationFused()
-            startFragment()
+            startLoadingFragment()
             forecastPresenter.initialize(this)
             forecastPresenter.requestWeatherForecast()
         }
         else {
             displaySettings()
+            startRetryFragment()
         }
     }
 
@@ -111,13 +116,24 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener {
     }
 
     private fun displaySettings() {
+        Toast.makeText(this, "Please enable location on your device - and try again", Toast.LENGTH_LONG).show()
         startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
     }
 
-    private fun startFragment() {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.forecastActivityContainer, LoadingFragment(), "ForecastFragment")
-        fragmentTransaction.commit()
+    private fun startLoadingFragment() {
+        fragmentManager?.let {
+            val fragmentTransaction = it.beginTransaction()
+            fragmentTransaction.replace(R.id.forecastActivityContainer, LoadingFragment(), "LoadingFragment")
+            fragmentTransaction.commit()
+        }
+    }
+
+    private fun startRetryFragment() {
+        fragmentManager?.let {
+            val fragmentTransaction = it.beginTransaction()
+            fragmentTransaction.replace(R.id.forecastActivityContainer, RetryFragment(), "RetryFragment")
+            fragmentTransaction.commit()
+        }
     }
 
     override fun onForecastSuccess(weatherForecast: WeatherForecast) {
@@ -130,6 +146,27 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.forecastActivityContainer, forecastFragment, "ForecastFragment")
         fragmentTransaction.commit()
+    }
+
+    private fun startForecastFragment() {
+        fragmentManager?.let {
+            val fragmentTransaction = it.beginTransaction()
+            fragmentTransaction.replace(R.id.forecastActivityContainer, RetryFragment(), "ForecastFragment")
+            fragmentTransaction.commit()
+        }
+    }
+
+    override fun onRetry() {
+        if(isLocationServicesEnabled()) {
+            getLocationFused()
+            startLoadingFragment()
+            forecastPresenter.initialize(this)
+            forecastPresenter.requestWeatherForecast()
+        }
+        else {
+            displaySettings()
+            startRetryFragment()
+        }
     }
 
     override fun onForecastFailure(error: String) {

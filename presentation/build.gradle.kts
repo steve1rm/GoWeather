@@ -47,7 +47,7 @@ dependencies {
     kapt(Libraries.paraceler)
     implementation(Libraries.supportTransition)
 
-    implementation("com.google.android.gms:play-services-location:9.0.0")
+    implementation("com.google.android.gms:play-services-location:16.0.0")
 
     testImplementation(TestLibraries.assertJ)
     testImplementation(TestLibraries.junit)

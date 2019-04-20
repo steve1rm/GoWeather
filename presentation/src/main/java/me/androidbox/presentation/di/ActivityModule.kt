@@ -10,6 +10,7 @@ import me.androidbox.models.WeatherForecastModel
 import me.androidbox.presentation.forecast.ForecastActivity
 import me.androidbox.presentation.forecast.ForecastPresenter
 import me.androidbox.presentation.forecast.ForecastPresenterImp
+import me.androidbox.presentation.forecast.RetryListener
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapperImp
 
@@ -31,5 +32,13 @@ class ActivityModule {
     @Provides
     fun provideWeatherForecastPresentationMapper(): WeatherForecastPresentationMapper =
             WeatherForecastPresentationMapperImp()
+
+/*
+    @Reusable
+    @Provides
+    fun provideRetryListener(): RetryListener {
+        return forecastActivity
+    }
+*/
 }
 
