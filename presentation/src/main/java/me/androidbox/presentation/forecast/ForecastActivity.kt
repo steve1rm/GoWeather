@@ -4,21 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Criteria
-import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import android.os.Looper
 import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentManager
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import dagger.android.AndroidInjection
 import me.androidbox.presentation.R
 import me.androidbox.presentation.models.WeatherForecast
@@ -26,7 +19,7 @@ import org.parceler.Parcels
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
-class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener, RetryListener {
+class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener {
 
     @Inject
     lateinit var forecastPresenter: ForecastPresenter
@@ -69,7 +62,12 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener, Re
                     forecastPresenter.requestWeatherForecast(location.latitude, location.longitude)
                 }
                 else {
-                    fusedLocationProviderClient.requestLocationUpdates(LocationRequest(), LocationCallback(), Looper.getMainLooper())
+                    val locationCallback = object : LocationCallback() {
+                        override fun onLocationResult(locationResult: LocationResult) {
+                            forecastPresenter.requestWeatherForecast(locationResult.lastLocation.latitude, locationResult.lastLocation.longitude)
+                        }
+                    }
+                    fusedLocationProviderClient.requestLocationUpdates(LocationRequest(), locationCallback, null)
                 }
             }
         }
@@ -88,7 +86,8 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener, Re
                     }
                 }
                 else {
-                    println("Permission denied")
+                    Toast.makeText(this, "Permissions has been denied", Toast.LENGTH_LONG).show()
+                    startRetryFragment()
                 }
             }
         }
@@ -145,22 +144,5 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener, Re
 
     override fun onForecastFailure(error: String) {
         startRetryFragment()
-    }
-
-    override fun onLocationChanged(location: Location?) {
-        println(location?.latitude)
-        println(location?.longitude)
-    }
-
-    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-        println("onStatusChanged $provider")
-    }
-
-    override fun onProviderEnabled(provider: String?) {
-        println("onProviderEnabled $provider")
-    }
-
-    override fun onProviderDisabled(provider: String?) {
-        println("onProviderDisabled $provider")
     }
 }
