@@ -9,12 +9,15 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.Looper
 import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import dagger.android.AndroidInjection
 import me.androidbox.presentation.R
@@ -29,9 +32,8 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener, Re
     lateinit var forecastPresenter: ForecastPresenter
 
     private var fusedLocationProviderClient: FusedLocationProviderClient by Delegates.notNull()
-    private var wayLatitude = 0.0
-    private var wayLongtitude = 0.0
     private var fragmentManager: FragmentManager? = null
+    private val permissionRequestCode = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -39,12 +41,11 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener, Re
         setContentView(R.layout.activity_home)
 
         fragmentManager = supportFragmentManager
+        forecastPresenter.initialize(this)
 
         if(isLocationServicesEnabled()) {
             getLocationFused()
             startLoadingFragment()
-            forecastPresenter.initialize(this)
-            forecastPresenter.requestWeatherForecast()
         }
         else {
             displaySettings()
@@ -56,19 +57,19 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener, Re
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION), 1000)
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION), permissionRequestCode)
         }
         else {
             fusedLocationProviderClient.lastLocation.addOnSuccessListener(this) { location ->
                 if(location != null) {
-                    wayLatitude = location.latitude
-                    wayLongtitude = location.longitude
-
-                    println("latitude $wayLatitude")
-                    println("longtitude $wayLongtitude")
+                    forecastPresenter.requestWeatherForecast(location.latitude, location.longitude)
+                }
+                else {
+                    fusedLocationProviderClient.requestLocationUpdates(LocationRequest(), LocationCallback(), Looper.getMainLooper())
                 }
             }
         }
@@ -78,15 +79,11 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener, Re
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode) {
-            1000 -> {
+            permissionRequestCode -> {
                 if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     fusedLocationProviderClient.lastLocation.addOnSuccessListener(this) { location ->
                         if(location != null) {
-                            wayLatitude = location.latitude
-                            wayLongtitude = location.longitude
-
-                            println("latitude $wayLatitude")
-                            println("longtitude $wayLongtitude")
+                            forecastPresenter.requestWeatherForecast(location.latitude, location.longitude)
                         }
                     }
                 }
@@ -94,19 +91,6 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener, Re
                     println("Permission denied")
                 }
             }
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun getLocation() {
-        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val criteria = Criteria()
-        val provider = locationManager.getBestProvider(criteria, false)
-        val location = locationManager.getLastKnownLocation(provider)
-
-
-        if(location != null) {
-            onLocationChanged(location)
         }
     }
 
@@ -148,20 +132,10 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener, Re
         fragmentTransaction.commit()
     }
 
-    private fun startForecastFragment() {
-        fragmentManager?.let {
-            val fragmentTransaction = it.beginTransaction()
-            fragmentTransaction.replace(R.id.forecastActivityContainer, RetryFragment(), "ForecastFragment")
-            fragmentTransaction.commit()
-        }
-    }
-
     override fun onRetry() {
         if(isLocationServicesEnabled()) {
             getLocationFused()
             startLoadingFragment()
-            forecastPresenter.initialize(this)
-            forecastPresenter.requestWeatherForecast()
         }
         else {
             displaySettings()
@@ -170,7 +144,7 @@ class ForecastActivity : AppCompatActivity(), ForecastView, LocationListener, Re
     }
 
     override fun onForecastFailure(error: String) {
-        /* change to failure */
+        startRetryFragment()
     }
 
     override fun onLocationChanged(location: Location?) {

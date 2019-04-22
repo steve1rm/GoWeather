@@ -1,13 +1,13 @@
 package me.androidbox.models
 
-data class ForecastRequestModel(val latitude: Float = 0F,
-                                val longitude: Float = 0F,
+data class ForecastRequestModel(val latitude: Double,
+                                val longitude: Double,
                                 val days: Int = 0)
 
 class ForecastRequestModelBuilder {
 
-    var latitude: Float = 0F
-    var longitude: Float = 0F
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
     var days: Int = 0
 
     fun build(): ForecastRequestModel =

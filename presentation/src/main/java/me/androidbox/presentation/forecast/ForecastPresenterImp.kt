@@ -13,12 +13,14 @@ class ForecastPresenterImp(private val weatherForecastInteractor: WeatherForecas
                            private val weatherForecastPresentationMapper: WeatherForecastPresentationMapper)
     :
     BasePresenterImp<ForecastView>(),
-    ForecastPresenter{
+    ForecastPresenter {
 
     private val compositableDisposable = CompositeDisposable()
 
     override fun initialize(forecastView: ForecastView) {
-        attachView(forecastView)
+        if(!isViewAttached()) {
+            attachView(forecastView)
+        }
     }
 
     override fun release() {
@@ -26,8 +28,8 @@ class ForecastPresenterImp(private val weatherForecastInteractor: WeatherForecas
         compositableDisposable.clear()
     }
 
-    override fun requestWeatherForecast() {
-        compositableDisposable.add(weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(0F, 0F, 5))
+    override fun requestWeatherForecast(latitude: Double, longitude: Double) {
+        compositableDisposable.add(weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, 5))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
