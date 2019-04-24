@@ -4,18 +4,26 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.location.LocationManager
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Looper
 import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.gms.location.*
+import com.google.android.gms.tasks.OnCanceledListener
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.Task
 import dagger.android.AndroidInjection
 import me.androidbox.presentation.R
 import me.androidbox.presentation.models.WeatherForecast
 import org.parceler.Parcels
+import java.lang.Exception
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
@@ -50,24 +58,46 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED &&
+            PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED) {
+            PackageManager.PERMISSION_GRANTED
+        ) {
 
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION), permissionRequestCode)
-        }
-        else {
-            fusedLocationProviderClient.lastLocation.addOnSuccessListener(this) { location ->
-                if(location != null) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                permissionRequestCode
+            )
+        } else {
+            fusedLocationProviderClient.lastLocation.addOnFailureListener(this) {
+                println(it.message)
+            }.addOnCanceledListener(this) {
+                println("Cancelled")
+            }.addOnSuccessListener(this) { location ->
+                if (location != null) {
                     forecastPresenter.requestWeatherForecast(location.latitude, location.longitude)
-                }
-                else {
+                } else {
                     val locationCallback = object : LocationCallback() {
                         override fun onLocationResult(locationResult: LocationResult) {
-                            forecastPresenter.requestWeatherForecast(locationResult.lastLocation.latitude, locationResult.lastLocation.longitude)
+                            forecastPresenter.requestWeatherForecast(
+                                locationResult.lastLocation.latitude,
+                                locationResult.lastLocation.longitude
+                            )
+                            fusedLocationProviderClient.removeLocationUpdates(this)
                         }
                     }
-                    fusedLocationProviderClient.requestLocationUpdates(LocationRequest(), locationCallback, null)
+
+                    val locationResult = LocationRequest()
+                    locationResult.maxWaitTime = 10000
+                    fusedLocationProviderClient.requestLocationUpdates(locationResult, locationCallback, null)
+                        .addOnCanceledListener {
+                            println()
+                        }.addOnFailureListener {
+                            println(it.message)
+                        }
                 }
             }
         }
@@ -144,5 +174,9 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener {
 
     override fun onForecastFailure(error: String) {
         startRetryFragment()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }
