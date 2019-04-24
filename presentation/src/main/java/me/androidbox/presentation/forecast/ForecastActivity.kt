@@ -45,8 +45,8 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener {
         forecastPresenter.initialize(this)
 
         if(isLocationServicesEnabled()) {
-            getLocationFused()
             startLoadingFragment()
+            getLocationFused()
         }
         else {
             displaySettings()
@@ -60,44 +60,21 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
             PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-            PackageManager.PERMISSION_GRANTED
-        ) {
+            PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(
-                    android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION
-                ),
-                permissionRequestCode
-            )
-        } else {
-            fusedLocationProviderClient.lastLocation.addOnFailureListener(this) {
-                println(it.message)
-            }.addOnCanceledListener(this) {
-                println("Cancelled")
-            }.addOnSuccessListener(this) { location ->
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION),
+                permissionRequestCode)
+        }
+        else {
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener(this) { location ->
                 if (location != null) {
                     forecastPresenter.requestWeatherForecast(location.latitude, location.longitude)
-                } else {
-                    val locationCallback = object : LocationCallback() {
-                        override fun onLocationResult(locationResult: LocationResult) {
-                            forecastPresenter.requestWeatherForecast(
-                                locationResult.lastLocation.latitude,
-                                locationResult.lastLocation.longitude
-                            )
-                            fusedLocationProviderClient.removeLocationUpdates(this)
-                        }
-                    }
-
-                    val locationResult = LocationRequest()
-                    locationResult.maxWaitTime = 10000
-                    fusedLocationProviderClient.requestLocationUpdates(locationResult, locationCallback, null)
-                        .addOnCanceledListener {
-                            println()
-                        }.addOnFailureListener {
-                            println(it.message)
-                        }
+                }
+                else {
+                    Toast.makeText(this, "There are no location coordinates, try opening google maps and trying again", Toast.LENGTH_SHORT).show()
+                    startRetryFragment()
                 }
             }
         }
@@ -163,8 +140,8 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener {
 
     override fun onRetry() {
         if(isLocationServicesEnabled()) {
-            getLocationFused()
             startLoadingFragment()
+            getLocationFused()
         }
         else {
             displaySettings()
@@ -174,9 +151,5 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener {
 
     override fun onForecastFailure(error: String) {
         startRetryFragment()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }
