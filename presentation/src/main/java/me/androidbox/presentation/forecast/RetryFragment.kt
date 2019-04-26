@@ -27,7 +27,6 @@ class RetryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         btnRetry.setOnClickListener {
             activity?.onRetry()
-            // startActivity(Intent(activity, ForecastActivity::class.java))
         }
     }
 }
