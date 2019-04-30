@@ -36,3 +36,4 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
         return DayModel(day.averageTemperatureInCelsius)
     }
 }
+

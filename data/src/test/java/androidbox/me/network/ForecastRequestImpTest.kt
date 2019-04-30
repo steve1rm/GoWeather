@@ -93,7 +93,7 @@ class ForecastRequestImpTest {
 
         val baseUrl = mockWebServer.url("json/fivedayforecast.json")
         val requestBody = sendRequest(OkHttpClient(), baseUrl)
-        assertThat(requestBody).isEqualToIgnoringCase("testing the sending the body response")
+        assertThat(requestBody).isEqualToIgnoringCase(getJson("json/fivedayforecast.json"))
     }
 
     private fun sendRequest(okHttpClient: OkHttpClient, base: HttpUrl): String {
@@ -118,8 +118,8 @@ class ForecastRequestImpTest {
 
     private fun createForecastModel(): ForecastRequestModel {
         return forecastModel {
-            latitude = 34.858585F
-            longitude = 58.345345F
+            latitude = 34.858585
+            longitude = 58.345345
             days = 5
         }
     }
