@@ -23,16 +23,17 @@ class WeatherForecastInteractorImpTest {
 
     @Test
     fun `should request weather forecast`() {
-        whenever(weatherForecast.requestWeatherForecast(ForecastRequestModel(0F, 0F, 1)))
-            .thenReturn(Single.just(WeatherForecastModel(LocationModel("", "", ""), CurrentModel(0F), ForecastModel(
-                ForecastDayModel(emptyList())
-            ))))
+        whenever(weatherForecast.requestWeatherForecast(ForecastRequestModel(0.0, 0.0, 1)))
+            .thenReturn(Single.just(WeatherForecastModel(
+                LocationModel("", "", ""),
+                CurrentModel(0),
+                ForecastModel(emptyList()))))
 
-        weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(0F, 0F, 1))
+        weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(0.0, 0.0, 1))
             .test()
             .assertValueCount(1)
             .assertNoErrors()
 
-        verify(weatherForecast).requestWeatherForecast(ForecastRequestModel(0F, 0F, 1))
+        verify(weatherForecast).requestWeatherForecast(ForecastRequestModel(0.0, 0.0, 1))
     }
 }
