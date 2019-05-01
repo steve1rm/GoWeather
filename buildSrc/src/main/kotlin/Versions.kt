@@ -26,7 +26,7 @@ object Versions {
     const val jUnitVersion = "4.12"
     const val assertJVersion = "3.11.1"
     const val mockitoKotlinVersion = "1.6.0"
-    const val robolectricVersion = "3.4.2"
+    const val robolectricVersion = "4.2"
     const val mockitoVersion = "1.9.5"
     const val runnerVersion = "1.1.1"
     const val espressoCoreVersion = "3.1.1"

@@ -33,4 +33,5 @@ object TestLibraries {
     const val runner = "androidx.test:runner:${Versions.runnerVersion}"
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCoreVersion}"
     const val mockWebServer = "com.squareup.okhttp3:mockwebserver:${Versions.mockWebServerVersion}"
+    const val robolectric = "org.robolectric:robolectric:${Versions.robolectricVersion}"
 }

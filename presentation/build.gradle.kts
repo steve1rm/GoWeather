@@ -24,6 +24,8 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    testOptions.unitTests.isIncludeAndroidResources = true
 }
 
 dependencies {
@@ -53,6 +55,7 @@ dependencies {
     testImplementation(TestLibraries.junit)
     testImplementation(TestLibraries.espressoCore)
     testImplementation(TestLibraries.runner)
+    testImplementation(TestLibraries.robolectric)
 
     implementation(project(":domain"))
     implementation(project(":data"))

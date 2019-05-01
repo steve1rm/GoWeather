@@ -34,8 +34,7 @@ class ForecastPresenterImp(private val weatherForecastInteractor: WeatherForecas
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 ::onWeatherForecastSuccess,
-                ::onWeatherForecastFailure
-            ))
+                ::onWeatherForecastFailure))
     }
 
     private fun onWeatherForecastSuccess(weatherForecastModel: WeatherForecastModel) {

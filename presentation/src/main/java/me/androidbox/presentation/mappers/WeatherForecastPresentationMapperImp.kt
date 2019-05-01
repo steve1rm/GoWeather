@@ -25,7 +25,7 @@ class WeatherForecastPresentationMapperImp : WeatherForecastPresentationMapper {
         forecast.forecastDay.forEach {
             forecastDayList.add(
                 ForecastDay(
-                it.date,
+                    it.date,
                     it.dateEpoch,
                     mapToForecastDay(it.day)))
         }
