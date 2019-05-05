@@ -6,7 +6,10 @@ plugins {
 }
 
 android {
-   compileSdkVersion(Versions.compileSdkVersion)
+    compileSdkVersion(Versions.compileSdkVersion)
+    defaultConfig {
+        minSdkVersion(Versions.minSdkVersion)
+    }
 }
 
 dependencies {
@@ -22,8 +25,6 @@ dependencies {
     implementation(Libraries.rxjava)
     implementation(Libraries.rxkotlin)
     implementation(Libraries.adapterRxjava2)
-    implementation(Libraries.okhttp)
-    implementation(Libraries.loggingInterceptor)
 
     implementation("com.google.android.gms:play-services-location:16.0.0")
 

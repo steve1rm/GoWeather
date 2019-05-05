@@ -31,4 +31,8 @@ object Versions {
     const val runnerVersion = "1.1.1"
     const val espressoCoreVersion = "3.1.1"
     const val mockWebServerVersion = "3.14.0"
+    const val androidxJunitVersion = "1.0.0"
+    const val androidxTruth = "1.0.0"
+    const val androidxCore = "1.1.0"
+    const val androidxRules = "1.1.0"
 }

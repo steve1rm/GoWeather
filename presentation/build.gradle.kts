@@ -53,9 +53,33 @@ dependencies {
 
     testImplementation(TestLibraries.assertJ)
     testImplementation(TestLibraries.junit)
-    testImplementation(TestLibraries.espressoCore)
     testImplementation(TestLibraries.runner)
     testImplementation(TestLibraries.robolectric)
+    testImplementation(TestLibraries.androidxJunit)
+    testImplementation(TestLibraries.androidxTruth)
+    implementation(TestLibraries.androidxCore)
+    testImplementation(TestLibraries.mockitoKotlin)
+    testImplementation(Libraries.daggerAndroid)
+    testImplementation(Libraries.daggerSupport)
+    testImplementation(Libraries.kotlinStdlib)
+
+    kaptTest(Libraries.daggerCompiler)
+    kaptTest(Libraries.daggerProcessor)
+
+    androidTestImplementation(TestLibraries.espressoCore)
+    androidTestImplementation(TestLibraries.androidxTruth)
+    androidTestImplementation(TestLibraries.androidxJunit)
+    androidTestImplementation(TestLibraries.runner)
+    androidTestImplementation(TestLibraries.androidxRules)
+    androidTestImplementation(TestLibraries.mockWebServer, {
+        exclude("com.squareup.okhttp3", "okhttp")
+    })
+
+    androidTestImplementation(Libraries.daggerAndroid)
+    androidTestImplementation(Libraries.daggerSupport)
+
+    kaptAndroidTest(Libraries.daggerCompiler)
+    kaptAndroidTest(Libraries.daggerProcessor)
 
     implementation(project(":domain"))
     implementation(project(":data"))

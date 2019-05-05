@@ -34,4 +34,8 @@ object TestLibraries {
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCoreVersion}"
     const val mockWebServer = "com.squareup.okhttp3:mockwebserver:${Versions.mockWebServerVersion}"
     const val robolectric = "org.robolectric:robolectric:${Versions.robolectricVersion}"
+    const val androidxJunit = "androidx.test.ext:junit:${Versions.androidxJunitVersion}"
+    const val androidxTruth = "androidx.test.ext:truth:${Versions.androidxTruth}"
+    const val androidxCore = "androidx.test:core:${Versions.androidxCore}"
+    const val androidxRules = "androidx.test:rules:${Versions.androidxRules}"
 }
