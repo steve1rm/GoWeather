@@ -37,15 +37,15 @@ class TestNetworkModule {
             .build()
     }
 
-    @Named("BaseUrl")
+    @Named("TestBaseUrl")
     @Reusable
     @Provides
-    fun provideBaseUrl(): String =
-        "this is the mockwebserver url"
+    fun provideBaseUrlTest(): String =
+        "http://localhost:8080/"
 
   @Reusable
     @Provides
-    fun provideRetrofit(@Named("BaseUrl") baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(@Named("TestBaseUrl") baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)

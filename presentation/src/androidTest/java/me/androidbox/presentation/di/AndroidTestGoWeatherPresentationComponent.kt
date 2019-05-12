@@ -6,6 +6,6 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [TestNetworkModule::class])
-interface AndroidTestGoWeatherPresentationComponent {
+interface AndroidTestGoWeatherPresentationComponent : GoWeatherComponent {
     fun inject(forecastActivityAndroidTest: ForecastActivityAndroidTest)
 }

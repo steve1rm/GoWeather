@@ -52,7 +52,6 @@ class ForecastRequestImpTest {
         assertThat(forecastRequest).isNotNull
     }
 
-
     @Test
     fun `should request a 5 day forecast`() {
         whenever(weatherForecastService.forecast(apiKey, "34.858585,58.345345", 5))
