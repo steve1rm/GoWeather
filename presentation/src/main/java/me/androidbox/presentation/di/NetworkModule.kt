@@ -62,6 +62,8 @@ class NetworkModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
+
+
 }
 
 /* http://localhost:57198/ */

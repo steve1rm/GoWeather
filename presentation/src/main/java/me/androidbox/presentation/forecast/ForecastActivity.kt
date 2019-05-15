@@ -20,7 +20,7 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
     lateinit var forecastPresenter: ForecastPresenter
 
     @Inject
-    lateinit var locationUtils: LocationUtils
+    lateinit var location: LocationUtils
 
     private var fragmentManager: FragmentManager? = null
 
@@ -32,10 +32,10 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
         fragmentManager = supportFragmentManager
         forecastPresenter.initialize(this)
 
-        locationUtils.setLocationListener(this)
-        if(locationUtils.isLocationServicesEnabled(this)) {
+        location.setLocationListener(this)
+        if(location.isLocationServicesEnabled(this)) {
             startLoadingFragment()
-            locationUtils.getLocationCoordinates(this)
+            location.getLocationCoordinates(this)
         }
         else {
             displayLocationSettings()
@@ -45,7 +45,7 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        locationUtils.requestPermissionResults(this, requestCode, permissions, grantResults)
+        location.requestPermissionResults(this, requestCode, permissions, grantResults)
     }
 
     private fun displayLocationSettings() {
@@ -86,9 +86,9 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
     }
 
     override fun onRetry() {
-        if(locationUtils.isLocationServicesEnabled(this)) {
+        if(location.isLocationServicesEnabled(this)) {
             startLoadingFragment()
-            locationUtils.getLocationCoordinates(this)
+            location.getLocationCoordinates(this)
         }
         else {
             displayLocationSettings()
@@ -106,7 +106,7 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
     }
 
     override fun onDestroy() {
-        locationUtils.removeLocationListener()
+        location.removeLocationListener()
         super.onDestroy()
     }
 }

@@ -23,14 +23,17 @@ class GoWeatherApplication : Application(), HasActivityInjector, HasSupportFragm
     @Inject
     lateinit var dispatchingAndroidServiceInjector: DispatchingAndroidInjector<Service>
 
+    lateinit var component: GoWeatherComponent
+
     override fun onCreate() {
         super.onCreate()
 
-        DaggerGoWeatherComponent
+        component =DaggerGoWeatherComponent
             .builder()
             .application(this)
             .build()
-            .inject(this)
+
+            component.inject(this)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

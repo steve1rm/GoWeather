@@ -1,13 +1,21 @@
 package me.androidbox.presentation.forecast
 
+import android.app.Activity
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import com.nhaarman.mockito_kotlin.mock
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.DispatchingAndroidInjector_Factory
 import me.androidbox.presentation.R
-import me.androidbox.presentation.di.DaggerAndroidTestGoWeatherPresentationComponent
+import me.androidbox.presentation.common.LocationUtils
+import me.androidbox.presentation.common.LocationUtilsImp
+import me.androidbox.presentation.di.GoWeatherApplication
 import okhttp3.HttpUrl
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -20,15 +28,18 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.nio.charset.Charset
 import javax.inject.Inject
 import javax.inject.Named
+import javax.inject.Provider
 
 @RunWith(AndroidJUnit4::class)
 class ForecastActivityAndroidTest {
 
-    @field:[Inject Named("BaseUrl")]
+    @field:[Inject Named("TestBaseUrl")]
     lateinit var baseUrl: String
+
+   // @Inject
+    val locationUtils: LocationUtils = LocationUtilsImp()
 
     @get:Rule
     val activityRule = ActivityTestRule(ForecastActivity::class.java, false, false)
@@ -37,12 +48,22 @@ class ForecastActivityAndroidTest {
 
     @Before
     fun setUp() {
-        DaggerAndroidTestGoWeatherPresentationComponent
-            .builder()
-            .build()
-            .inject(this)
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val testApplication = instrumentation.targetContext.applicationContext as GoWeatherApplication
 
-        mockWebServer.start()
+        testApplication.dispatchingAndroidActivityInjector = createFakeMainActivityInjector {
+            location = locationUtils
+        }
+
+       /* val testComponent = DaggerAndroidTestGoWeatherPresentationComponent
+            .builder()
+            .testNetworkModule(TestNetworkModule())
+            .build()
+
+        testApplication.component = testComponent
+        testComponent.inject(this)
+*/
+        mockWebServer.start(8080)
     }
 
     @After
@@ -84,5 +105,21 @@ class ForecastActivityAndroidTest {
         } ?: run {
             return ""
         }
+    }
+
+    fun createFakeMainActivityInjector(block : ForecastActivity.() -> Unit)
+            : DispatchingAndroidInjector<Activity> {
+        val injector = AndroidInjector<Activity> { instance ->
+            if (instance is ForecastActivity) {
+                instance.block()
+            }
+        }
+        val factory = AndroidInjector.Factory<Activity> { injector }
+        val map = mapOf(Pair<Class <*>,
+                Provider<AndroidInjector.Factory<*>>>(ForecastActivity::class.java, Provider { factory }))
+
+        val stringMap : Map<String, Provider<AndroidInjector.Factory<*>>> = emptyMap()
+
+        return DispatchingAndroidInjector_Factory.newDispatchingAndroidInjector(map, stringMap)
     }
 }
