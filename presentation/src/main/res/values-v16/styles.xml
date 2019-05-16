@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="retry_button_style">
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingLeft">26dp</item>
+        <item name="android:paddingRight">26dp</item>
+        <item name="android:background">@color/colorBackgroundRetry</item>
+        <item name="android:textColor">@color/colorFailureMessage</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+</resources>
