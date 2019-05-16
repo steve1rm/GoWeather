@@ -1,6 +1,6 @@
 package me.androidbox.interactors.di
 
-import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockitokotlin2.mock
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable

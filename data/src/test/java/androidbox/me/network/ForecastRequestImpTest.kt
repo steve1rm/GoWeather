@@ -1,13 +1,16 @@
 package androidbox.me.network
 
-import androidbox.me.entities.*
+import androidbox.me.entities.CurrrentEntity
+import androidbox.me.entities.ForecastEntity
+import androidbox.me.entities.LocationEntity
+import androidbox.me.entities.WeatherForecastEntity
 import androidbox.me.mappers.ForecastRequestDomainMapper
 import androidbox.me.mappers.ForecastRequestEntityMapper
 import androidbox.me.network.di.DaggerTestDataComponent
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import me.androidbox.interactors.WeatherForecast
 import me.androidbox.models.ForecastRequestModel
