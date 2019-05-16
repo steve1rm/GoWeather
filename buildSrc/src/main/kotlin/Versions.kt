@@ -25,9 +25,9 @@ object Versions {
     /** Testing */
     const val jUnitVersion = "4.12"
     const val assertJVersion = "3.11.1"
-    const val mockitoKotlinVersion = "1.6.0"
+    const val mockitoKotlinVersion = "2.1.0"
     const val robolectricVersion = "4.2"
-    const val mockitoVersion = "1.9.5"
+    const val mockitoAndroidVersion = "2.27.0"
     const val runnerVersion = "1.1.1"
     const val espressoCoreVersion = "3.1.1"
     const val mockWebServerVersion = "3.14.0"

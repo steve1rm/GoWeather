@@ -83,6 +83,7 @@ dependencies {
     androidTestImplementation(Libraries.daggerAndroid)
     androidTestImplementation(Libraries.daggerSupport)
     androidTestImplementation(TestLibraries.mockitoKotlin)
+    androidTestImplementation(TestLibraries.mockitoAndroid)
 
     kaptAndroidTest(Libraries.daggerCompiler)
     kaptAndroidTest(Libraries.daggerProcessor)

@@ -8,14 +8,14 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import com.nhaarman.mockito_kotlin.mock
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.DispatchingAndroidInjector_Factory
 import me.androidbox.presentation.R
 import me.androidbox.presentation.common.LocationUtils
-import me.androidbox.presentation.common.LocationUtilsImp
+import me.androidbox.presentation.di.DaggerAndroidTestGoWeatherPresentationComponent
 import me.androidbox.presentation.di.GoWeatherApplication
+import me.androidbox.presentation.di.TestNetworkModule
 import okhttp3.HttpUrl
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -38,8 +38,8 @@ class ForecastActivityAndroidTest {
     @field:[Inject Named("TestBaseUrl")]
     lateinit var baseUrl: String
 
-   // @Inject
-    val locationUtils: LocationUtils = LocationUtilsImp()
+    @Inject
+    lateinit var locationUtils: LocationUtils
 
     @get:Rule
     val activityRule = ActivityTestRule(ForecastActivity::class.java, false, false)
@@ -48,6 +48,12 @@ class ForecastActivityAndroidTest {
 
     @Before
     fun setUp() {
+        DaggerAndroidTestGoWeatherPresentationComponent
+            .builder()
+            .testNetworkModule(TestNetworkModule())
+            .build()
+            .inject(this)
+
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val testApplication = instrumentation.targetContext.applicationContext as GoWeatherApplication
 
