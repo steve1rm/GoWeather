@@ -56,9 +56,9 @@ class TestNetworkModule {
             .build()
     }
 
-    @Reusable
+   /* @Reusable
     @Provides
     fun provideLocationUtils(): LocationUtils {
         return mock()
-    }
+    }*/
 }

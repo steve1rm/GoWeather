@@ -41,6 +41,9 @@ class ForecastActivityAndroidTest {
     @Inject
     lateinit var locationUtils: LocationUtils
 
+    @Inject
+    lateinit var presenter: ForecastPresenter
+
     @get:Rule
     val activityRule = ActivityTestRule(ForecastActivity::class.java, false, false)
 
@@ -59,6 +62,7 @@ class ForecastActivityAndroidTest {
 
         testApplication.dispatchingAndroidActivityInjector = createFakeMainActivityInjector {
             location = locationUtils
+            forecastPresenter = presenter
         }
 
        /* val testComponent = DaggerAndroidTestGoWeatherPresentationComponent

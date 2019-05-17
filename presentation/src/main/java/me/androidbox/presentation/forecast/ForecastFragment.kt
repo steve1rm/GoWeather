@@ -39,7 +39,7 @@ class ForecastFragment : Fragment() {
         startSlideUpAnimation()
     }
 
-     private fun displayWeather(weatherForecast: WeatherForecast) {
+    private fun displayWeather(weatherForecast: WeatherForecast) {
         println("displayWeather ${weatherForecast.forecast.forecastDay[0].day.averageTemperatureInCelsius}")
         tvLocationName.text = weatherForecast.location.name
         val temperatureWithDegrees = "${weatherForecast.current.temperatureInCelsius}\u00B0"
@@ -52,6 +52,7 @@ class ForecastFragment : Fragment() {
         rvDailyForecast.addItemDecoration(DividerItemDecoration(activity, RecyclerView.VERTICAL))
     }
 
+    /* wait for the screen to fully render before applying the animation */
     private fun startSlideUpAnimation() {
         weather_forecast.post {
             val constraintSet1 = ConstraintSet()
