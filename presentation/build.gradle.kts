@@ -15,7 +15,8 @@ android {
         versionCode = Versions.versionCode
         versionName = Versions.versionName
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+       // testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "me.androidbox.presentation.di.GoWeatherTestRunner"
     }
 
     buildTypes {

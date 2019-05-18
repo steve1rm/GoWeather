@@ -13,9 +13,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.DispatchingAndroidInjector_Factory
 import me.androidbox.presentation.R
 import me.androidbox.presentation.common.LocationUtils
-import me.androidbox.presentation.di.DaggerAndroidTestGoWeatherPresentationComponent
-import me.androidbox.presentation.di.GoWeatherApplication
-import me.androidbox.presentation.di.TestNetworkModule
+import me.androidbox.presentation.di.*
 import okhttp3.HttpUrl
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -51,20 +49,29 @@ class ForecastActivityAndroidTest {
 
     @Before
     fun setUp() {
+        val instrumentation = InstrumentationRegistry.getInstrumentation()
+        val testApplication = instrumentation.targetContext.applicationContext as AndroidTestGoWeatherApplication
+
+        DaggerAndroidTestGoWeatherPresentationComponent
+            .builder()
+            .applicationModule(TestGoWeatherApplicationModule())
+            .create(testApplication)
+            .inject(testApplication)
+
+/*
         DaggerAndroidTestGoWeatherPresentationComponent
             .builder()
             .testNetworkModule(TestNetworkModule())
             .build()
             .inject(this)
+*/
 
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val testApplication = instrumentation.targetContext.applicationContext as GoWeatherApplication
 
-        testApplication.dispatchingAndroidActivityInjector = createFakeMainActivityInjector {
+    /*    testApplication.dispatchingAndroidActivityInjector = createFakeMainActivityInjector {
             location = locationUtils
             forecastPresenter = presenter
         }
-
+*/
        /* val testComponent = DaggerAndroidTestGoWeatherPresentationComponent
             .builder()
             .testNetworkModule(TestNetworkModule())
@@ -117,7 +124,7 @@ class ForecastActivityAndroidTest {
         }
     }
 
-    fun createFakeMainActivityInjector(block : ForecastActivity.() -> Unit)
+    private fun createFakeMainActivityInjector(block : ForecastActivity.() -> Unit)
             : DispatchingAndroidInjector<Activity> {
         val injector = AndroidInjector<Activity> { instance ->
             if (instance is ForecastActivity) {

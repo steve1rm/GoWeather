@@ -9,7 +9,14 @@ import me.androidbox.presentation.forecast.ForecastActivity
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidSupportInjectionModule::class, ActivityBuilder::class, ActivityModule::class, NetworkModule::class, NetworkDataServiceModule::class, MapperModule::class, GoWeatherApplicationModule::class])
+@Component(modules = [
+    AndroidSupportInjectionModule::class,
+    ActivityBuilder::class,
+    ActivityModule::class,
+    NetworkModule::class,
+    NetworkDataServiceModule::class,
+    MapperModule::class,
+    GoWeatherApplicationModule::class])
 interface GoWeatherComponent {
     @Component.Builder
     interface Builder {

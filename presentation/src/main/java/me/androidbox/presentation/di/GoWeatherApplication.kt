@@ -12,7 +12,7 @@ import dagger.android.support.HasSupportFragmentInjector
 import me.androidbox.presentation.forecast.ForecastActivity
 import javax.inject.Inject
 
-class GoWeatherApplication : Application(), HasActivityInjector, HasSupportFragmentInjector, HasServiceInjector {
+open class GoWeatherApplication : Application(), HasActivityInjector, HasSupportFragmentInjector, HasServiceInjector {
 
     @Inject
     lateinit var dispatchingAndroidActivityInjector: DispatchingAndroidInjector<Activity>
@@ -28,7 +28,7 @@ class GoWeatherApplication : Application(), HasActivityInjector, HasSupportFragm
     override fun onCreate() {
         super.onCreate()
 
-        component =DaggerGoWeatherComponent
+        component = DaggerGoWeatherComponent
             .builder()
             .application(this)
             .build()

@@ -1,11 +1,9 @@
 package me.androidbox.presentation.di
 
-import com.nhaarman.mockitokotlin2.mock
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import me.androidbox.presentation.BuildConfig
-import me.androidbox.presentation.common.LocationUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
