@@ -45,12 +45,13 @@ class ForecastActivityAndroidTest {
     @get:Rule
     val activityRule = ActivityTestRule(ForecastActivity::class.java, false, false)
 
-    private val mockWebServer = MockWebServer()
+    private val mockWebServer by lazy { MockWebServer() }
 
     @Before
     fun setUp() {
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val testApplication = instrumentation.targetContext.applicationContext as AndroidTestGoWeatherApplication
+        val testApplication =
+            InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
+                    as AndroidTestGoWeatherApplication
 
         DaggerAndroidTestGoWeatherPresentationComponent
             .builder()
@@ -58,28 +59,6 @@ class ForecastActivityAndroidTest {
             .create(testApplication)
             .inject(testApplication)
 
-/*
-        DaggerAndroidTestGoWeatherPresentationComponent
-            .builder()
-            .testNetworkModule(TestNetworkModule())
-            .build()
-            .inject(this)
-*/
-
-
-    /*    testApplication.dispatchingAndroidActivityInjector = createFakeMainActivityInjector {
-            location = locationUtils
-            forecastPresenter = presenter
-        }
-*/
-       /* val testComponent = DaggerAndroidTestGoWeatherPresentationComponent
-            .builder()
-            .testNetworkModule(TestNetworkModule())
-            .build()
-
-        testApplication.component = testComponent
-        testComponent.inject(this)
-*/
         mockWebServer.start(8080)
     }
 
