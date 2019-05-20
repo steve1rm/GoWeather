@@ -18,7 +18,7 @@ class ForecastRequestImp(private val weatherForecastService: WeatherForecastServ
         val query = buildLocationQuery(forecastRequestEntity.latitude, forecastRequestEntity.longitude)
 
         return weatherForecastService.forecast(apiKey, query, forecastRequestEntity.days)
-            .timeout(10000, TimeUnit.MILLISECONDS)
+            .timeout(10, TimeUnit.SECONDS)
             .map {
                 forecastRequestDomainMapper.map(it)
             }

@@ -8,6 +8,7 @@ import me.androidbox.models.ForecastRequestModel
 import me.androidbox.models.WeatherForecastModel
 import me.androidbox.presentation.common.BasePresenterImp
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
+import java.util.concurrent.TimeUnit
 
 class ForecastPresenterImp(private val weatherForecastInteractor: WeatherForecastInteractor,
                            private val weatherForecastPresentationMapper: WeatherForecastPresentationMapper)

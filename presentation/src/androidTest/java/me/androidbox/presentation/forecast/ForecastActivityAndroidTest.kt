@@ -27,6 +27,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Provider
@@ -66,6 +67,48 @@ class ForecastActivityAndroidTest {
     fun appLaunchedSuccessfully() {
         loadFromResources("json/fivedayforecast.json")
         mockWebServerRule.mockWebServer.enqueue(MockResponse().setBody(loadFromResources("json/fivedayforecast.json")))
+
+        ActivityScenario.launch(ForecastActivity::class.java)
+
+        onView(withText(R.string.app_name))
+            .check(matches(isDisplayed()))
+
+        onView(allOf(withId(R.id.action_bar), hasDescendant(withText("GoWeather"))))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun `return_404_error_response`() {
+        mockWebServerRule.mockWebServer.enqueue(MockResponse().setResponseCode(404))
+
+        ActivityScenario.launch(ForecastActivity::class.java)
+
+        onView(withText(R.string.app_name))
+            .check(matches(isDisplayed()))
+
+        onView(allOf(withId(R.id.action_bar), hasDescendant(withText("GoWeather"))))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun return_malformed_json_response() {
+        mockWebServerRule.mockWebServer.enqueue(MockResponse().setBody("malformed json response"))
+
+        ActivityScenario.launch(ForecastActivity::class.java)
+
+        onView(withText(R.string.app_name))
+            .check(matches(isDisplayed()))
+
+        onView(allOf(withId(R.id.action_bar), hasDescendant(withText("GoWeather"))))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun displayRetryFragment_when_timeoutOccurs() {
+        loadFromResources("json/fivedayforecast.json")
+        mockWebServerRule.mockWebServer.enqueue(MockResponse()
+            .setBody(loadFromResources("json/fivedayforecast.json"))
+            .throttleBody(1, 5, TimeUnit.SECONDS))
 
         ActivityScenario.launch(ForecastActivity::class.java)
 
