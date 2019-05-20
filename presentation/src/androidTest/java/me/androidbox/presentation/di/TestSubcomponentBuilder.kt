@@ -6,10 +6,10 @@ import me.androidbox.presentation.forecast.ForecastFragment
 import me.androidbox.presentation.forecast.ForecastActivity
 
 @Module
-abstract class TestActivityBuilder {
-    @ContributesAndroidInjector
-    abstract fun injectIntoHomeActivity(): ForecastActivity
+abstract class TestSubComponentBuilder {
+    @ContributesAndroidInjector(modules = [TestActivityModule::class])
+    abstract fun injectIntoForecastActivity(): ForecastActivity
 
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     abstract fun injectIntoForecastFragment(): ForecastFragment
 }

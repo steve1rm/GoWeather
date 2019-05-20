@@ -53,10 +53,4 @@ class TestNetworkModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
-
-   /* @Reusable
-    @Provides
-    fun provideLocationUtils(): LocationUtils {
-        return mock()
-    }*/
 }
