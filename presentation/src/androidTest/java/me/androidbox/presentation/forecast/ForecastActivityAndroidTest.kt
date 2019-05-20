@@ -13,15 +13,16 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.DispatchingAndroidInjector_Factory
 import me.androidbox.presentation.R
 import me.androidbox.presentation.common.LocationUtils
-import me.androidbox.presentation.di.*
+import me.androidbox.presentation.di.AndroidTestGoWeatherApplication
+import me.androidbox.presentation.di.DaggerAndroidTestGoWeatherPresentationComponent
+import me.androidbox.presentation.di.TestGoWeatherApplicationModule
+import me.androidbox.presentation.rules.MockWebServerRule
 import okhttp3.HttpUrl
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.CoreMatchers.allOf
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -45,7 +46,8 @@ class ForecastActivityAndroidTest {
     @get:Rule
     val activityRule = ActivityTestRule(ForecastActivity::class.java, false, false)
 
-    private val mockWebServer by lazy { MockWebServer() }
+    @get:Rule
+    val mockWebServerRule = MockWebServerRule()
 
     @Before
     fun setUp() {
@@ -58,19 +60,12 @@ class ForecastActivityAndroidTest {
             .applicationModule(TestGoWeatherApplicationModule())
             .create(testApplication)
             .inject(testApplication)
-
-        mockWebServer.start(8080)
-    }
-
-    @After
-    fun tearDown() {
-        mockWebServer.shutdown()
     }
 
     @Test
     fun appLaunchedSuccessfully() {
         loadFromResources("json/fivedayforecast.json")
-        mockWebServer.enqueue(MockResponse().setBody(loadFromResources("json/fivedayforecast.json")))
+        mockWebServerRule.mockWebServer.enqueue(MockResponse().setBody(loadFromResources("json/fivedayforecast.json")))
 
         ActivityScenario.launch(ForecastActivity::class.java)
 
