@@ -39,4 +39,5 @@ object TestLibraries {
     const val androidxTruth = "androidx.test.ext:truth:${Versions.androidxTruth}"
     const val androidxCore = "androidx.test:core:${Versions.androidxCore}"
     const val androidxRules = "androidx.test:rules:${Versions.androidxRules}"
+    const val espressoContrib = "com.android.support.test.espresso:espresso-contrib:${Versions.espressoContribVersion}"
 }

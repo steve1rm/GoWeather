@@ -30,6 +30,7 @@ object Versions {
     const val mockitoAndroidVersion = "2.27.0"
     const val runnerVersion = "1.1.1"
     const val espressoCoreVersion = "3.1.1"
+    const val espressoContribVersion = "2.0.0"
     const val mockWebServerVersion = "3.14.0"
     const val androidxJunitVersion = "1.0.0"
     const val androidxTruth = "1.0.0"

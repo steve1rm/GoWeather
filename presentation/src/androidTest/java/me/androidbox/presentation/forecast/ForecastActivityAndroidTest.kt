@@ -1,9 +1,12 @@
 package me.androidbox.presentation.forecast
 
 import android.app.Activity
+import android.view.View
 import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -23,6 +26,7 @@ import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.mockwebserver.MockResponse
 import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.startsWith
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -64,17 +68,29 @@ class ForecastActivityAndroidTest {
     }
 
     @Test
-    fun appLaunchedSuccessfully() {
+    fun should_load_five_day_forecast() {
         loadFromResources("json/fivedayforecast.json")
         mockWebServerRule.mockWebServer.enqueue(MockResponse().setBody(loadFromResources("json/fivedayforecast.json")))
 
         ActivityScenario.launch(ForecastActivity::class.java)
 
-        onView(withText(R.string.app_name))
+        /* Display Title of app in the toolbar */
+        onView((withId(R.id.action_bar)))
+            .check(matches(allOf(hasDescendant(withText(R.string.app_name)), isDisplayed())))
+
+        /* Displays the current temperature */
+        onView(withId(R.id.tvTemperatureDegrees))
+            .check(matches(allOf(withText(startsWith("36")), isDisplayed())))
+
+        /* Displays the current location */
+        onView(withId(R.id.tvLocationName))
+            .check(matches(allOf(withText("Bangkok"), isDisplayed())))
+
+        /* Display the 4 day forecast */
+        onView(withId(R.id.rvDailyForecast))
             .check(matches(isDisplayed()))
 
-        onView(allOf(withId(R.id.action_bar), hasDescendant(withText("GoWeather"))))
-            .check(matches(isDisplayed()))
+        
     }
 
     @Test

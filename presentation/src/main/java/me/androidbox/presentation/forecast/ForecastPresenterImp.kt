@@ -30,7 +30,7 @@ class ForecastPresenterImp(private val weatherForecastInteractor: WeatherForecas
     }
 
     override fun requestWeatherForecast(latitude: Double, longitude: Double) {
-        compositableDisposable.add(weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, 5))
+        compositableDisposable.add(weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, 4))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
