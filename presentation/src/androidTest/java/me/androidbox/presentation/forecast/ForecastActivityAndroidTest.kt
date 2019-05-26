@@ -77,13 +77,14 @@ class ForecastActivityAndroidTest {
 
         ActivityScenario.launch(ForecastActivity::class.java)
 
-        Thread.sleep(2000)
-
         /* should display Title of app in the toolbar */
         onView((withId(R.id.action_bar)))
             .check(matches(allOf(hasDescendant(withText(R.string.app_name)), isDisplayed())))
 
         /* should display the initial loading screen */
+        onView(withId(R.id.ivProgress)).check(matches(isDisplayed()))
+
+        Thread.sleep(1000)
 
         /* should display the current temperature */
         onView(withId(R.id.tvTemperatureDegrees))
