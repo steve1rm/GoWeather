@@ -33,7 +33,8 @@ object Versions {
     const val espressoContribVersion = "2.0.0"
     const val mockWebServerVersion = "3.14.0"
     const val androidxJunitVersion = "1.0.0"
-    const val androidxTruth = "1.0.0"
-    const val androidxCore = "1.1.0"
-    const val androidxRules = "1.1.0"
+    const val androidxTruthVersion = "1.0.0"
+    const val androidxCoreVersion = "1.1.0"
+    const val androidxRulesVersion = "1.1.0"
+    const val okhttp3IdlingResourceVersion = "1.0.0"
 }

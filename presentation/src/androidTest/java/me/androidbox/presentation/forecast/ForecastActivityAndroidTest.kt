@@ -1,13 +1,11 @@
 package me.androidbox.presentation.forecast
 
 import android.app.Activity
-import android.view.View
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.Visibility.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
@@ -19,7 +17,9 @@ import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.di.AndroidTestGoWeatherApplication
 import me.androidbox.presentation.di.DaggerAndroidTestGoWeatherPresentationComponent
 import me.androidbox.presentation.di.TestGoWeatherApplicationModule
+import me.androidbox.presentation.di.TestNetworkModule
 import me.androidbox.presentation.rules.MockWebServerRule
+import me.androidbox.presentation.viewAssertions.childAtPosition
 import okhttp3.HttpUrl
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -48,6 +48,8 @@ class ForecastActivityAndroidTest {
     @Inject
     lateinit var presenter: ForecastPresenter
 
+    var okHttpClient: OkHttpClient? = null
+
     @get:Rule
     val activityRule = ActivityTestRule(ForecastActivity::class.java, false, false)
 
@@ -63,6 +65,7 @@ class ForecastActivityAndroidTest {
         DaggerAndroidTestGoWeatherPresentationComponent
             .builder()
             .applicationModule(TestGoWeatherApplicationModule())
+            .testNetworkModule(TestNetworkModule(okHttpClient))
             .create(testApplication)
             .inject(testApplication)
     }
@@ -74,23 +77,54 @@ class ForecastActivityAndroidTest {
 
         ActivityScenario.launch(ForecastActivity::class.java)
 
-        /* Display Title of app in the toolbar */
+        Thread.sleep(2000)
+
+        /* should display Title of app in the toolbar */
         onView((withId(R.id.action_bar)))
             .check(matches(allOf(hasDescendant(withText(R.string.app_name)), isDisplayed())))
 
-        /* Displays the current temperature */
+        /* should display the initial loading screen */
+
+        /* should display the current temperature */
         onView(withId(R.id.tvTemperatureDegrees))
             .check(matches(allOf(withText(startsWith("36")), isDisplayed())))
 
-        /* Displays the current location */
+        /* should display the current location */
         onView(withId(R.id.tvLocationName))
             .check(matches(allOf(withText("Bangkok"), isDisplayed())))
 
-        /* Display the 4 day forecast */
-        onView(withId(R.id.rvDailyForecast))
-            .check(matches(isDisplayed()))
+        Thread.sleep(2000)
 
-        
+        /* should display the daily forecast */
+        onView(withId(R.id.rvDailyForecast)).check(matches(isDisplayed()))
+
+        /* should display the number of forecast days */
+        onView(withId(R.id.rvDailyForecast)).check(matches(hasChildCount(5)))
+
+        /* Should display the correct day and average temperature at position 0 */
+        onView(childAtPosition(withId(R.id.rvDailyForecast), 0))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Sunday"), withEffectiveVisibility(VISIBLE)))))
+        onView(childAtPosition(withId(R.id.rvDailyForecast), 0))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvAverageTemperature), withText("33.6"), withEffectiveVisibility(VISIBLE)))))
+
+        /* Should display the correct day and average temperature at position 1 */
+        onView(childAtPosition(withId(R.id.rvDailyForecast), 1))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Monday"), withEffectiveVisibility(VISIBLE)))))
+        onView(childAtPosition(withId(R.id.rvDailyForecast), 1))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvAverageTemperature), withText("33.4"), withEffectiveVisibility(VISIBLE)))))
+
+        /* Should display the correct day and average temperature at position 2 */
+        onView(childAtPosition(withId(R.id.rvDailyForecast), 2))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Tuesday"), withEffectiveVisibility(VISIBLE)))))
+        onView(childAtPosition(withId(R.id.rvDailyForecast), 2))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvAverageTemperature), withText("34.1"), withEffectiveVisibility(VISIBLE)))))
+
+        /* Should display the correct day and average temperature at position 3 */
+        onView(childAtPosition(withId(R.id.rvDailyForecast), 3))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Wednesday"), withEffectiveVisibility(VISIBLE)))))
+        onView(childAtPosition(withId(R.id.rvDailyForecast), 3))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvAverageTemperature), withText("34.4"), withEffectiveVisibility(VISIBLE)))))
+
     }
 
     @Test
@@ -166,7 +200,7 @@ class ForecastActivityAndroidTest {
         }
         val factory = AndroidInjector.Factory<Activity> { injector }
         val map = mapOf(Pair<Class <*>,
-                Provider<AndroidInjector.Factory<*>>>(ForecastActivity::class.java, Provider { factory }))
+                Provider<AndroidInjector.Factory<*>>>(ForecastActivity::class.java, Provider { factory } ))
 
         val stringMap : Map<String, Provider<AndroidInjector.Factory<*>>> = emptyMap()
 

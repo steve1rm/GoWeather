@@ -11,13 +11,14 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
-class TestNetworkModule {
+class TestNetworkModule(private var okHttpClient: OkHttpClient?) {
 
-    @Reusable
+    @Singleton
     @Provides
-    fun httpLogginInterceptor(): HttpLoggingInterceptor {
+    fun httpLoggingInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
 
         loggingInterceptor.level = if(BuildConfig.DEBUG) {
@@ -30,28 +31,30 @@ class TestNetworkModule {
         return loggingInterceptor
     }
 
-    @Reusable
+    @Singleton
     @Provides
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        return OkHttpClient.Builder()
+    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient? {
+        okHttpClient = OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(2, TimeUnit.SECONDS)
             .readTimeout(2, TimeUnit.SECONDS)
             .build()
+
+        return okHttpClient
     }
 
     @Named("TestBaseUrl")
-    @Reusable
+    @Singleton
     @Provides
     fun provideBaseUrlTest(): String =
         "http://localhost:8080/"
 
-  @Reusable
+    @Singleton
     @Provides
-    fun provideRetrofit(@Named("TestBaseUrl") baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(@Named("TestBaseUrl") baseUrl: String, okHttpClient: OkHttpClient?): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(okHttpClient)
+            .client(okHttpClient!!)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()

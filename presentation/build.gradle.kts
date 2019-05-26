@@ -86,6 +86,7 @@ dependencies {
     androidTestImplementation(TestLibraries.mockitoKotlin)
     androidTestImplementation(TestLibraries.mockitoAndroid)
     androidTestImplementation(TestLibraries.espressoContrib)
+    androidTestImplementation(TestLibraries.okhttp3IdlingResource)
 
     kaptAndroidTest(Libraries.daggerCompiler)
     kaptAndroidTest(Libraries.daggerProcessor)

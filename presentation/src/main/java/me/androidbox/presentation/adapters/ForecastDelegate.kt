@@ -3,10 +3,6 @@ package me.androidbox.presentation.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.weather_forecast_item.view.*
-import me.androidbox.models.ForecastDayModel
-import me.androidbox.models.WeatherForecastModel
-import me.androidbox.presentation.BaseDelegate
 import me.androidbox.presentation.R
 import me.androidbox.presentation.models.ForecastDay
 import me.androidbox.presentation.viewholders.ForecastViewHolder
