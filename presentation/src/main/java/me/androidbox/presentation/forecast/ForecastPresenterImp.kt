@@ -1,17 +1,16 @@
 package me.androidbox.presentation.forecast
 
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import me.androidbox.interactors.WeatherForecastInteractor
 import me.androidbox.models.ForecastRequestModel
 import me.androidbox.models.WeatherForecastModel
 import me.androidbox.presentation.common.BasePresenterImp
+import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
-import java.util.concurrent.TimeUnit
 
 class ForecastPresenterImp(private val weatherForecastInteractor: WeatherForecastInteractor,
-                           private val weatherForecastPresentationMapper: WeatherForecastPresentationMapper)
+                           private val weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
+                           private val schedulerProvider: SchedulerProvider)
     :
     BasePresenterImp<ForecastView>(),
     ForecastPresenter {
@@ -29,10 +28,11 @@ class ForecastPresenterImp(private val weatherForecastInteractor: WeatherForecas
         compositableDisposable.clear()
     }
 
-    override fun requestWeatherForecast(latitude: Double, longitude: Double) {
-        compositableDisposable.add(weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, 4))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+    override fun requestWeatherForecast(latitude: Double, longitude: Double, days: Int) {
+        /* TODO should have mapper here */
+        compositableDisposable.add(weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, days))
+            .subscribeOn(schedulerProvider.backgroundScheduler())
+            .observeOn(schedulerProvider.uiScheduler())
             .subscribe(
                 ::onWeatherForecastSuccess,
                 ::onWeatherForecastFailure))

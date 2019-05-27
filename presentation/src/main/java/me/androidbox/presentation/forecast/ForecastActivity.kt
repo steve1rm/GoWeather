@@ -97,7 +97,7 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
     }
 
     override fun onLocationSuccess(latitude: Double, longitude: Double) {
-        forecastPresenter.requestWeatherForecast(latitude, longitude)
+        forecastPresenter.requestWeatherForecast(latitude, longitude, 4)
     }
 
     override fun onLocationFailure(message: String) {
