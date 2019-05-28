@@ -22,7 +22,7 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
     private fun mapToForecastModel(forecast: ForecastEntity): ForecastModel {
         val forecastDayList = mutableListOf<ForecastDayModel>()
 
-        forecast.forecastDay.forEach {
+        forecast.forecastDay.drop(1).forEach {
             forecastDayList.add(ForecastDayModel(
                 it.date,
                 it.dateEpoch,

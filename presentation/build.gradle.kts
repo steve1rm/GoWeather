@@ -34,6 +34,10 @@ android {
     }
 }
 
+repositories {
+    google()
+}
+
 dependencies {
     implementation(Libraries.kotlinStdlib)
     implementation(Libraries.appCompat)
@@ -54,7 +58,8 @@ dependencies {
     implementation(Libraries.paracelerApi)
     kapt(Libraries.paraceler)
     implementation(Libraries.supportTransition)
-
+    testImplementation("androidx.fragment:fragment:1.1.0-alpha09")
+    testImplementation("androidx.fragment:fragment:1.1.0-alpha09")
     implementation("com.google.android.gms:play-services-location:16.0.0")
 
     testImplementation(TestLibraries.assertJ)
@@ -68,6 +73,7 @@ dependencies {
     testImplementation(Libraries.daggerAndroid)
     testImplementation(Libraries.daggerSupport)
     testImplementation(Libraries.kotlinStdlib)
+   // implementation(TestLibraries.fragmentTesting)
 
     kaptTest(Libraries.daggerCompiler)
     kaptTest(Libraries.daggerProcessor)

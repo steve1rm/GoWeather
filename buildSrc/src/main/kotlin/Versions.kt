@@ -37,4 +37,5 @@ object Versions {
     const val androidxCoreVersion = "1.1.0"
     const val androidxRulesVersion = "1.1.0"
     const val okhttp3IdlingResourceVersion = "1.0.0"
+    const val fragmentTestingVersion = "1.0.0"
 }

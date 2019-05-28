@@ -13,7 +13,7 @@ class RetryFragment : Fragment() {
 
     private var activity: RetryListener? = null
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as RetryListener
     }
