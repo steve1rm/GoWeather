@@ -18,11 +18,14 @@ import kotlinx.android.synthetic.main.weather_forecast.*
 import kotlinx.android.synthetic.main.weather_forecast_header.*
 import me.androidbox.presentation.R
 import me.androidbox.presentation.adapters.ForecastAdapter
-import me.androidbox.presentation.adapters.ForecastDelegate
 import me.androidbox.presentation.models.WeatherForecast
 import org.parceler.Parcels
+import javax.inject.Inject
 
 class ForecastFragment : Fragment() {
+
+    @Inject
+    lateinit var forecastAdapter: ForecastAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         AndroidSupportInjection.inject(this)
@@ -32,7 +35,7 @@ class ForecastFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val bundle = arguments
-        val parcelable = bundle?.getParcelable<Parcelable>("weatherForecast")
+        val parcelable = bundle?.getParcelable<Parcelable>(ForecastActivity.WEATHER_FORECAST_KEY)
         val weatherForecast = Parcels.unwrap<WeatherForecast>(parcelable)
         displayWeather(weatherForecast)
         startSlideUpAnimation()
@@ -43,7 +46,8 @@ class ForecastFragment : Fragment() {
         val temperatureWithDegrees = "${weatherForecast.current.temperatureInCelsius}\u00B0"
         tvTemperatureDegrees.text = temperatureWithDegrees
 
-        val forecastAdapter = ForecastAdapter(weatherForecast.forecast.forecastDay, ForecastDelegate(1))
+        forecastAdapter.populate(weatherForecast.forecast.forecastDay)
+        val forecastAdapter = forecastAdapter
         forecastAdapter.notifyDataSetChanged()
         rvDailyForecast.adapter = forecastAdapter
         rvDailyForecast.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)

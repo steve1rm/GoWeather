@@ -10,6 +10,6 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = [ActivityModule::class])
     abstract fun injectIntoHomeActivity(): ForecastActivity
 
-    @ContributesAndroidInjector(modules = [ActivityModule::class])
+    @ContributesAndroidInjector(modules = [ActivityModule::class, ForecastModule::class])
     abstract fun injectIntoForecastFragment(): ForecastFragment
 }

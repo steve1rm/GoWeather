@@ -16,6 +16,10 @@ import javax.inject.Inject
 
 class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, LocationUtilsListener {
 
+    companion object {
+        const val WEATHER_FORECAST_KEY = "weatherForecast"
+    }
+
     @Inject
     lateinit var forecastPresenter: ForecastPresenter
 
@@ -72,7 +76,7 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
     override fun onForecastSuccess(weatherForecast: WeatherForecast) {
         val bundle = Bundle()
         val parcelable = Parcels.wrap(weatherForecast)
-        bundle.putParcelable("weatherForecast", parcelable)
+        bundle.putParcelable(WEATHER_FORECAST_KEY, parcelable)
         val forecastFragment = ForecastFragment()
         forecastFragment.arguments = bundle
 

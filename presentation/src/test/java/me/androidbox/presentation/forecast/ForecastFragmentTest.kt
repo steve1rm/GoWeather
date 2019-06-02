@@ -1,6 +1,7 @@
 package me.androidbox.presentation.forecast
 
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.testing.launchFragment
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -41,7 +42,7 @@ class ForecastFragmentTest {
         launchFragment<ForecastFragment>(bundle).onFragment {
             assertThat(it.tvLocationName.text).isEqualTo("name")
             assertThat(it.tvTemperatureDegrees.text).isEqualTo("42\u00B0")
-            assertThat(it.rvDailyForecast.)
+            assertThat(it.rvDailyForecast.visibility).isEqualTo(View.VISIBLE)
         }
     }
 
