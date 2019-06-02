@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.fragment.app.testing.launchFragment
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.android.synthetic.main.weather_forecast.*
 import kotlinx.android.synthetic.main.weather_forecast_header.*
 import me.androidbox.presentation.R
 import me.androidbox.presentation.models.*
@@ -26,7 +27,7 @@ class ForecastFragmentTest {
     }
 
     @Test
-    fun `should test`() {
+    fun `should assign correct temperature name and location`() {
         val bundle = Bundle()
         val weatherForecast = WeatherForecast(
             Location("name", "region", "country"),
@@ -37,17 +38,15 @@ class ForecastFragmentTest {
         bundle.putParcelable("weatherForecast", parcelable)
         forecastFragment.arguments = bundle
 
-        var tvTemperature: TextView? = null
         launchFragment<ForecastFragment>(bundle).onFragment {
-            tvTemperature = it.tvTemperatureDegrees
+            assertThat(it.tvLocationName.text).isEqualTo("name")
+            assertThat(it.tvTemperatureDegrees.text).isEqualTo("42\u00B0")
+            assertThat(it.rvDailyForecast.)
         }
-
-    //    tvTemperature = forecastFragment.activity?.findViewById<TextView>(R.id.tvTemperatureDegrees)
-        assertThat(tvTemperature?.text).contains("42")
     }
 
     private fun createForecastList(): List<ForecastDay> {
-        return listOf<ForecastDay>(
+        return listOf(
             ForecastDay("date", "dateEpoch", Day(45F)),
             ForecastDay("date", "dateEphoc", Day(36F)))
     }
