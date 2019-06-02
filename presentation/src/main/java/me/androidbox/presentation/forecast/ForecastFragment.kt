@@ -1,7 +1,6 @@
 package me.androidbox.presentation.forecast
 
 import android.os.Bundle
-import android.os.Handler
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
@@ -40,7 +39,6 @@ class ForecastFragment : Fragment() {
     }
 
     private fun displayWeather(weatherForecast: WeatherForecast) {
-        println("displayWeather ${weatherForecast.forecast.forecastDay[0].day.averageTemperatureInCelsius}")
         tvLocationName.text = weatherForecast.location.name
         val temperatureWithDegrees = "${weatherForecast.current.temperatureInCelsius}\u00B0"
         tvTemperatureDegrees.text = temperatureWithDegrees
@@ -52,7 +50,7 @@ class ForecastFragment : Fragment() {
         rvDailyForecast.addItemDecoration(DividerItemDecoration(activity, RecyclerView.VERTICAL))
     }
 
-    /* wait for the screen to fully render before applying the animation */
+    /* waits for the screen to fully render before applying the animation */
     private fun startSlideUpAnimation() {
         weather_forecast.post {
             val constraintSet1 = ConstraintSet()

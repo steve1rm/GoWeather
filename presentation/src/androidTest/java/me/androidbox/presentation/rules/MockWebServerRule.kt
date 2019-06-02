@@ -6,13 +6,10 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 class MockWebServerRule : TestRule {
-    internal val mockWebServer: MockWebServer by lazy {
-        MockWebServer()
-    }
-
     override fun apply(base: Statement?, description: Description?): Statement {
         return object: Statement() {
             override fun evaluate() {
+                val mockWebServer = MockWebServer()
                 mockWebServer.start(8080)
                 base?.evaluate()
                 mockWebServer.shutdown()

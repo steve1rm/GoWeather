@@ -41,5 +41,7 @@ object TestLibraries {
     const val androidxRules = "androidx.test:rules:${Versions.androidxRulesVersion}"
     const val espressoContrib = "com.android.support.test.espresso:espresso-contrib:${Versions.espressoContribVersion}"
     const val okhttp3IdlingResource = "com.jakewharton.espresso:okhttp3-idling-resource:${Versions.okhttp3IdlingResourceVersion}"
+    const val idlingConcurrent = "com.android.support.test.espresso.idling:idling-concurrent:${Versions.idlingConcurrentVersion}"
+    const val espressoIdlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.espressoIdlingResourceVersion}"
     const val fragmentTesting = "androidx.fragment:fragment-testing:${Versions.fragmentTestingVersion}"
 }

@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import me.androidbox.presentation.BuildConfig
+import me.androidbox.presentation.IdlingResource
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,7 +15,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-class TestNetworkModule(private var okHttpClient: OkHttpClient?) {
+class TestNetworkModule {
 
     @Singleton
     @Provides
@@ -34,11 +35,13 @@ class TestNetworkModule(private var okHttpClient: OkHttpClient?) {
     @Singleton
     @Provides
     fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient? {
-        okHttpClient = OkHttpClient.Builder()
+        val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(2, TimeUnit.SECONDS)
             .readTimeout(2, TimeUnit.SECONDS)
             .build()
+
+        IdlingResource.registerOkHttp(okHttpClient)
 
         return okHttpClient
     }

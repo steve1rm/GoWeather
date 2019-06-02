@@ -22,6 +22,7 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
     private fun mapToForecastModel(forecast: ForecastEntity): ForecastModel {
         val forecastDayList = mutableListOf<ForecastDayModel>()
 
+        /* where not interested in the first one as we want the next 4 days */
         forecast.forecastDay.drop(1).forEach {
             forecastDayList.add(ForecastDayModel(
                 it.date,

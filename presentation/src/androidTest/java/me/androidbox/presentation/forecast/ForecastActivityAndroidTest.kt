@@ -3,6 +3,7 @@ package me.androidbox.presentation.forecast
 import android.app.Activity
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -52,7 +53,13 @@ class ForecastActivityAndroidTest {
     @Inject
     lateinit var presenter: ForecastPresenter
 
-    var okHttpClient: OkHttpClient? = null
+    @Inject
+    lateinit var okHttpClient: OkHttpClient
+
+/*
+    @get:Rule
+    val mockWebServerRule = MockWebServerRule()
+*/
 
     @get:Rule
     val activityRule = ActivityTestRule(ForecastActivity::class.java, false, false)
@@ -70,11 +77,11 @@ class ForecastActivityAndroidTest {
         DaggerAndroidTestGoWeatherPresentationComponent
             .builder()
             .applicationModule(TestGoWeatherApplicationModule())
-            .testNetworkModule(TestNetworkModule(okHttpClient))
+            .testNetworkModule(TestNetworkModule())
             .create(testApplication)
             .inject(testApplication)
 
-        mockWebserver.start()
+        mockWebserver.start(8080)
     }
 
     @After
@@ -96,7 +103,6 @@ class ForecastActivityAndroidTest {
         /* should display the initial loading screen */
         onView(withId(R.id.ivProgress)).check(matches(isDisplayed()))
 
-
         /* should display the current temperature */
         onView(withId(R.id.tvTemperatureDegrees))
             .check(matches(allOf(withText(startsWith("36")), isDisplayed())))
@@ -105,13 +111,13 @@ class ForecastActivityAndroidTest {
         onView(withId(R.id.tvLocationName))
             .check(matches(allOf(withText("Bangkok"), isDisplayed())))
 
-        sleep(2000)
+ //       sleep(2000)
 
         /* should display the daily forecast */
         onView(withId(R.id.rvDailyForecast)).check(matches(isDisplayed()))
 
         /* should display the number of forecast days */
-        onView(withId(R.id.rvDailyForecast)).check(matches(hasChildCount(5)))
+        onView(withId(R.id.rvDailyForecast)).check(matches(hasChildCount(4)))
 
         /* Should display the correct day and average temperature at position 0 */
         onView(childAtPosition(withId(R.id.rvDailyForecast), 0))

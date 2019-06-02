@@ -45,13 +45,6 @@ class NetworkModule {
     fun provideBaseUrl(context: Context): String =
         context.getString(R.string.baseUrl)
 
-
-    @Named("TestBaseUrl")
-    @Reusable
-    @Provides
-    fun provideBaseUrlTest(): String =
-        "http://localhost:8080/"
-
     @Reusable
     @Provides
     fun provideRetrofit(@Named("BaseUrl") baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
@@ -65,5 +58,3 @@ class NetworkModule {
 
 
 }
-
-/* http://localhost:57198/ */

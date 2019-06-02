@@ -58,8 +58,9 @@ dependencies {
     implementation(Libraries.paracelerApi)
     kapt(Libraries.paraceler)
     implementation(Libraries.supportTransition)
-    testImplementation("androidx.fragment:fragment:1.1.0-alpha09")
-    testImplementation("androidx.fragment:fragment:1.1.0-alpha09")
+    testImplementation("androidx.fragment:fragment-testing:1.1.0-alpha09")
+    debugImplementation("androidx.fragment:fragment-testing:1.1.0-alpha09")
+
     implementation("com.google.android.gms:play-services-location:16.0.0")
 
     testImplementation(TestLibraries.assertJ)
@@ -73,12 +74,17 @@ dependencies {
     testImplementation(Libraries.daggerAndroid)
     testImplementation(Libraries.daggerSupport)
     testImplementation(Libraries.kotlinStdlib)
+    implementation(TestLibraries.espressoIdlingResource)
+
    // implementation(TestLibraries.fragmentTesting)
+   // debugImplementation(TestLibraries.fragmentTesting)
 
     kaptTest(Libraries.daggerCompiler)
     kaptTest(Libraries.daggerProcessor)
 
-    androidTestImplementation(TestLibraries.espressoCore)
+    androidTestImplementation(TestLibraries.espressoCore, {
+        exclude(module = "idling-concurrent")
+    })
     androidTestImplementation(TestLibraries.androidxTruth)
     androidTestImplementation(TestLibraries.androidxJunit)
     androidTestImplementation(TestLibraries.runner)
@@ -91,8 +97,16 @@ dependencies {
     androidTestImplementation(Libraries.daggerSupport)
     androidTestImplementation(TestLibraries.mockitoKotlin)
     androidTestImplementation(TestLibraries.mockitoAndroid)
-    androidTestImplementation(TestLibraries.espressoContrib)
-    androidTestImplementation(TestLibraries.okhttp3IdlingResource)
+    androidTestImplementation(TestLibraries.espressoContrib,  {
+        exclude(module = "support-annotation")
+    })
+
+    debugImplementation(TestLibraries.okhttp3IdlingResource, {
+        exclude(module = "support-annotation")
+    })
+
+    androidTestImplementation(TestLibraries.espressoIdlingResource)
+    androidTestImplementation(TestLibraries.idlingConcurrent)
 
     kaptAndroidTest(Libraries.daggerCompiler)
     kaptAndroidTest(Libraries.daggerProcessor)
