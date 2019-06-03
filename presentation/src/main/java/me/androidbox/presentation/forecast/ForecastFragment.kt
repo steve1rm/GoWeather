@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -35,10 +36,15 @@ class ForecastFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val bundle = arguments
-        val parcelable = bundle?.getParcelable<Parcelable>(ForecastActivity.WEATHER_FORECAST_KEY)
-        val weatherForecast = Parcels.unwrap<WeatherForecast>(parcelable)
-        displayWeather(weatherForecast)
-        startSlideUpAnimation()
+
+        bundle?.let {
+            val parcelable = it.getParcelable<Parcelable>(ForecastActivity.WEATHER_FORECAST_KEY)
+            val weatherForecast = Parcels.unwrap<WeatherForecast>(parcelable)
+            displayWeather(weatherForecast)
+            startSlideUpAnimation()
+        } ?: run {
+            Toast.makeText(activity, getString(R.string.failedToDisplayData), Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun displayWeather(weatherForecast: WeatherForecast) {
