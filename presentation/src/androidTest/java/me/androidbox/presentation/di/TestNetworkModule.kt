@@ -35,15 +35,11 @@ class TestNetworkModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient? {
-        val okHttpClient = OkHttpClient.Builder()
+        return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(2, TimeUnit.SECONDS)
             .readTimeout(2, TimeUnit.SECONDS)
             .build()
-
-        IdlingResource.registerOkHttp(okHttpClient)
-
-        return okHttpClient
     }
 
     @Named("TestBaseUrl")

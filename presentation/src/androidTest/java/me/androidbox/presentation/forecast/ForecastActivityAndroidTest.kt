@@ -21,6 +21,7 @@ import me.androidbox.presentation.di.DaggerAndroidTestGoWeatherPresentationCompo
 import me.androidbox.presentation.di.TestGoWeatherApplicationModule
 import me.androidbox.presentation.di.TestNetworkModule
 import me.androidbox.presentation.rules.MockWebServerRule
+import me.androidbox.presentation.rules.OkHttpIdingResourceRule
 import me.androidbox.presentation.viewAssertions.childAtPosition
 import okhttp3.HttpUrl
 import okhttp3.MediaType
@@ -60,6 +61,9 @@ class ForecastActivityAndroidTest {
     @get:Rule
     val mockWebServerRule = MockWebServerRule()
 */
+
+   /* @get:Rule
+    val okHttpIdingResourceRule = OkHttpIdingResourceRule()*/
 
     @get:Rule
     val activityRule = ActivityTestRule(ForecastActivity::class.java, false, false)

@@ -12,7 +12,8 @@ import javax.inject.Singleton
     TestNetworkDataServiceModule::class,
     TestGoWeatherApplicationModule::class,
     TestMapperModule::class,
-    TestSubComponentBuilder::class])
+    TestSubComponentBuilder::class,
+    TestForecastModule::class])
 interface AndroidTestGoWeatherPresentationComponent : AndroidInjector<AndroidTestGoWeatherApplication> {
 
     @Component.Builder
