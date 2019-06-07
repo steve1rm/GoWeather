@@ -81,7 +81,6 @@ class ForecastActivityAndroidTest {
         DaggerAndroidTestGoWeatherPresentationComponent
             .builder()
             .applicationModule(TestGoWeatherApplicationModule())
-            .testNetworkModule(TestNetworkModule())
             .create(testApplication)
             .inject(testApplication)
 
