@@ -3,11 +3,10 @@ package me.androidbox.presentation.forecast
 import android.app.Activity
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.espresso.matcher.ViewMatchers.Visibility.*
+import androidx.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
@@ -19,8 +18,6 @@ import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.di.AndroidTestGoWeatherApplication
 import me.androidbox.presentation.di.DaggerAndroidTestGoWeatherPresentationComponent
 import me.androidbox.presentation.di.TestGoWeatherApplicationModule
-import me.androidbox.presentation.di.TestNetworkModule
-import me.androidbox.presentation.rules.MockWebServerRule
 import me.androidbox.presentation.rules.OkHttpIdingResourceRule
 import me.androidbox.presentation.viewAssertions.childAtPosition
 import okhttp3.HttpUrl
@@ -57,13 +54,8 @@ class ForecastActivityAndroidTest {
     @Inject
     lateinit var okHttpClient: OkHttpClient
 
-/*
     @get:Rule
-    val mockWebServerRule = MockWebServerRule()
-*/
-
-   /* @get:Rule
-    val okHttpIdingResourceRule = OkHttpIdingResourceRule()*/
+    val okHttpIdingResourceRule = OkHttpIdingResourceRule(InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as AndroidTestGoWeatherApplication)
 
     @get:Rule
     val activityRule = ActivityTestRule(ForecastActivity::class.java, false, false)

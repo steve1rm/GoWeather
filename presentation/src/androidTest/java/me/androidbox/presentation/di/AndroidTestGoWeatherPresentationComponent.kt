@@ -3,6 +3,7 @@ package me.androidbox.presentation.di
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
+import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
 @Singleton
@@ -22,4 +23,6 @@ interface AndroidTestGoWeatherPresentationComponent : AndroidInjector<AndroidTes
 
         abstract fun testNetworkModule(testNetworkModule: TestNetworkModule): Builder
     }
+
+    fun okHttpClient(): OkHttpClient
 }
