@@ -115,7 +115,6 @@ class ForecastRequestImpTest {
         val url = this.javaClass.classLoader.getResource(path)
         val file = File(url.path)
         return String(file.readBytes())
-
     }
 
     private fun createForecastModel(): ForecastRequestModel {

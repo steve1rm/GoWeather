@@ -15,6 +15,8 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 class OkHttpIdingResourceRule(application: Application) : TestRule {
+
+    /* My attempt below - but not working */
     private val testApplication =
         InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
                 as AndroidTestGoWeatherApplication
