@@ -1,5 +1,7 @@
 package me.androidbox.presentation.di
 
+import androidx.test.espresso.IdlingResource
+import com.jakewharton.espresso.OkHttp3IdlingResource
 import dagger.Module
 import dagger.Provides
 import me.androidbox.presentation.BuildConfig
@@ -55,5 +57,11 @@ class TestNetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideIdlingResource(okHttpClient: OkHttpClient): IdlingResource {
+        return OkHttp3IdlingResource.create("okhttp", okHttpClient)
     }
 }

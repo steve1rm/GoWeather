@@ -58,8 +58,10 @@ class ForecastActivityAndroidTest {
     @Inject
     lateinit var okHttpClient: OkHttpClient
 
+   /* @Inject
     @get:Rule
-    val okHttpIdingResourceRule = OkHttpIdingResourceRule(InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as AndroidTestGoWeatherApplication)
+    lateinit var okHttpIdingResourceRule: OkHttpIdingResourceRule
+*/
 
     @get:Rule
     val activityRule = ActivityTestRule(ForecastActivity::class.java, false, false)
@@ -110,8 +112,6 @@ class ForecastActivityAndroidTest {
         onView(withId(R.id.tvLocationName))
             .check(matches(allOf(withText("Bangkok"), isDisplayed())))
 
- //       sleep(2000)
-
         /* should display the daily forecast */
         onView(withId(R.id.rvDailyForecast)).check(matches(isDisplayed()))
 
@@ -141,7 +141,6 @@ class ForecastActivityAndroidTest {
             .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Wednesday"), withEffectiveVisibility(VISIBLE)))))
         onView(childAtPosition(withId(R.id.rvDailyForecast), 3))
             .check(matches(hasDescendant(allOf(withId(R.id.tvAverageTemperature), withText("34.4"), withEffectiveVisibility(VISIBLE)))))
-
     }
 
     @Test
