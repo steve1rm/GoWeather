@@ -2,6 +2,7 @@ package me.androidbox.presentation.mappers
 
 import me.androidbox.models.*
 import me.androidbox.presentation.models.*
+import javax.inject.Inject
 
 class WeatherForecastPresentationMapperImp : WeatherForecastPresentationMapper {
     override fun map(domain: WeatherForecastModel): WeatherForecast {

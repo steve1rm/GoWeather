@@ -2,6 +2,7 @@ package androidbox.me.mappers
 
 import androidbox.me.entities.*
 import me.androidbox.models.*
+import javax.inject.Inject
 
 class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
     override fun map(entity: WeatherForecastEntity): WeatherForecastModel {

@@ -8,14 +8,28 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.failurecase_layout.*
 import me.androidbox.presentation.R
+import me.androidbox.presentation.di.ActivityModule
+import me.androidbox.presentation.di.DaggerActivityComponent
+import javax.inject.Inject
 
-class RetryFragment : Fragment() {
+class RetryFragment(private val retryListener: () -> Unit) : Fragment() {
 
-    private var activity: RetryListener? = null
+    @Inject
+    lateinit var activity: RetryListener
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         activity = context as RetryListener
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        DaggerActivityComponent
+            .builder()
+            .build()
+            .inject(this)
+
+        println("")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -26,7 +40,8 @@ class RetryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnRetry.setOnClickListener {
-            activity?.onRetry()
+            retryListener()
+//            activity.onRetry()
         }
     }
 }

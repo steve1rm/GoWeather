@@ -3,21 +3,18 @@ package me.androidbox.presentation.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.common.SchedulerProviderImp
+import javax.inject.Singleton
 
 @Module
-object GoWeatherApplicationModule {
+class GoWeatherApplicationModule(private val application: GoWeatherApplication) {
 
     @Provides
-    @Reusable
-    @JvmStatic
-    fun provideContext(goWeatherApplication: GoWeatherApplication): Context =
-            goWeatherApplication.applicationContext
+    @Singleton
+    fun provideContext(): Context = application
 
     @Provides
-    @Reusable
-    @JvmStatic
+    @Singleton
     fun provideScheduler(): SchedulerProvider = SchedulerProviderImp()
 }

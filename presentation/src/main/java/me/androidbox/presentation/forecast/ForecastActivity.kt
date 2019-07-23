@@ -10,6 +10,10 @@ import dagger.android.AndroidInjection
 import me.androidbox.presentation.R
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsListener
+import me.androidbox.presentation.di.ActivityModule
+import me.androidbox.presentation.di.DaggerActivityComponent
+import me.androidbox.presentation.di.GoWeatherApplication
+import me.androidbox.presentation.di.GoWeatherComponent
 import me.androidbox.presentation.models.WeatherForecast
 import org.parceler.Parcels
 import javax.inject.Inject
@@ -29,9 +33,15 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
     private var fragmentManager: FragmentManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        DaggerActivityComponent
+            .builder()
+            .activityModule(ActivityModule(this@ForecastActivity))
+            .goWeatherComponent((application as GoWeatherApplication).component)
+            .build()
+            .inject(this@ForecastActivity)
 
         fragmentManager = supportFragmentManager
         forecastPresenter.initialize(this)
@@ -68,7 +78,7 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
     private fun startRetryFragment() {
         fragmentManager?.let {
             val fragmentTransaction = it.beginTransaction()
-            fragmentTransaction.replace(R.id.forecastActivityContainer, RetryFragment(), "RetryFragment")
+            fragmentTransaction.replace(R.id.forecastActivityContainer, RetryFragment(onRetry), "RetryFragment")
             fragmentTransaction.commit()
         }
     }
@@ -87,6 +97,17 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
 
     override fun onForecastFailure(error: String) {
         startRetryFragment()
+    }
+
+    private val onRetry: () -> Unit = {
+        if(location.isLocationServicesEnabled(this)) {
+            startLoadingFragment()
+            location.getLocationCoordinates(this)
+        }
+        else {
+            displayLocationSettings()
+            startRetryFragment()
+        }
     }
 
     override fun onRetry() {

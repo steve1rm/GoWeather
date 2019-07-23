@@ -2,28 +2,24 @@ package me.androidbox.presentation.di
 
 import androidbox.me.di.MapperModule
 import androidbox.me.di.NetworkDataServiceModule
-import dagger.BindsInstance
 import dagger.Component
-import dagger.android.support.AndroidSupportInjectionModule
-import me.androidbox.presentation.forecast.ForecastActivity
+import me.androidbox.interactors.WeatherForecast
+import me.androidbox.presentation.adapters.ForecastAdapter
+import me.androidbox.presentation.common.SchedulerProvider
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
-    AndroidSupportInjectionModule::class,
-    ActivityBuilder::class,
     NetworkModule::class,
     NetworkDataServiceModule::class,
     MapperModule::class,
-    GoWeatherApplicationModule::class])
+    GoWeatherApplicationModule::class,
+    ForecastModule::class])
 interface GoWeatherComponent {
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun application(application: GoWeatherApplication): Builder
-
-        fun build(): GoWeatherComponent
-    }
 
     fun inject(application: GoWeatherApplication)
+
+    fun schedulerProvider(): SchedulerProvider
+    fun weatherForecast(): WeatherForecast
+    fun forecastAdapter(): ForecastAdapter
 }

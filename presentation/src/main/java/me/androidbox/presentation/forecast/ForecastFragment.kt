@@ -19,6 +19,9 @@ import kotlinx.android.synthetic.main.weather_forecast.*
 import kotlinx.android.synthetic.main.weather_forecast_header.*
 import me.androidbox.presentation.R
 import me.androidbox.presentation.adapters.ForecastAdapter
+import me.androidbox.presentation.di.ActivityModule
+import me.androidbox.presentation.di.DaggerActivityComponent
+import me.androidbox.presentation.di.GoWeatherApplication
 import me.androidbox.presentation.models.WeatherForecast
 import org.parceler.Parcels
 import javax.inject.Inject
@@ -29,7 +32,13 @@ class ForecastFragment : Fragment() {
     lateinit var forecastAdapter: ForecastAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        AndroidSupportInjection.inject(this)
+        DaggerActivityComponent
+            .builder()
+            .activityModule(ActivityModule(activity))
+            .goWeatherComponent((activity?.application as GoWeatherApplication).component)
+            .build()
+            .inject(this)
+
         return inflater.inflate(R.layout.weather_forecast, container, false)
     }
 

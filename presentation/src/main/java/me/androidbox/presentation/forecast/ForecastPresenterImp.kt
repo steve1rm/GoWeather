@@ -8,10 +8,11 @@ import me.androidbox.presentation.common.BasePresenterImp
 import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class ForecastPresenterImp(private val weatherForecastInteractor: WeatherForecastInteractor,
-                           private val weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
-                           private val schedulerProvider: SchedulerProvider)
+class ForecastPresenterImp @Inject constructor(private val weatherForecastInteractor: WeatherForecastInteractor,
+                                               private val weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
+                                               private val schedulerProvider: SchedulerProvider)
     :
     BasePresenterImp<ForecastView>(),
     ForecastPresenter {
