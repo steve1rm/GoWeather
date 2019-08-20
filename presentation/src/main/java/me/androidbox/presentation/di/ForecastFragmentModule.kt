@@ -8,7 +8,7 @@ import me.androidbox.presentation.adapters.ForecastDelegate
 import me.androidbox.presentation.models.ForecastDay
 
 @Module
-object ForecastModule {
+object ForecastFragmentModule {
 
     @Provides
     @JvmStatic

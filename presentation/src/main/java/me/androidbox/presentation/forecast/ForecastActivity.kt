@@ -6,14 +6,12 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import dagger.android.AndroidInjection
 import me.androidbox.presentation.R
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsListener
-import me.androidbox.presentation.di.ActivityModule
-import me.androidbox.presentation.di.DaggerActivityComponent
+import me.androidbox.presentation.di.ForecastActivityModule
+import me.androidbox.presentation.di.DaggerForecastActivityComponent
 import me.androidbox.presentation.di.GoWeatherApplication
-import me.androidbox.presentation.di.GoWeatherComponent
 import me.androidbox.presentation.models.WeatherForecast
 import org.parceler.Parcels
 import javax.inject.Inject
@@ -36,9 +34,9 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        DaggerActivityComponent
+        DaggerForecastActivityComponent
             .builder()
-            .activityModule(ActivityModule(this@ForecastActivity))
+            .forecastActivityModule(ForecastActivityModule(this@ForecastActivity))
             .goWeatherComponent((application as GoWeatherApplication).component)
             .build()
             .inject(this@ForecastActivity)

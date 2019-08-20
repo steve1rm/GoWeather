@@ -18,7 +18,7 @@ import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapperImp
 
 @Module
-class ActivityModule(private val forecastActivity: ForecastActivity) {
+class ForecastActivityModule(private val forecastActivity: ForecastActivity) {
 
     @Reusable
     @Provides

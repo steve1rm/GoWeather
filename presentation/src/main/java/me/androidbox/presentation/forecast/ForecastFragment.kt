@@ -14,13 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.weather_forecast.*
 import kotlinx.android.synthetic.main.weather_forecast_header.*
 import me.androidbox.presentation.R
 import me.androidbox.presentation.adapters.ForecastAdapter
-import me.androidbox.presentation.di.ActivityModule
-import me.androidbox.presentation.di.DaggerActivityComponent
+import me.androidbox.presentation.di.DaggerForecastFragmentComponent
 import me.androidbox.presentation.di.GoWeatherApplication
 import me.androidbox.presentation.models.WeatherForecast
 import org.parceler.Parcels
@@ -31,11 +29,11 @@ class ForecastFragment : Fragment() {
     @Inject
     lateinit var forecastAdapter: ForecastAdapter
 
+    /* .goWeatherComponent((application as GoWeatherApplication).component) */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        DaggerActivityComponent
+        DaggerForecastFragmentComponent
             .builder()
-            .activityModule(ActivityModule(activity))
-            .goWeatherComponent((activity?.application as GoWeatherApplication).component)
+            .goWeatherComponent((context?.applicationContext as GoWeatherApplication).component)
             .build()
             .inject(this)
 

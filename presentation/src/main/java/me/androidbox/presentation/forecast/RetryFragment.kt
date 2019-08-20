@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.failurecase_layout.*
 import me.androidbox.presentation.R
-import me.androidbox.presentation.di.ActivityModule
-import me.androidbox.presentation.di.DaggerActivityComponent
+import me.androidbox.presentation.di.DaggerForecastActivityComponent
 import javax.inject.Inject
 
 class RetryFragment(private val retryListener: () -> Unit) : Fragment() {
@@ -24,7 +23,7 @@ class RetryFragment(private val retryListener: () -> Unit) : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerActivityComponent
+        DaggerForecastActivityComponent
             .builder()
             .build()
             .inject(this)

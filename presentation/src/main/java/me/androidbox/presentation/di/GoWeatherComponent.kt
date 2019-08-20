@@ -13,13 +13,11 @@ import javax.inject.Singleton
     NetworkModule::class,
     NetworkDataServiceModule::class,
     MapperModule::class,
-    GoWeatherApplicationModule::class,
-    ForecastModule::class])
+    GoWeatherApplicationModule::class])
 interface GoWeatherComponent {
 
     fun inject(application: GoWeatherApplication)
 
     fun schedulerProvider(): SchedulerProvider
     fun weatherForecast(): WeatherForecast
-    fun forecastAdapter(): ForecastAdapter
 }
