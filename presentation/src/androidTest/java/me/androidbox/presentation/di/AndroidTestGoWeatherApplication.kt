@@ -7,9 +7,9 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
-class AndroidTestGoWeatherApplication : GoWeatherApplication(), HasActivityInjector {
+class AndroidTestGoWeatherApplication {
     @Inject
     lateinit var activityInjector: DispatchingAndroidInjector<Activity>
 
-    override fun activityInjector(): AndroidInjector<Activity> = activityInjector
+    // override fun activityInjector(): AndroidInjector<Activity> = activityInjector
 }

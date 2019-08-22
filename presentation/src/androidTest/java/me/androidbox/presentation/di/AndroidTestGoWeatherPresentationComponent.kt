@@ -15,7 +15,8 @@ import javax.inject.Singleton
     TestMapperModule::class,
     TestSubComponentBuilder::class,
     TestForecastModule::class])
-interface AndroidTestGoWeatherPresentationComponent : AndroidInjector<AndroidTestGoWeatherApplication> {
+interface AndroidTestGoWeatherPresentationComponent  {
+/*
 
     @Component.Builder
     abstract class Builder : AndroidInjector.Builder<AndroidTestGoWeatherApplication>() {
@@ -23,6 +24,7 @@ interface AndroidTestGoWeatherPresentationComponent : AndroidInjector<AndroidTes
 
         abstract fun testNetworkModule(testNetworkModule: TestNetworkModule): Builder
     }
+*/
 
     fun okHttpClient(): OkHttpClient
 }

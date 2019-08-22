@@ -1,8 +1,6 @@
 package me.androidbox.presentation.forecast
 
 import android.app.Activity
-import androidbox.me.mappers.ForecastRequestDomainMapper
-import androidbox.me.mappers.MapperToDomain
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -10,19 +8,14 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.DispatchingAndroidInjector_Factory
 import me.androidbox.presentation.R
 import me.androidbox.presentation.common.LocationUtils
-import me.androidbox.presentation.di.AndroidTestGoWeatherApplication
 import me.androidbox.presentation.di.DaggerAndroidTestGoWeatherPresentationComponent
 import me.androidbox.presentation.di.TestGoWeatherApplicationModule
-import me.androidbox.presentation.rules.OkHttpIdingResourceRule
 import me.androidbox.presentation.viewAssertions.childAtPosition
 import okhttp3.HttpUrl
 import okhttp3.MediaType
@@ -72,15 +65,16 @@ class ForecastActivityAndroidTest {
 
     @Before
     fun setUp() {
-        val testApplication =
+     /*   val testApplication =
             InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
                     as AndroidTestGoWeatherApplication
-
+*/
         DaggerAndroidTestGoWeatherPresentationComponent
             .builder()
-            .applicationModule(TestGoWeatherApplicationModule())
+
+          /*  .applicationModule(TestGoWeatherApplicationModule())
             .create(testApplication)
-            .inject(testApplication)
+            .inject(testApplication)*/
 
         mockWebserver.start(8080)
     }

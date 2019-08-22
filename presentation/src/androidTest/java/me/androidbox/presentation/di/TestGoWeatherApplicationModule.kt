@@ -15,8 +15,8 @@ import javax.inject.Named
 
 @Module
 class TestGoWeatherApplicationModule {
-    @Provides
+  /*  @Provides
     @Reusable
     fun provideContext(goWeatherApplication: AndroidTestGoWeatherApplication): Context =
-        goWeatherApplication.applicationContext
+        goWeatherApplication.applicationContext*/
 }
