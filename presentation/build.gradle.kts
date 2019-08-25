@@ -15,7 +15,7 @@ android {
         versionCode = Versions.versionCode
         versionName = Versions.versionName
 
-        testInstrumentationRunner = "me.androidbox.presentation.di.GoWeatherTestRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -81,9 +81,9 @@ dependencies {
     kaptTest(Libraries.daggerCompiler)
     kaptTest(Libraries.daggerProcessor)
 
-    androidTestImplementation(TestLibraries.espressoCore, {
+    androidTestImplementation(TestLibraries.espressoCore) {
         exclude(module = "idling-concurrent")
-    })
+    }
     androidTestImplementation(TestLibraries.androidxTruth)
     androidTestImplementation(TestLibraries.androidxJunit)
     androidTestImplementation(TestLibraries.runner)
@@ -106,6 +106,7 @@ dependencies {
 
     androidTestImplementation(TestLibraries.espressoIdlingResource)
     androidTestImplementation(TestLibraries.idlingConcurrent)
+    androidTestImplementation(TestLibraries.espressoIntents)
 
     kaptAndroidTest(Libraries.daggerCompiler)
     kaptAndroidTest(Libraries.daggerProcessor)

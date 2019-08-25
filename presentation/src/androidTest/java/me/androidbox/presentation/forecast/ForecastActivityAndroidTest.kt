@@ -1,13 +1,16 @@
 package me.androidbox.presentation.forecast
 
 import android.app.Activity
+import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -15,7 +18,7 @@ import dagger.android.DispatchingAndroidInjector_Factory
 import me.androidbox.presentation.R
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.di.DaggerAndroidTestGoWeatherPresentationComponent
-import me.androidbox.presentation.di.TestGoWeatherApplicationModule
+import me.androidbox.presentation.rules.TestComponentRule
 import me.androidbox.presentation.viewAssertions.childAtPosition
 import okhttp3.HttpUrl
 import okhttp3.MediaType
@@ -29,6 +32,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import java.lang.Thread.sleep
 import java.util.concurrent.TimeUnit
@@ -63,14 +67,21 @@ class ForecastActivityAndroidTest {
         MockWebServer()
     }
 
+    private val goWeatherComponent = TestComponentRule(InstrumentationRegistry.getInstrumentation().targetContext)
+
+    private val forecast = IntentsTestRule(ForecastActivity::class.java, false, false)
+
+    @get:Rule
+    val chain: RuleChain = RuleChain.outerRule(goWeatherComponent).around(forecast)
+
     @Before
     fun setUp() {
      /*   val testApplication =
             InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
                     as AndroidTestGoWeatherApplication
-*/
+*//*
         DaggerAndroidTestGoWeatherPresentationComponent
-            .builder()
+            .builder()*/
 
           /*  .applicationModule(TestGoWeatherApplicationModule())
             .create(testApplication)
@@ -89,7 +100,9 @@ class ForecastActivityAndroidTest {
         loadFromResources("json/fivedayforecast.json")
         mockWebserver.enqueue(MockResponse().setBody(loadFromResources("json/fivedayforecast.json")))
 
-        ActivityScenario.launch(ForecastActivity::class.java)
+        // ActivityScenario.launch(ForecastActivity::class.java)
+
+        forecast.launchActivity(Intent(goWeatherComponent.getContext(), ForecastActivity::class.java))
 
         /* should display Title of app in the toolbar */
         onView((withId(R.id.action_bar)))
@@ -141,7 +154,9 @@ class ForecastActivityAndroidTest {
     fun return_404_error_response() {
         mockWebserver.enqueue(MockResponse().setResponseCode(404))
 
-        ActivityScenario.launch(ForecastActivity::class.java)
+   //     ActivityScenario.launch(ForecastActivity::class.java)
+
+        forecast.launchActivity(Intent(goWeatherComponent.getContext(), ForecastActivity::class.java))
 
         /* should display Title of app in the toolbar */
         onView((withId(R.id.action_bar)))

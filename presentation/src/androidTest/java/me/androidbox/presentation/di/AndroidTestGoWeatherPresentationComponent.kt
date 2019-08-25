@@ -1,30 +1,24 @@
 package me.androidbox.presentation.di
 
+import androidx.test.espresso.IdlingResource
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
+import me.androidbox.presentation.common.SchedulerProvider
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
-    AndroidSupportInjectionModule::class,
     TestNetworkModule::class,
     TestNetworkDataServiceModule::class,
     TestGoWeatherApplicationModule::class,
     TestMapperModule::class,
-    TestSubComponentBuilder::class,
-    TestForecastModule::class])
-interface AndroidTestGoWeatherPresentationComponent  {
-/*
+    TestForecastModule::class,
+    TestActivityModule::class])
+interface AndroidTestGoWeatherPresentationComponent : GoWeatherComponent {
 
-    @Component.Builder
-    abstract class Builder : AndroidInjector.Builder<AndroidTestGoWeatherApplication>() {
-        abstract fun applicationModule(TestApplicationModule: TestGoWeatherApplicationModule): Builder
-
-        abstract fun testNetworkModule(testNetworkModule: TestNetworkModule): Builder
-    }
-*/
-
+  /*  fun schedulerProvider(): SchedulerProvider */
     fun okHttpClient(): OkHttpClient
+    fun idlingResource(): IdlingResource
 }

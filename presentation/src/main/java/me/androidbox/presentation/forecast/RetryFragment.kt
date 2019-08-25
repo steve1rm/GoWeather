@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.failurecase_layout.*
 import me.androidbox.presentation.R
 import me.androidbox.presentation.di.DaggerForecastActivityComponent
+import me.androidbox.presentation.di.DaggerForecastFragmentComponent
+import me.androidbox.presentation.di.GoWeatherApplication
 import javax.inject.Inject
 
 class RetryFragment(private val retryListener: () -> Unit) : Fragment() {
 
-    @Inject
+  //  @Inject
     lateinit var activity: RetryListener
 
     override fun onAttach(context: Context) {
@@ -23,8 +25,9 @@ class RetryFragment(private val retryListener: () -> Unit) : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerForecastActivityComponent
+        DaggerForecastFragmentComponent
             .builder()
+            .goWeatherComponent((context?.applicationContext as GoWeatherApplication).component)
             .build()
             .inject(this)
 
