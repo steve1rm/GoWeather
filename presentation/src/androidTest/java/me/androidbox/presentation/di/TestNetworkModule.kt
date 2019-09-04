@@ -1,10 +1,13 @@
 package me.androidbox.presentation.di
 
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
 import com.jakewharton.espresso.OkHttp3IdlingResource
 import dagger.Module
 import dagger.Provides
 import me.androidbox.presentation.BuildConfig
+import me.androidbox.presentation.common.CustomIdlingResouce
+import me.androidbox.presentation.common.CustomResource
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -50,16 +53,20 @@ class TestNetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(@Named("TestBaseUrl") baseUrl: String, okHttpClient: OkHttpClient?): Retrofit {
+    fun provideRetrofit(@Named("TestBaseUrl") baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
+        val idlingResource = OkHttp3IdlingResource.create("okhttp", okHttpClient)
+
+        IdlingRegistry.getInstance().register(idlingResource)
+
         return Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(okHttpClient!!)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
 
-    @Singleton
+
     @Provides
     fun provideIdlingResource(okHttpClient: OkHttpClient): IdlingResource {
         return OkHttp3IdlingResource.create("okhttp", okHttpClient)
