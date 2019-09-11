@@ -21,6 +21,7 @@ object Versions {
     const val constraintLayoutVersion = "1.1.3"
     const val recyclerViewVersion = "1.0.0"
     const val parcelerVersion = "1.1.12"
+    const val lifecycleVersion = "2.1.0"
 
     /** Testing */
     const val jUnitVersion = "4.12"

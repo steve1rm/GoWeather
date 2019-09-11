@@ -61,6 +61,7 @@ dependencies {
     debugImplementation("androidx.fragment:fragment-testing:1.1.0-alpha09")
 
     implementation("com.google.android.gms:play-services-location:16.0.0")
+    implementation(Libraries.lifecycleExtensions)
 
     testImplementation(TestLibraries.assertJ)
     testImplementation(TestLibraries.junit)

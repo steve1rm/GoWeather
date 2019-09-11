@@ -1,14 +1,12 @@
-package me.androidbox.presentation.forecast
+package me.androidbox.presentation.forecast.mvp
 
 import io.reactivex.disposables.CompositeDisposable
 import me.androidbox.interactors.WeatherForecastInteractor
 import me.androidbox.models.ForecastRequestModel
 import me.androidbox.models.WeatherForecastModel
-import me.androidbox.presentation.IdlingResource
 import me.androidbox.presentation.common.BasePresenterImp
 import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ForecastPresenterImp @Inject constructor(private val weatherForecastInteractor: WeatherForecastInteractor,

@@ -24,6 +24,7 @@ object Libraries {
     const val paraceler = "org.parceler:parceler:${Versions.parcelerVersion}"
     const val paracelerApi = "org.parceler:parceler-api:${Versions.parcelerVersion}"
     const val supportTransition = "com.android.support:transition:${Versions.androidLibraryVersion}"
+    const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleVersion}"
 }
 
 object TestLibraries {

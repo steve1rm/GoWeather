@@ -6,6 +6,9 @@ import me.androidbox.interactors.WeatherForecastInteractor
 import me.androidbox.models.*
 import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.common.TestSchedulerProviderImp
+import me.androidbox.presentation.forecast.mvp.ForecastPresenter
+import me.androidbox.presentation.forecast.mvp.ForecastPresenterImp
+import me.androidbox.presentation.forecast.mvp.ForecastView
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import me.androidbox.presentation.models.Current
 import me.androidbox.presentation.models.Forecast
@@ -26,7 +29,11 @@ class ForecastPresenterImpTest {
     @Before
     fun setUp() {
         schedulerProvider = TestSchedulerProviderImp()
-        forecastPresenter = ForecastPresenterImp(weatherForecastIntIterator, weatherForecastPresentationMapper, schedulerProvider)
+        forecastPresenter = ForecastPresenterImp(
+            weatherForecastIntIterator,
+            weatherForecastPresentationMapper,
+            schedulerProvider
+        )
         assertThat(forecastPresenter).isNotNull
     }
 

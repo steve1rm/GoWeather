@@ -3,7 +3,6 @@ package me.androidbox.presentation.forecast
 import android.app.Activity
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -18,6 +17,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.DispatchingAndroidInjector_Factory
 import me.androidbox.presentation.R
 import me.androidbox.presentation.common.LocationUtils
+import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.rules.TestComponentRule
 import me.androidbox.presentation.viewAssertions.childAtPosition
 import okhttp3.HttpUrl

@@ -10,8 +10,8 @@ import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsImp
 import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.common.AndroidTestSchedulerProviderImp
-import me.androidbox.presentation.forecast.ForecastPresenter
-import me.androidbox.presentation.forecast.ForecastPresenterImp
+import me.androidbox.presentation.forecast.mvp.ForecastPresenter
+import me.androidbox.presentation.forecast.mvp.ForecastPresenterImp
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapperImp
 
@@ -28,7 +28,11 @@ class TestActivityModule {
     fun provideForecastPresenter(weatherForecastInteractor: WeatherForecastInteractor,
                                  weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
                                  schedulerProvider: SchedulerProvider): ForecastPresenter =
-            ForecastPresenterImp(weatherForecastInteractor, weatherForecastPresentationMapper, schedulerProvider)
+        ForecastPresenterImp(
+            weatherForecastInteractor,
+            weatherForecastPresentationMapper,
+            schedulerProvider
+        )
 
     @Reusable
     @Provides

@@ -1,4 +1,4 @@
-package me.androidbox.presentation.forecast
+package me.androidbox.presentation.forecast.mvp
 
 import me.androidbox.presentation.common.BasePresenter
 

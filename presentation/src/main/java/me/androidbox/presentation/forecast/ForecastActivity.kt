@@ -4,19 +4,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import me.androidbox.presentation.R
+import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsListener
-import me.androidbox.presentation.di.ForecastActivityModule
-import me.androidbox.presentation.di.DaggerForecastActivityComponent
-import me.androidbox.presentation.di.GoWeatherApplication
+import me.androidbox.presentation.di.ForecastActivityComponent
+import me.androidbox.presentation.forecast.mvp.ForecastPresenter
+import me.androidbox.presentation.forecast.mvp.ForecastView
+import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.models.WeatherForecast
 import org.parceler.Parcels
 import javax.inject.Inject
 
-class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, LocationUtilsListener {
+class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView, RetryListener, LocationUtilsListener {
 
     companion object {
         const val WEATHER_FORECAST_KEY = "weatherForecast"
@@ -30,17 +32,11 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
 
     private var fragmentManager: FragmentManager? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+    override fun provideLayoutId(): Int {
+        return R.layout.activity_home
+    }
 
-        DaggerForecastActivityComponent
-            .builder()
-            .forecastActivityModule(ForecastActivityModule(this@ForecastActivity))
-            .goWeatherComponent((application as GoWeatherApplication).component)
-            .build()
-            .inject(this@ForecastActivity)
-
+    override fun setupView(savedInstanceState: Bundle?) {
         fragmentManager = supportFragmentManager
         forecastPresenter.initialize(this)
 
@@ -54,6 +50,41 @@ class ForecastActivity : AppCompatActivity(), ForecastView, RetryListener, Locat
             startRetryFragment()
         }
     }
+
+    override fun setupObservers() {
+        super.setupObservers()
+        viewModel.data.observe(this@ForecastActivity, Observer {
+            println(it)
+        })
+    }
+
+    override fun injectDependencies(forecastActivityComponent: ForecastActivityComponent) =
+        forecastActivityComponent.inject(this@ForecastActivity)
+
+  /*  override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_home)
+
+        DaggerForecastActivityComponent
+            .builder()
+            .forecastActivityModule(ForecastActivityModule(this@ForecastActivity))
+            .goWeatherComponent((application as GoWeatherApplication).component)
+            .build()
+            .inject(this@ForecastActivity)
+
+  *//*      fragmentManager = supportFragmentManager
+        forecastPresenter.initialize(this)
+
+        location.setLocationListener(this)
+        if(location.isLocationServicesEnabled(this)) {
+            startLoadingFragment()
+            location.getLocationCoordinates(this)
+        }
+        else {
+            displayLocationSettings()
+            startRetryFragment()
+        }*//*
+    }*/
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

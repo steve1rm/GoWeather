@@ -3,6 +3,7 @@ package me.androidbox.presentation.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import io.reactivex.disposables.CompositeDisposable
 import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.common.SchedulerProviderImp
 import javax.inject.Singleton
@@ -17,4 +18,8 @@ class GoWeatherApplicationModule(private val application: GoWeatherApplication) 
     @Provides
     @Singleton
     fun provideScheduler(): SchedulerProvider = SchedulerProviderImp()
+
+    @Provides
+    fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
 }
+
