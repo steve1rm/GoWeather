@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import me.androidbox.presentation.di.DaggerForecastActivityComponent
 import me.androidbox.presentation.di.ForecastActivityComponent
+import me.androidbox.presentation.di.ForecastActivityModule
 import me.androidbox.presentation.di.GoWeatherApplication
 import javax.inject.Inject
 
@@ -39,6 +40,7 @@ abstract class BaseActivity<VM: BaseViewModel> : AppCompatActivity() {
         return DaggerForecastActivityComponent
             .builder()
             .goWeatherComponent((application as GoWeatherApplication).component)
+            .forecastActivityModule(ForecastActivityModule(this))
             .build()
     }
 

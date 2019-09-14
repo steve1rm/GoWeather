@@ -32,65 +32,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView, RetryL
 
     private var fragmentManager: FragmentManager? = null
 
-    override fun provideLayoutId(): Int {
-        return R.layout.activity_home
-    }
-
-    override fun setupView(savedInstanceState: Bundle?) {
-        fragmentManager = supportFragmentManager
-        forecastPresenter.initialize(this)
-
-        location.setLocationListener(this)
-        if(location.isLocationServicesEnabled(this)) {
-            startLoadingFragment()
-            location.getLocationCoordinates(this)
-        }
-        else {
-            displayLocationSettings()
-            startRetryFragment()
-        }
-    }
-
-    override fun setupObservers() {
-        super.setupObservers()
-        viewModel.data.observe(this@ForecastActivity, Observer {
-            println(it)
-        })
-    }
-
-    override fun injectDependencies(forecastActivityComponent: ForecastActivityComponent) =
-        forecastActivityComponent.inject(this@ForecastActivity)
-
-  /*  override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-
-        DaggerForecastActivityComponent
-            .builder()
-            .forecastActivityModule(ForecastActivityModule(this@ForecastActivity))
-            .goWeatherComponent((application as GoWeatherApplication).component)
-            .build()
-            .inject(this@ForecastActivity)
-
-  *//*      fragmentManager = supportFragmentManager
-        forecastPresenter.initialize(this)
-
-        location.setLocationListener(this)
-        if(location.isLocationServicesEnabled(this)) {
-            startLoadingFragment()
-            location.getLocationCoordinates(this)
-        }
-        else {
-            displayLocationSettings()
-            startRetryFragment()
-        }*//*
-    }*/
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        location.requestPermissionResults(this, requestCode, permissions, grantResults)
-    }
-
     private fun displayLocationSettings() {
         Toast.makeText(this, "Please enable location on your device - and try again", Toast.LENGTH_LONG).show()
         startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
@@ -139,17 +80,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView, RetryL
         }
     }
 
-    override fun onRetry() {
-        if(location.isLocationServicesEnabled(this)) {
-            startLoadingFragment()
-            location.getLocationCoordinates(this)
-        }
-        else {
-            displayLocationSettings()
-            startRetryFragment()
-        }
-    }
-
     override fun onLocationSuccess(latitude: Double, longitude: Double) {
         forecastPresenter.requestWeatherForecast(latitude, longitude, 5)
     }
@@ -162,5 +92,52 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView, RetryL
     override fun onDestroy() {
         location.removeLocationListener()
         super.onDestroy()
+    }
+
+    override fun provideLayoutId(): Int {
+        return R.layout.activity_home
+    }
+
+    override fun setupView(savedInstanceState: Bundle?) {
+        fragmentManager = supportFragmentManager
+        forecastPresenter.initialize(this)
+
+        location.setLocationListener(this)
+        if(location.isLocationServicesEnabled(this)) {
+            startLoadingFragment()
+            location.getLocationCoordinates(this)
+        }
+        else {
+            displayLocationSettings()
+            startRetryFragment()
+        }
+    }
+
+    override fun setupObservers() {
+        super.setupObservers()
+        viewModel.data.observe(this@ForecastActivity, Observer {
+            println(it)
+        })
+    }
+
+    override fun injectDependencies(forecastActivityComponent: ForecastActivityComponent) =
+        forecastActivityComponent.inject(this@ForecastActivity)
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        location.requestPermissionResults(this, requestCode, permissions, grantResults)
+    }
+
+
+    /* Not used as we have a onRetry lambda instead */
+    override fun onRetry() {
+        if(location.isLocationServicesEnabled(this)) {
+            startLoadingFragment()
+            location.getLocationCoordinates(this)
+        }
+        else {
+            displayLocationSettings()
+            startRetryFragment()
+        }
     }
 }

@@ -1,4 +1,4 @@
-package me.androidbox.presentation.common
+package me.androidbox.presentation.base
 
 import java.lang.ref.WeakReference
 

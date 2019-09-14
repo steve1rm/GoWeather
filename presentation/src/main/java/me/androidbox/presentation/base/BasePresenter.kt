@@ -1,4 +1,4 @@
-package me.androidbox.presentation.common
+package me.androidbox.presentation.base
 
 interface BasePresenter<V> {
     fun attachView(view: V?)

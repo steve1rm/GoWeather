@@ -9,6 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 import me.androidbox.interactors.WeatherForecast
 import me.androidbox.interactors.WeatherForecastInteractor
 import me.androidbox.interactors.WeatherForecastInteractorImp
+import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsImp
 import me.androidbox.presentation.common.SchedulerProvider
@@ -23,7 +24,7 @@ import me.androidbox.presentation.utils.NetworkHelper
 import me.androidbox.presentation.utils.ViewModelProviderFactory
 
 @Module
-class ForecastActivityModule(private val forecastActivity: ForecastActivity) {
+class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
 
     @Reusable
     @Provides
@@ -61,7 +62,7 @@ class ForecastActivityModule(private val forecastActivity: ForecastActivity) {
     @Reusable
     @Provides
     fun provideRetryListener(): RetryListener {
-        return forecastActivity
+        return forecastActivity as ForecastActivity
     }
 
     @Reusable
@@ -69,7 +70,7 @@ class ForecastActivityModule(private val forecastActivity: ForecastActivity) {
     fun provideViewModel(compositeDisposable: CompositeDisposable, networkHelper: NetworkHelper): ForecastViewModel {
         return ViewModelProviders.of(
             forecastActivity,
-            ViewModelProviderFactory<ForecastViewModel>(ForecastViewModel::class) {
+            ViewModelProviderFactory(ForecastViewModel::class) {
                 ForecastViewModel(compositeDisposable, networkHelper)
         }).get(ForecastViewModel::class.java)
     }

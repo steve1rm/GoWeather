@@ -2,13 +2,10 @@ package me.androidbox.presentation.forecast
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,41 +15,17 @@ import kotlinx.android.synthetic.main.weather_forecast.*
 import kotlinx.android.synthetic.main.weather_forecast_header.*
 import me.androidbox.presentation.R
 import me.androidbox.presentation.adapters.ForecastAdapter
-import me.androidbox.presentation.di.DaggerForecastFragmentComponent
-import me.androidbox.presentation.di.GoWeatherApplication
+import me.androidbox.presentation.base.BaseFragment
+import me.androidbox.presentation.di.ForecastFragmentComponent
+import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.models.WeatherForecast
 import org.parceler.Parcels
 import javax.inject.Inject
 
-class ForecastFragment : Fragment() {
+class ForecastFragment : BaseFragment<ForecastViewModel>() {
 
     @Inject
     lateinit var forecastAdapter: ForecastAdapter
-
-    /* .goWeatherComponent((application as GoWeatherApplication).component) */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        DaggerForecastFragmentComponent
-            .builder()
-            .goWeatherComponent((context?.applicationContext as GoWeatherApplication).component)
-            .build()
-            .inject(this)
-
-        return inflater.inflate(R.layout.weather_forecast, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val bundle = arguments
-
-        bundle?.let {
-            val parcelable = it.getParcelable<Parcelable>(ForecastActivity.WEATHER_FORECAST_KEY)
-            val weatherForecast = Parcels.unwrap<WeatherForecast>(parcelable)
-            displayWeather(weatherForecast)
-            startSlideUpAnimation()
-        } ?: run {
-            Toast.makeText(activity, getString(R.string.failedToDisplayData), Toast.LENGTH_LONG).show()
-        }
-    }
 
     private fun displayWeather(weatherForecast: WeatherForecast) {
         tvLocationName.text = weatherForecast.location.name
@@ -80,5 +53,25 @@ class ForecastFragment : Fragment() {
             TransitionManager.beginDelayedTransition(weather_forecast, transition)
             constraintSet2.applyTo(weather_forecast)
         }
+    }
+
+    override fun provideLayoutId() =
+        R.layout.weather_forecast
+
+    override fun setupView(view: View, savedInstanceState: Bundle?) {
+        val bundle = arguments
+
+        bundle?.let {
+            val parcelable = it.getParcelable<Parcelable>(ForecastActivity.WEATHER_FORECAST_KEY)
+            val weatherForecast = Parcels.unwrap<WeatherForecast>(parcelable)
+            displayWeather(weatherForecast)
+            startSlideUpAnimation()
+        } ?: run {
+            Toast.makeText(activity, getString(R.string.failedToDisplayData), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun injectDependencies(forecastFragmentComponent: ForecastFragmentComponent) {
+        forecastFragmentComponent.inject(this)
     }
 }
