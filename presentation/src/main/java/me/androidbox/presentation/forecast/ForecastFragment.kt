@@ -17,15 +17,23 @@ import me.androidbox.presentation.R
 import me.androidbox.presentation.adapters.ForecastAdapter
 import me.androidbox.presentation.base.BaseFragment
 import me.androidbox.presentation.di.ForecastFragmentComponent
+import me.androidbox.presentation.forecast.mvp.ForecastPresenter
+import me.androidbox.presentation.forecast.mvp.ForecastView
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.models.WeatherForecast
 import org.parceler.Parcels
 import javax.inject.Inject
 
-class ForecastFragment : BaseFragment<ForecastViewModel>() {
+class ForecastFragment : BaseFragment<ForecastViewModel>(), ForecastView() {
 
     @Inject
     lateinit var forecastAdapter: ForecastAdapter
+
+    @Inject
+    lateinit var forecastPresenter: ForecastPresenter
+
+    @Inject
+    lateinit var forecastViewModel: ForecastViewModel
 
     private fun displayWeather(weatherForecast: WeatherForecast) {
         tvLocationName.text = weatherForecast.location.name
@@ -73,5 +81,13 @@ class ForecastFragment : BaseFragment<ForecastViewModel>() {
 
     override fun injectDependencies(forecastFragmentComponent: ForecastFragmentComponent) {
         forecastFragmentComponent.inject(this)
+    }
+
+    override fun onForecastSuccess(weatherForecast: WeatherForecast) {
+        forecastPresenter.requestWeatherForecast()
+    }
+
+    override fun onForecastFailure(error: String) {
+
     }
 }

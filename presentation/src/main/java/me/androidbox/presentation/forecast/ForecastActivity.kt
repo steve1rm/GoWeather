@@ -53,8 +53,18 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView, RetryL
         }
     }
 
+    private fun startForecastFragment() {
+        fragmentManager?.let {
+            val fragmentTransaction = it.beginTransaction()
+            fragmentTransaction.replace(R.id.forecastActivityContainer, ForecastFragment(),"ForecastFragment")
+            fragmentTransaction.commit()
+        }
+    }
+
     override fun onForecastSuccess(weatherForecast: WeatherForecast) {
-        val bundle = Bundle()
+
+
+/*        val bundle = Bundle()
         val parcelable = Parcels.wrap(weatherForecast)
         bundle.putParcelable(WEATHER_FORECAST_KEY, parcelable)
         val forecastFragment = ForecastFragment()
@@ -62,7 +72,7 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView, RetryL
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.forecastActivityContainer, forecastFragment, "ForecastFragment")
-        fragmentTransaction.commit()
+        fragmentTransaction.commit()*/
     }
 
     override fun onForecastFailure(error: String) {
@@ -81,7 +91,9 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView, RetryL
     }
 
     override fun onLocationSuccess(latitude: Double, longitude: Double) {
-        forecastPresenter.requestWeatherForecast(latitude, longitude, 5)
+        startForecastFragment()
+     //   forecastPresenter.requestWeatherForecast(latitude, longitude, 5)
+
     }
 
     override fun onLocationFailure(message: String) {
