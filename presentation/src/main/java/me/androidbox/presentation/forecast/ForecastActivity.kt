@@ -11,17 +11,12 @@ import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsListener
 import me.androidbox.presentation.di.ForecastActivityComponent
-import me.androidbox.presentation.forecast.mvp.ForecastPresenter
-import me.androidbox.presentation.forecast.mvp.ForecastView
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
-import me.androidbox.presentation.models.WeatherForecast
-import org.parceler.Parcels
 import javax.inject.Inject
 
 class ForecastActivity : BaseActivity<ForecastViewModel>(), RetryListener, LocationUtilsListener {
 
     companion object {
-        const val WEATHER_FORECAST_KEY = "weatherForecast"
         const val WEATHER_LATITUDE_KEY = "weatherLatitudeKey"
         const val WEATHER_LONGITUDE_KEY = "weatherLongitudeKey"
     }
@@ -57,7 +52,7 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), RetryListener, Locat
         bundle.putDouble(WEATHER_LATITUDE_KEY, latitude)
         bundle.putDouble(WEATHER_LONGITUDE_KEY, longitude)
 
-        val forecastFragment = ForecastFragment()
+        val forecastFragment = ForecastFragment(::onWeatherForecastFetchingFailure)
         forecastFragment.arguments = bundle
 
         fragmentManager?.let {
@@ -66,23 +61,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), RetryListener, Locat
             fragmentTransaction.commit()
         }
     }
-
-  /*  override fun onForecastSuccess(weatherForecast: WeatherForecast) {
-
-*//*        val bundle = Bundle()
-        val parcelable = Parcels.wrap(weatherForecast)
-        bundle.putParcelable(WEATHER_FORECAST_KEY, parcelable)
-        val forecastFragment = ForecastFragment()
-        forecastFragment.arguments = bundle
-
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.forecastActivityContainer, forecastFragment, "ForecastFragment")
-        fragmentTransaction.commit()*//*
-    }
-
-    override fun onForecastFailure(error: String) {
-        startRetryFragment()
-    }*/
 
     private val onRetry: () -> Unit = {
         if(location.isLocationServicesEnabled(this)) {
@@ -93,6 +71,10 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), RetryListener, Locat
             displayLocationSettings()
             startRetryFragment()
         }
+    }
+
+    private fun onWeatherForecastFetchingFailure() {
+        startRetryFragment()
     }
 
     override fun onLocationSuccess(latitude: Double, longitude: Double) {
@@ -115,7 +97,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), RetryListener, Locat
 
     override fun setupView(savedInstanceState: Bundle?) {
         fragmentManager = supportFragmentManager
-    //    forecastPresenter.initialize(this)
 
         location.setLocationListener(this)
         if(location.isLocationServicesEnabled(this)) {
@@ -142,7 +123,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), RetryListener, Locat
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         location.requestPermissionResults(this, requestCode, permissions, grantResults)
     }
-
 
     /* Not used as we have a onRetry lambda instead */
     override fun onRetry() {
