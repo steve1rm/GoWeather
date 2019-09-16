@@ -24,7 +24,8 @@ import me.androidbox.presentation.models.WeatherForecast
 import org.parceler.Parcels
 import javax.inject.Inject
 
-class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit) : BaseFragment<ForecastViewModel>(), ForecastView {
+class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
+    : BaseFragment<ForecastViewModel>(), ForecastView {
 
     @Inject
     lateinit var forecastAdapter: ForecastAdapter
@@ -90,8 +91,6 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit) : 
     }
 
     override fun onForecastFailure(error: String) {
-        Toast.makeText(activity, "Failed to get weather $error", Toast.LENGTH_LONG)
-            .show()
         onFetchWeatherForecastFailure()
     }
 }
