@@ -12,6 +12,7 @@ import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsListener
 import me.androidbox.presentation.di.ForecastActivityComponent
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
+import me.androidbox.presentation.router.ForecastFragmentRouterImp
 import javax.inject.Inject
 
 class ForecastActivity : BaseActivity<ForecastViewModel>(), RetryListener, LocationUtilsListener {
@@ -48,18 +49,8 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), RetryListener, Locat
     }
 
     private fun startForecastFragment(latitude: Double, longitude: Double) {
-        val bundle = Bundle()
-        bundle.putDouble(WEATHER_LATITUDE_KEY, latitude)
-        bundle.putDouble(WEATHER_LONGITUDE_KEY, longitude)
-
-        val forecastFragment = ForecastFragment(::onWeatherForecastFetchingFailure)
-        forecastFragment.arguments = bundle
-
-        fragmentManager?.let {
-            val fragmentTransaction = it.beginTransaction()
-            fragmentTransaction.replace(R.id.forecastActivityContainer, forecastFragment,"ForecastFragment")
-            fragmentTransaction.commit()
-        }
+        val forecastFragmentRouter = ForecastFragmentRouterImp(supportFragmentManager)
+        forecastFragmentRouter.goToForecastFragment(latitude, longitude)
     }
 
     private val onRetry: () -> Unit = {
