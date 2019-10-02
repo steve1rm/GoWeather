@@ -34,8 +34,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListene
     @Inject
     lateinit var loadingFragmentRouter: LoadingFragmentRouterImp
 
-    private var fragmentManager: FragmentManager? = null
-
     private fun displayLocationSettings() {
         Toast.makeText(this, "Please enable location on your device - and try again", Toast.LENGTH_LONG).show()
         startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
@@ -87,8 +85,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListene
     }
 
     override fun setupView(savedInstanceState: Bundle?) {
-        fragmentManager = supportFragmentManager
-
         location.setLocationListener(this)
         if(location.isLocationServicesEnabled(this)) {
             startLoadingFragment()
