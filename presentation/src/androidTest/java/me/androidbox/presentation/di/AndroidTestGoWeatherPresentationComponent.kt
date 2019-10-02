@@ -4,6 +4,7 @@ import androidx.test.espresso.IdlingResource
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
+import io.reactivex.disposables.CompositeDisposable
 import me.androidbox.presentation.common.SchedulerProvider
 import okhttp3.OkHttpClient
 import javax.inject.Singleton

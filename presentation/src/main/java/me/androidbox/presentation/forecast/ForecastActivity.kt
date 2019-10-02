@@ -12,10 +12,10 @@ import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsListener
 import me.androidbox.presentation.di.ForecastActivityComponent
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
-import me.androidbox.presentation.router.ForecastFragmentRouterImp
+import me.androidbox.presentation.router.*
 import javax.inject.Inject
 
-class ForecastActivity : BaseActivity<ForecastViewModel>(), RetryListener, LocationUtilsListener {
+class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListener {
 
     companion object {
         const val WEATHER_LATITUDE_KEY = "weatherLatitudeKey"
@@ -25,6 +25,15 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), RetryListener, Locat
     @Inject
     lateinit var location: LocationUtils
 
+    @Inject
+    lateinit var forecastFragmentRouter: ForecastFragmentRouterImp
+
+    @Inject
+    lateinit var retryFragmentRouter: RetryFragmentRouterImp
+
+    @Inject
+    lateinit var loadingFragmentRouter: LoadingFragmentRouterImp
+
     private var fragmentManager: FragmentManager? = null
 
     private fun displayLocationSettings() {
@@ -33,27 +42,18 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), RetryListener, Locat
     }
 
     private fun startLoadingFragment() {
-        fragmentManager?.let {
-            val fragmentTransaction = it.beginTransaction()
-            fragmentTransaction.replace(R.id.forecastActivityContainer, LoadingFragment(), "LoadingFragment")
-            fragmentTransaction.commit()
-        }
+        loadingFragmentRouter.gotoLoadingFragment(supportFragmentManager)
     }
 
     private fun startRetryFragment() {
-        fragmentManager?.let {
-            val fragmentTransaction = it.beginTransaction()
-            fragmentTransaction.replace(R.id.forecastActivityContainer, RetryFragment(onRetry), "RetryFragment")
-            fragmentTransaction.commit()
-        }
+        retryFragmentRouter.gotoRetryFragment(supportFragmentManager, ::onRetry)
     }
 
     private fun startForecastFragment(latitude: Double, longitude: Double) {
-        val forecastFragmentRouter = ForecastFragmentRouterImp(supportFragmentManager)
-        forecastFragmentRouter.goToForecastFragment(latitude, longitude)
+        forecastFragmentRouter.goToForecastFragment(supportFragmentManager, latitude, longitude, ::onWeatherForecastFetchingFailure)
     }
 
-    private val onRetry: () -> Unit = {
+    private fun onRetry() {
         if(location.isLocationServicesEnabled(this)) {
             startLoadingFragment()
             location.getLocationCoordinates(this)
@@ -113,17 +113,5 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), RetryListener, Locat
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         location.requestPermissionResults(this, requestCode, permissions, grantResults)
-    }
-
-    /* Not used as we have a onRetry lambda instead */
-    override fun onRetry() {
-        if(location.isLocationServicesEnabled(this)) {
-            startLoadingFragment()
-            location.getLocationCoordinates(this)
-        }
-        else {
-            displayLocationSettings()
-            startRetryFragment()
-        }
     }
 }

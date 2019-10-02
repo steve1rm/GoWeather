@@ -61,12 +61,6 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
 
     @Reusable
     @Provides
-    fun provideRetryListener(): RetryListener {
-        return forecastActivity as ForecastActivity
-    }
-
-    @Reusable
-    @Provides
     fun provideViewModel(compositeDisposable: CompositeDisposable, networkHelper: NetworkHelper): ForecastViewModel {
         return ViewModelProviders.of(
             forecastActivity,

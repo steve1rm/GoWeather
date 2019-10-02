@@ -10,18 +10,6 @@ import me.androidbox.presentation.R
 
 class RetryFragment(private val retryListener: () -> Unit) : Fragment() {
 
-   // @Inject
-   // lateinit var activity: RetryListener
-
- /*   override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        DaggerForecastFragmentComponent
-            .builder()
-            .goWeatherComponent((context?.applicationContext as GoWeatherApplication).component)
-            .build()
-            .inject(this)
-    }*/
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.failurecase_layout, container, false)
@@ -31,7 +19,6 @@ class RetryFragment(private val retryListener: () -> Unit) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         btnRetry.setOnClickListener {
             retryListener()
-//            activity.onRetry()
         }
     }
 }

@@ -1,7 +1,6 @@
 package me.androidbox.presentation.forecast
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
@@ -21,7 +20,6 @@ import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastView
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.models.WeatherForecast
-import org.parceler.Parcels
 import javax.inject.Inject
 
 class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)

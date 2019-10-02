@@ -1,5 +1,7 @@
 package me.androidbox.presentation.router
 
+import androidx.fragment.app.FragmentManager
+
 interface ForecastFragmentRouter {
-    fun goToForecastFragment(latitude: Double, longitude: Double)
+    fun goToForecastFragment(fragmentManager: FragmentManager, latitude: Double, longitude: Double, statusCallback: () -> Unit)
 }
