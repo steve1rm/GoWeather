@@ -20,6 +20,7 @@ import me.androidbox.presentation.forecast.mvp.ForecastPresenterImp
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapperImp
+import me.androidbox.presentation.router.*
 import me.androidbox.presentation.utils.NetworkHelper
 import me.androidbox.presentation.utils.ViewModelProviderFactory
 
@@ -68,5 +69,20 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
                 ForecastViewModel(compositeDisposable, networkHelper)
         }).get(ForecastViewModel::class.java)
     }
+
+    @Reusable
+    @Provides
+    fun provideForecastFragmentRouter(): ForecastFragmentRouter =
+        ForecastFragmentRouterImp(forecastActivity.supportFragmentManager)
+
+    @Reusable
+    @Provides
+    fun provideLoadingFragmentRouter(): LoadingFragmentRouter =
+        LoadingFragmentRouterImp(forecastActivity.supportFragmentManager)
+
+    @Reusable
+    @Provides
+    fun provideRetryFragmentRouter(): RetryFragmentRouter =
+        RetryFragmentRouterImp(forecastActivity.supportFragmentManager)
 }
 

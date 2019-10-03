@@ -24,7 +24,7 @@ class ForecastFragmentTest {
 
     @Before
     fun setUp() {
-        forecastFragment = ForecastFragment()
+        forecastFragment = ForecastFragment {}
         assertThat(forecastFragment).isNotNull
     }
 

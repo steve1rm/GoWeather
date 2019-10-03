@@ -26,13 +26,13 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListene
     lateinit var location: LocationUtils
 
     @Inject
-    lateinit var forecastFragmentRouter: ForecastFragmentRouterImp
+    lateinit var forecastFragmentRouter: ForecastFragmentRouter
 
     @Inject
-    lateinit var retryFragmentRouter: RetryFragmentRouterImp
+    lateinit var retryFragmentRouter: RetryFragmentRouter
 
     @Inject
-    lateinit var loadingFragmentRouter: LoadingFragmentRouterImp
+    lateinit var loadingFragmentRouter: LoadingFragmentRouter
 
     private fun displayLocationSettings() {
         Toast.makeText(this, "Please enable location on your device - and try again", Toast.LENGTH_LONG).show()
@@ -40,15 +40,15 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListene
     }
 
     private fun startLoadingFragment() {
-        loadingFragmentRouter.gotoLoadingFragment(supportFragmentManager)
+        loadingFragmentRouter.gotoLoadingFragment()
     }
 
     private fun startRetryFragment() {
-        retryFragmentRouter.gotoRetryFragment(supportFragmentManager, ::onRetry)
+        retryFragmentRouter.gotoRetryFragment(::onRetry)
     }
 
     private fun startForecastFragment(latitude: Double, longitude: Double) {
-        forecastFragmentRouter.goToForecastFragment(supportFragmentManager, latitude, longitude, ::onWeatherForecastFetchingFailure)
+        forecastFragmentRouter.goToForecastFragment(latitude, longitude, ::onWeatherForecastFetchingFailure)
     }
 
     private fun onRetry() {
