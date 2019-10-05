@@ -9,7 +9,6 @@ import me.androidbox.presentation.R
 import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsImp.LocationStatus
-import me.androidbox.presentation.common.LocationUtilsListener
 import me.androidbox.presentation.di.ForecastActivityComponent
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.router.ForecastFragmentRouter
@@ -17,7 +16,7 @@ import me.androidbox.presentation.router.LoadingFragmentRouter
 import me.androidbox.presentation.router.RetryFragmentRouter
 import javax.inject.Inject
 
-class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListener {
+class ForecastActivity : BaseActivity<ForecastViewModel>() {
 
     companion object {
         const val WEATHER_LATITUDE_KEY = "weatherLatitudeKey"
@@ -68,16 +67,11 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListene
         startRetryFragment()
     }
 
-    override fun onDestroy() {
-        location.removeLocationListener()
-        super.onDestroy()
-    }
-
     override fun provideLayoutId(): Int {
         return R.layout.activity_home
     }
 
-    override fun onLocationResult(locationStatus: LocationStatus) {
+    fun onLocationResult(locationStatus: LocationStatus) {
         when(locationStatus) {
             is LocationStatus.Success -> {
                 startForecastFragment(locationStatus.latitude, locationStatus.longitude)
@@ -90,8 +84,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListene
     }
 
     override fun setupView(savedInstanceState: Bundle?) {
-        location.setLocationListener(this)
-
         if(location.isLocationServicesEnabled()) {
             startLoadingFragment()
             location.getLocationCoordinates()

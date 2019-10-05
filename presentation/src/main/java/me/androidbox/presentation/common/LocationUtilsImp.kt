@@ -9,10 +9,9 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
-class LocationUtilsImp(private val activity: Activity, private val locationStatus: (LocationStatus) -> Unit) : LocationUtils {
+class LocationUtilsImp(private val activity: Activity, private val locationResultStatus: (LocationStatus) -> Unit) : LocationUtils {
 
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
-    private var locationUtilsListener: LocationUtilsListener? = null
 
     private companion object {
         const val permissionRequestCode = 1000
@@ -39,12 +38,10 @@ class LocationUtilsImp(private val activity: Activity, private val locationStatu
         else {
             fusedLocationProviderClient?.lastLocation?.addOnSuccessListener(activity) { location ->
                 if (location != null) {
-                  //  locationStatusResult(LocationStatus.Success(location.latitude, location.longitude))
-                    locationUtilsListener?.onLocationResult(LocationStatus.Success(location.latitude, location.longitude))
+                    locationResultStatus(LocationStatus.Success(location.latitude, location.longitude))
                 }
                 else {
-                    locationUtilsListener?.onLocationResult(
-                        LocationStatus.Failure("There are no location coordinates, try opening google maps and trying again"))
+                    locationResultStatus(LocationStatus.Failure("There are no location coordinates, try opening google maps and trying again"))
                 }
             }
         }
@@ -57,23 +54,15 @@ class LocationUtilsImp(private val activity: Activity, private val locationStatu
                 if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     fusedLocationProviderClient?.lastLocation?.addOnSuccessListener(activity) { location ->
                         if(location != null) {
-                            locationUtilsListener?.onLocationResult(LocationStatus.Success(location.latitude, location.longitude))
+                            locationResultStatus(LocationStatus.Success(location.latitude, location.longitude))
                         }
                     }
                 }
                 else {
-                    locationUtilsListener?.onLocationResult(LocationStatus.Failure("Permissions has been denied"))
+                    locationResultStatus(LocationStatus.Failure("Permissions has been denied"))
                 }
             }
         }
-    }
-
-    override fun setLocationListener(locationUtilsListener: LocationUtilsListener) {
-        this.locationUtilsListener = locationUtilsListener
-    }
-
-    override fun removeLocationListener() {
-        this.locationUtilsListener = null
     }
 
     sealed class LocationStatus {
