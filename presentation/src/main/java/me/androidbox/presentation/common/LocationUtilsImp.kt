@@ -14,8 +14,8 @@ class LocationUtilsImp(private val activity: Activity) : LocationUtils {
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var locationUtilsListener: LocationUtilsListener? = null
 
-    companion object {
-        private const val permissionRequestCode = 1000
+    private companion object {
+        const val permissionRequestCode = 1000
     }
 
     override fun isLocationServicesEnabled(): Boolean {
@@ -39,10 +39,11 @@ class LocationUtilsImp(private val activity: Activity) : LocationUtils {
         else {
             fusedLocationProviderClient?.lastLocation?.addOnSuccessListener(activity) { location ->
                 if (location != null) {
-                    locationUtilsListener?.onLocationSuccess(location.latitude, location.longitude)
+                    locationUtilsListener?.onLocationResult(LocationInformation.LocationSuccess(location.latitude, location.longitude))
                 }
                 else {
-                    locationUtilsListener?.onLocationFailure("There are no location coordinates, try opening google maps and trying again")
+                    locationUtilsListener?.onLocationResult(
+                        LocationInformation.LocationFailure("There are no location coordinates, try opening google maps and trying again"))
                 }
             }
         }
@@ -55,12 +56,12 @@ class LocationUtilsImp(private val activity: Activity) : LocationUtils {
                 if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     fusedLocationProviderClient?.lastLocation?.addOnSuccessListener(activity) { location ->
                         if(location != null) {
-                            locationUtilsListener?.onLocationSuccess(location.latitude, location.longitude)
+                            locationUtilsListener?.onLocationResult(LocationInformation.LocationSuccess(location.latitude, location.longitude))
                         }
                     }
                 }
                 else {
-                    locationUtilsListener?.onLocationFailure("Permissions has been denied")
+                    locationUtilsListener?.onLocationResult(LocationInformation.LocationFailure("Permissions has been denied"))
                 }
             }
         }
@@ -72,5 +73,10 @@ class LocationUtilsImp(private val activity: Activity) : LocationUtils {
 
     override fun removeLocationListener() {
         this.locationUtilsListener = null
+    }
+
+    sealed class LocationInformation {
+        class LocationSuccess(val latitude: Double, val longitude: Double) : LocationInformation()
+        class LocationFailure(val errorMessage: String) : LocationInformation()
     }
 }

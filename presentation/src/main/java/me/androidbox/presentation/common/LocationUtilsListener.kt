@@ -1,6 +1,7 @@
 package me.androidbox.presentation.common
 
+import me.androidbox.presentation.common.LocationUtilsImp.LocationInformation
+
 interface LocationUtilsListener {
-    fun onLocationSuccess(latitude: Double, longitude: Double)
-    fun onLocationFailure(message: String)
+    fun onLocationResult(locationInformation: LocationInformation)
 }
