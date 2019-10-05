@@ -9,7 +9,7 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
-class LocationUtilsImp(private val activity: Activity) : LocationUtils {
+class LocationUtilsImp(private val activity: Activity, private val locationStatus: (LocationStatus) -> Unit) : LocationUtils {
 
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var locationUtilsListener: LocationUtilsListener? = null
@@ -39,11 +39,12 @@ class LocationUtilsImp(private val activity: Activity) : LocationUtils {
         else {
             fusedLocationProviderClient?.lastLocation?.addOnSuccessListener(activity) { location ->
                 if (location != null) {
-                    locationUtilsListener?.onLocationResult(LocationInformation.LocationSuccess(location.latitude, location.longitude))
+                  //  locationStatusResult(LocationStatus.Success(location.latitude, location.longitude))
+                    locationUtilsListener?.onLocationResult(LocationStatus.Success(location.latitude, location.longitude))
                 }
                 else {
                     locationUtilsListener?.onLocationResult(
-                        LocationInformation.LocationFailure("There are no location coordinates, try opening google maps and trying again"))
+                        LocationStatus.Failure("There are no location coordinates, try opening google maps and trying again"))
                 }
             }
         }
@@ -56,12 +57,12 @@ class LocationUtilsImp(private val activity: Activity) : LocationUtils {
                 if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     fusedLocationProviderClient?.lastLocation?.addOnSuccessListener(activity) { location ->
                         if(location != null) {
-                            locationUtilsListener?.onLocationResult(LocationInformation.LocationSuccess(location.latitude, location.longitude))
+                            locationUtilsListener?.onLocationResult(LocationStatus.Success(location.latitude, location.longitude))
                         }
                     }
                 }
                 else {
-                    locationUtilsListener?.onLocationResult(LocationInformation.LocationFailure("Permissions has been denied"))
+                    locationUtilsListener?.onLocationResult(LocationStatus.Failure("Permissions has been denied"))
                 }
             }
         }
@@ -75,8 +76,8 @@ class LocationUtilsImp(private val activity: Activity) : LocationUtils {
         this.locationUtilsListener = null
     }
 
-    sealed class LocationInformation {
-        class LocationSuccess(val latitude: Double, val longitude: Double) : LocationInformation()
-        class LocationFailure(val errorMessage: String) : LocationInformation()
+    sealed class LocationStatus {
+        class Success(val latitude: Double, val longitude: Double) : LocationStatus()
+        class Failure(val errorMessage: String) : LocationStatus()
     }
 }

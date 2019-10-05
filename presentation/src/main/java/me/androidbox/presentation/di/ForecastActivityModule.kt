@@ -12,6 +12,7 @@ import me.androidbox.interactors.WeatherForecastInteractorImp
 import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsImp
+import me.androidbox.presentation.common.LocationUtilsImp.LocationStatus
 import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.forecast.ForecastActivity
 import me.androidbox.presentation.forecast.RetryListener
@@ -57,7 +58,7 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
     @Reusable
     @Provides
     fun provideLocationUtils(): LocationUtils {
-        return LocationUtilsImp(forecastActivity)
+        return LocationUtilsImp(forecastActivity, (forecastActivity as ForecastActivity)::onLocationResult)
     }
 
     @Reusable

@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import me.androidbox.presentation.R
 import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
-import me.androidbox.presentation.common.LocationUtilsImp.LocationInformation
+import me.androidbox.presentation.common.LocationUtilsImp.LocationStatus
 import me.androidbox.presentation.common.LocationUtilsListener
 import me.androidbox.presentation.di.ForecastActivityComponent
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
@@ -77,13 +77,13 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListene
         return R.layout.activity_home
     }
 
-    override fun onLocationResult(locationInformation: LocationInformation) {
-        when(locationInformation) {
-            is LocationInformation.LocationSuccess -> {
-                startForecastFragment(locationInformation.latitude, locationInformation.longitude)
+    override fun onLocationResult(locationStatus: LocationStatus) {
+        when(locationStatus) {
+            is LocationStatus.Success -> {
+                startForecastFragment(locationStatus.latitude, locationStatus.longitude)
             }
-            is LocationInformation.LocationFailure -> {
-                Toast.makeText(this, locationInformation.errorMessage, Toast.LENGTH_LONG).show()
+            is LocationStatus.Failure -> {
+                Toast.makeText(this, locationStatus.errorMessage, Toast.LENGTH_LONG).show()
                 startRetryFragment()
             }
         }
