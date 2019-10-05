@@ -52,9 +52,9 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListene
     }
 
     private fun onRetry() {
-        if(location.isLocationServicesEnabled(this)) {
+        if(location.isLocationServicesEnabled()) {
             startLoadingFragment()
-            location.getLocationCoordinates(this)
+            location.getLocationCoordinates()
         }
         else {
             displayLocationSettings()
@@ -66,15 +66,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListene
         startRetryFragment()
     }
 
-    override fun onLocationSuccess(latitude: Double, longitude: Double) {
-        startForecastFragment(latitude, longitude)
-    }
-
-    override fun onLocationFailure(message: String) {
-        startRetryFragment()
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-    }
-
     override fun onDestroy() {
         location.removeLocationListener()
         super.onDestroy()
@@ -84,11 +75,20 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListene
         return R.layout.activity_home
     }
 
+    override fun onLocationSuccess(latitude: Double, longitude: Double) {
+        startForecastFragment(latitude, longitude)
+    }
+
+    override fun onLocationFailure(message: String) {
+        startRetryFragment()
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
     override fun setupView(savedInstanceState: Bundle?) {
         location.setLocationListener(this)
-        if(location.isLocationServicesEnabled(this)) {
+        if(location.isLocationServicesEnabled()) {
             startLoadingFragment()
-            location.getLocationCoordinates(this)
+            location.getLocationCoordinates()
         }
         else {
             displayLocationSettings()
@@ -108,6 +108,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), LocationUtilsListene
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        location.requestPermissionResults(this, requestCode, permissions, grantResults)
+        location.requestPermissionResults(requestCode, permissions, grantResults)
     }
 }
