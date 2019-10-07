@@ -55,7 +55,7 @@ class ForecastActivity : BaseActivity<ForecastViewModel>() {
     private fun onRetry() {
         if(location.isLocationServicesEnabled()) {
             startLoadingFragment()
-            location.getLocationCoordinates()
+            location.getLocationCoordinates(::onLocationResult)
         }
         else {
             displayLocationSettings()
@@ -71,7 +71,7 @@ class ForecastActivity : BaseActivity<ForecastViewModel>() {
         return R.layout.activity_home
     }
 
-    fun onLocationResult(locationStatus: LocationStatus) {
+    private fun onLocationResult(locationStatus: LocationStatus) {
         when(locationStatus) {
             is LocationStatus.Success -> {
                 startForecastFragment(locationStatus.latitude, locationStatus.longitude)
@@ -86,7 +86,7 @@ class ForecastActivity : BaseActivity<ForecastViewModel>() {
     override fun setupView(savedInstanceState: Bundle?) {
         if(location.isLocationServicesEnabled()) {
             startLoadingFragment()
-            location.getLocationCoordinates()
+            location.getLocationCoordinates(::onLocationResult)
         }
         else {
             displayLocationSettings()
@@ -106,6 +106,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        location.requestPermissionResults(requestCode, permissions, grantResults)
+        location.requestPermissionResults(::onLocationResult, requestCode, permissions, grantResults)
     }
 }

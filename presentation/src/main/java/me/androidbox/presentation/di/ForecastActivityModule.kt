@@ -58,7 +58,7 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
     @Reusable
     @Provides
     fun provideLocationUtils(): LocationUtils {
-        return LocationUtilsImp(forecastActivity, (forecastActivity as ForecastActivity)::onLocationResult)
+        return LocationUtilsImp(forecastActivity)
     }
 
     @Reusable

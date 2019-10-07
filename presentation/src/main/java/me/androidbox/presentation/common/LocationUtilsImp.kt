@@ -9,7 +9,7 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
-class LocationUtilsImp(private val activity: Activity, private val locationResultStatus: (LocationStatus) -> Unit) : LocationUtils {
+class LocationUtilsImp(private val activity: Activity) : LocationUtils {
 
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
 
@@ -22,7 +22,7 @@ class LocationUtilsImp(private val activity: Activity, private val locationResul
             .isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
-    override fun getLocationCoordinates() {
+    override fun getLocationCoordinates(locationResultStatus: (LocationStatus) -> Unit) {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity)
 
         if (ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -48,7 +48,7 @@ class LocationUtilsImp(private val activity: Activity, private val locationResul
     }
 
     @SuppressLint("MissingPermission")
-    override fun requestPermissionResults(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun requestPermissionResults(locationResultStatus: (LocationStatus) -> Unit, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when(requestCode) {
             permissionRequestCode -> {
                 if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
