@@ -60,7 +60,7 @@ abstract class BaseFragment<VM: BaseViewModel> : Fragment() {
     private fun buildFragmentComponent(): ForecastFragmentComponent {
         return DaggerForecastFragmentComponent
             .builder()
-            .goWeatherComponent((context!!.applicationContext as GoWeatherApplication).component)
+            .goWeatherApplicationComponent((context!!.applicationContext as GoWeatherApplication).goWeatherApplicationComponent)
             .forecastFragmentModule(ForecastFragmentModule(this))
             .build()
     }

@@ -39,7 +39,7 @@ abstract class BaseActivity<VM: BaseViewModel> : AppCompatActivity() {
     private fun buildActivityComponent(): ForecastActivityComponent {
         return DaggerForecastActivityComponent
             .builder()
-            .goWeatherComponent((application as GoWeatherApplication).component)
+            .goWeatherApplicationComponent((application as GoWeatherApplication).goWeatherApplicationComponent)
             .forecastActivityModule(ForecastActivityModule(this))
             .build()
     }

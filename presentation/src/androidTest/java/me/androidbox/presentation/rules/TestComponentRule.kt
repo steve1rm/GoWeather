@@ -1,7 +1,6 @@
 package me.androidbox.presentation.rules
 
 import android.content.Context
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
 import me.androidbox.presentation.di.*
@@ -26,7 +25,7 @@ class TestComponentRule(private val context: Context): TestRule {
                 .testActivityModule(TestActivityModule())
                 .build()
 
-        application.component = androidTestGoWeatherPresentationComponent
+        application.goWeatherApplicationComponent = androidTestGoWeatherPresentationComponent
 
         idlingResource = androidTestGoWeatherPresentationComponent.idlingResource()
     }

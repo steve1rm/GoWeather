@@ -2,10 +2,7 @@ package me.androidbox.presentation.di
 
 import androidx.test.espresso.IdlingResource
 import dagger.Component
-import dagger.android.AndroidInjector
-import dagger.android.support.AndroidSupportInjectionModule
-import io.reactivex.disposables.CompositeDisposable
-import me.androidbox.presentation.common.SchedulerProvider
+import me.androidbox.presentation.di.application.GoWeatherApplicationComponent
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
@@ -17,7 +14,8 @@ import javax.inject.Singleton
     TestMapperModule::class,
     TestForecastModule::class,
     TestActivityModule::class])
-interface AndroidTestGoWeatherPresentationComponent : GoWeatherComponent {
+interface AndroidTestGoWeatherPresentationComponent :
+    GoWeatherApplicationComponent {
 
   /*  fun schedulerProvider(): SchedulerProvider */
     fun okHttpClient(): OkHttpClient
