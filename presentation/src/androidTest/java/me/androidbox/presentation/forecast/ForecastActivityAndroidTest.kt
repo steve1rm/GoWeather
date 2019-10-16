@@ -89,6 +89,7 @@ class ForecastActivityAndroidTest {
         onView((withId(R.id.action_bar)))
             .check(matches(allOf(hasDescendant(withText(R.string.app_name)), isDisplayed())))
 
+        Thread.sleep(1000)
         /* should display the initial loading screen */
         onView(withId(R.id.ivProgress)).check(matches(isDisplayed()))
 
@@ -131,7 +132,6 @@ class ForecastActivityAndroidTest {
             .check(matches(hasDescendant(allOf(withId(R.id.tvAverageTemperature), withText("34.4"), withEffectiveVisibility(VISIBLE)))))
     }
 
-    @Ignore
     @Test
     fun return_404_error_response() {
         mockWebserver.enqueue(MockResponse().setResponseCode(404))
@@ -168,7 +168,6 @@ class ForecastActivityAndroidTest {
             .check(matches(allOf(withText(R.string.retry), isDisplayed())))
     }
 
-    @Ignore
     @Test
     fun return_malformed_json_response() {
         mockWebserver.enqueue(MockResponse().setBody("malformed json response"))
@@ -182,7 +181,6 @@ class ForecastActivityAndroidTest {
             .check(matches(isDisplayed()))
     }
 
-    @Ignore
     @Test
     fun displayRetryFragment_when_timeoutOccurs() {
         loadFromResources("json/fivedayforecast.json")

@@ -23,6 +23,7 @@ class TestComponentRule(private val context: Context): TestRule {
             DaggerAndroidTestGoWeatherPresentationComponent.builder()
                 .testGoWeatherApplicationModule(TestGoWeatherApplicationModule(application))
                 .testNetworkModule(TestNetworkModule())
+                .testActivityModule(TestActivityModule())
                 .build()
 
         application.component = androidTestGoWeatherPresentationComponent
