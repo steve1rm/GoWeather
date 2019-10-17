@@ -9,10 +9,10 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import me.androidbox.presentation.di.DaggerForecastFragmentComponent
-import me.androidbox.presentation.di.ForecastFragmentComponent
-import me.androidbox.presentation.di.ForecastFragmentModule
+import me.androidbox.presentation.di.forecast.ForecastFragmentComponent
+import me.androidbox.presentation.di.forecast.ForecastFragmentModule
 import me.androidbox.presentation.di.GoWeatherApplication
+import me.androidbox.presentation.di.application.GoWeatherApplicationComponent
 import javax.inject.Inject
 
 abstract class BaseFragment<VM: BaseViewModel> : Fragment() {
@@ -58,10 +58,11 @@ abstract class BaseFragment<VM: BaseViewModel> : Fragment() {
     protected abstract fun injectDependencies(forecastFragmentComponent: ForecastFragmentComponent)
 
     private fun buildFragmentComponent(): ForecastFragmentComponent {
-        return DaggerForecastFragmentComponent
-            .builder()
-            .goWeatherApplicationComponent((context!!.applicationContext as GoWeatherApplication).goWeatherApplicationComponent)
-            .forecastFragmentModule(ForecastFragmentModule(this))
-            .build()
+        return getGoWeatherApplicationComponent()
+            .newForecastFragmentComponent(ForecastFragmentModule(this))
+    }
+
+    private fun getGoWeatherApplicationComponent(): GoWeatherApplicationComponent {
+        return (activity!!.applicationContext as GoWeatherApplication).goWeatherApplicationComponent
     }
 }

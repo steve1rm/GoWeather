@@ -14,7 +14,6 @@ class ForecastFragmentRouterImp(private val fragmentManager: FragmentManager) : 
         bundle.putDouble(ForecastActivity.WEATHER_LONGITUDE_KEY, longitude)
 
         val forecastFragment = ForecastFragment(statusCallback)
-
         forecastFragment.arguments = bundle
 
         fragmentManager.let {

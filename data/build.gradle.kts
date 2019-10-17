@@ -16,8 +16,6 @@ dependencies {
     implementation(Libraries.kotlinStdlib)
     implementation(Libraries.appCompat)
     implementation(Libraries.gson)
-    implementation(Libraries.retrofit2)
-    implementation(Libraries.adapterRxjava2)
     implementation(Libraries.daggerAndroid)
     implementation(Libraries.daggerSupport)
     kapt(Libraries.daggerCompiler)
@@ -25,6 +23,10 @@ dependencies {
     implementation(Libraries.rxjava)
     implementation(Libraries.rxkotlin)
     implementation(Libraries.adapterRxjava2)
+    implementation(Libraries.okhttp)
+    implementation(Libraries.loggingInterceptor)
+    implementation(Libraries.retrofit2)
+    implementation(Libraries.converterGson)
 
     implementation("com.google.android.gms:play-services-location:16.0.0")
 

@@ -1,15 +1,12 @@
-package me.androidbox.presentation.di
+package me.androidbox.presentation.di.forecast
 
-import dagger.Component
-import me.androidbox.presentation.di.application.GoWeatherApplicationComponent
+import dagger.Subcomponent
 import me.androidbox.presentation.di.scopes.FragmentScope
 import me.androidbox.presentation.forecast.ForecastFragment
 import me.androidbox.presentation.forecast.RetryFragment
 
 @FragmentScope
-@Component(
-    dependencies = [GoWeatherApplicationComponent::class],
-    modules = [ForecastFragmentModule::class])
+@Subcomponent(modules = [ForecastFragmentModule::class])
 interface ForecastFragmentComponent {
     fun inject(forecastFragment: ForecastFragment)
     fun inject(retryFragment: RetryFragment)

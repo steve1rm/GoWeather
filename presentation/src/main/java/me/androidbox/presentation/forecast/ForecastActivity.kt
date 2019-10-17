@@ -9,7 +9,7 @@ import me.androidbox.presentation.R
 import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsImp.LocationStatus
-import me.androidbox.presentation.di.ForecastActivityComponent
+import me.androidbox.presentation.di.forecast.ForecastActivityComponent
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.router.ForecastFragmentRouter
 import me.androidbox.presentation.router.LoadingFragmentRouter

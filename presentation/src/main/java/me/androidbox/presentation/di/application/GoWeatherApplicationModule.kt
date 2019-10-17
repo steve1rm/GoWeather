@@ -14,13 +14,14 @@ class GoWeatherApplicationModule(private val application: GoWeatherApplication) 
 
     @Provides
     @Singleton
-    fun provideContext(): Context = application
+    fun provideApplicationContext(): Context = application
 
     @Provides
     @Singleton
     fun provideScheduler(): SchedulerProvider = SchedulerProviderImp()
 
     @Provides
+    @Singleton
     fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
 }
 

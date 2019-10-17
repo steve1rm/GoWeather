@@ -48,15 +48,12 @@ dependencies {
     implementation(Libraries.rxjava)
     implementation(Libraries.rxAndroid)
     implementation(Libraries.rxkotlin)
-    implementation(Libraries.okhttp)
-    implementation(Libraries.loggingInterceptor)
-    implementation(Libraries.retrofit2)
-    implementation(Libraries.adapterRxjava2)
-    implementation(Libraries.converterGson)
     implementation(Libraries.recyclerView)
     implementation(Libraries.paracelerApi)
     kapt(Libraries.paraceler)
     implementation(Libraries.supportTransition)
+    implementation(Libraries.loggingInterceptor)
+
     testImplementation("androidx.fragment:fragment-testing:1.1.0-alpha09")
     debugImplementation("androidx.fragment:fragment-testing:1.1.0-alpha09")
 
@@ -108,6 +105,9 @@ dependencies {
     androidTestImplementation(TestLibraries.espressoIdlingResource)
     androidTestImplementation(TestLibraries.idlingConcurrent)
     androidTestImplementation(TestLibraries.espressoIntents)
+    androidTestImplementation(Libraries.converterGson)
+    implementation(Libraries.retrofit2)
+    androidTestImplementation(Libraries.adapterRxjava2)
 
     kaptAndroidTest(Libraries.daggerCompiler)
     kaptAndroidTest(Libraries.daggerProcessor)

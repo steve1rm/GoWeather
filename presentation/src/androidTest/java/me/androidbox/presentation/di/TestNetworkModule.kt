@@ -6,8 +6,6 @@ import com.jakewharton.espresso.OkHttp3IdlingResource
 import dagger.Module
 import dagger.Provides
 import me.androidbox.presentation.BuildConfig
-import me.androidbox.presentation.common.CustomIdlingResouce
-import me.androidbox.presentation.common.CustomResource
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -65,7 +63,6 @@ class TestNetworkModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
-
 
     @Provides
     fun provideIdlingResource(okHttpClient: OkHttpClient): IdlingResource {

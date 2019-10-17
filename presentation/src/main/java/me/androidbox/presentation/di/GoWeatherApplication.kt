@@ -1,6 +1,7 @@
 package me.androidbox.presentation.di
 
 import android.app.Application
+import androidbox.me.di.MapperModule
 import me.androidbox.presentation.di.application.DaggerGoWeatherApplicationComponent
 import me.androidbox.presentation.di.application.GoWeatherApplicationModule
 import me.androidbox.presentation.di.application.GoWeatherApplicationComponent
@@ -15,7 +16,5 @@ class GoWeatherApplication : Application() {
             .builder()
             .goWeatherApplicationModule(GoWeatherApplicationModule(this@GoWeatherApplication))
             .build()
-
-       //     goWeatherApplicationComponent.inject(this@GoWeatherApplication)
     }
 }

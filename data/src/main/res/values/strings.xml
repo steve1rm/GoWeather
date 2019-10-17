@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="goweatherapikey" translatable="false">a4d0f1b25ce7d6d29d28bea49fed1df6</string>
+    <string name="baseUrl" translatable="false">http://api.weatherstack.com</string>
 </resources>

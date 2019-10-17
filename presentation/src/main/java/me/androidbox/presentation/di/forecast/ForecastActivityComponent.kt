@@ -1,15 +1,12 @@
-package me.androidbox.presentation.di
+package me.androidbox.presentation.di.forecast
 
-import dagger.Component
-import me.androidbox.presentation.di.application.GoWeatherApplicationComponent
+import dagger.Subcomponent
 import me.androidbox.presentation.di.scopes.ActivityScope
 import me.androidbox.presentation.forecast.ForecastActivity
 import me.androidbox.presentation.forecast.RetryFragment
 
 @ActivityScope
-@Component(
-    dependencies = [GoWeatherApplicationComponent::class],
-    modules = [ForecastActivityModule::class])
+@Subcomponent(modules = [ForecastActivityModule::class])
 interface ForecastActivityComponent {
     fun inject(forecastActivity: ForecastActivity)
     fun inject(retryFragment: RetryFragment)

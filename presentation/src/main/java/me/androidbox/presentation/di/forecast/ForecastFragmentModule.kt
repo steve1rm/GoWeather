@@ -1,4 +1,4 @@
-package me.androidbox.presentation.di
+package me.androidbox.presentation.di.forecast
 
 import androidx.lifecycle.ViewModelProviders
 import dagger.Module
@@ -13,6 +13,7 @@ import me.androidbox.presentation.adapters.ForecastAdapter
 import me.androidbox.presentation.adapters.ForecastDelegate
 import me.androidbox.presentation.base.BaseFragment
 import me.androidbox.presentation.common.SchedulerProvider
+import me.androidbox.presentation.di.scopes.FragmentScope
 import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastPresenterImp
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
@@ -42,13 +43,13 @@ class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>) {
         }).get(ForecastViewModel::class.java)
     }
 
-    @Reusable
+    @FragmentScope
     @Provides
     fun provideWeatherForecastInteractor(weatherForecast: WeatherForecast): WeatherForecastInteractor {
         return WeatherForecastInteractorImp(weatherForecast)
     }
 
-    @Reusable
+    @FragmentScope
     @Provides
     fun provideWeatherForecastPresentationMapper(): WeatherForecastPresentationMapper =
         WeatherForecastPresentationMapperImp()

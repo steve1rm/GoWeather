@@ -1,4 +1,4 @@
-package me.androidbox.presentation.di
+package me.androidbox.presentation.di.forecast
 
 import android.content.Context
 import androidx.lifecycle.ViewModelProviders
@@ -12,10 +12,8 @@ import me.androidbox.interactors.WeatherForecastInteractorImp
 import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsImp
-import me.androidbox.presentation.common.LocationUtilsImp.LocationStatus
 import me.androidbox.presentation.common.SchedulerProvider
-import me.androidbox.presentation.forecast.ForecastActivity
-import me.androidbox.presentation.forecast.RetryListener
+import me.androidbox.presentation.di.application.GoWeatherApplicationComponent
 import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastPresenterImp
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel

@@ -6,10 +6,10 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import me.androidbox.presentation.di.DaggerForecastActivityComponent
-import me.androidbox.presentation.di.ForecastActivityComponent
-import me.androidbox.presentation.di.ForecastActivityModule
 import me.androidbox.presentation.di.GoWeatherApplication
+import me.androidbox.presentation.di.application.GoWeatherApplicationComponent
+import me.androidbox.presentation.di.forecast.ForecastActivityComponent
+import me.androidbox.presentation.di.forecast.ForecastActivityModule
 import javax.inject.Inject
 
 abstract class BaseActivity<VM: BaseViewModel> : AppCompatActivity() {
@@ -37,11 +37,8 @@ abstract class BaseActivity<VM: BaseViewModel> : AppCompatActivity() {
     }
 
     private fun buildActivityComponent(): ForecastActivityComponent {
-        return DaggerForecastActivityComponent
-            .builder()
-            .goWeatherApplicationComponent((application as GoWeatherApplication).goWeatherApplicationComponent)
-            .forecastActivityModule(ForecastActivityModule(this))
-            .build()
+        return getGoWeatherApplicationComponent()
+            .newForecastActivityComponent(ForecastActivityModule(this))
     }
 
     internal fun showMessage(message: String) =
@@ -56,4 +53,8 @@ abstract class BaseActivity<VM: BaseViewModel> : AppCompatActivity() {
     protected abstract fun setupView(savedInstanceState: Bundle?)
 
     protected abstract fun injectDependencies(forecastActivityComponent: ForecastActivityComponent)
+
+    private fun getGoWeatherApplicationComponent(): GoWeatherApplicationComponent {
+        return (application as GoWeatherApplication).goWeatherApplicationComponent
+    }
 }
