@@ -1,5 +1,6 @@
 package me.androidbox.presentation.di.forecast
 
+import android.content.Context
 import dagger.Subcomponent
 import me.androidbox.presentation.di.scopes.ActivityScope
 import me.androidbox.presentation.forecast.ForecastActivity

@@ -59,7 +59,7 @@ abstract class BaseFragment<VM: BaseViewModel> : Fragment() {
 
     private fun buildFragmentComponent(): ForecastFragmentComponent {
         return getGoWeatherApplicationComponent()
-            .newForecastFragmentComponent(ForecastFragmentModule(this))
+            .newForecastFragmentComponent(ForecastFragmentModule(this, context!!))
     }
 
     private fun getGoWeatherApplicationComponent(): GoWeatherApplicationComponent {

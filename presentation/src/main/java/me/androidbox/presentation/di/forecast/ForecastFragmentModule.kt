@@ -1,5 +1,7 @@
 package me.androidbox.presentation.di.forecast
 
+import android.content.Context
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import dagger.Module
 import dagger.Provides
@@ -24,7 +26,15 @@ import me.androidbox.presentation.utils.NetworkHelper
 import me.androidbox.presentation.utils.ViewModelProviderFactory
 
 @Module
-class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>) {
+class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>, private val context: Context) {
+
+    @FragmentScope
+    @Provides
+    fun provideFragment(): Fragment = forecastFragment
+
+    @FragmentScope
+    @Provides
+    fun provideContext(): Context = context
 
     @Provides
     fun providesForecastAdapter(forecastDelegate: BaseDelegate<ForecastDay>): ForecastAdapter =
@@ -33,6 +43,12 @@ class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>) {
     @Provides
     fun providesForecastDelegate(): BaseDelegate<ForecastDay> =
         ForecastDelegate(1)
+
+    @Reusable
+    @Provides
+    fun provideNetworkHelper(context: Context) : NetworkHelper {
+        return NetworkHelper(context)
+    }
 
     @Provides
     fun provideViewModel(compositeDisposable: CompositeDisposable, networkHelper: NetworkHelper): ForecastViewModel {

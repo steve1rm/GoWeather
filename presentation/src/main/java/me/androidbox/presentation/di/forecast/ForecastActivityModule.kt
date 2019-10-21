@@ -1,5 +1,6 @@
 package me.androidbox.presentation.di.forecast
 
+import android.app.Activity
 import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import dagger.Module
@@ -13,7 +14,6 @@ import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsImp
 import me.androidbox.presentation.common.SchedulerProvider
-import me.androidbox.presentation.di.application.GoWeatherApplicationComponent
 import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastPresenterImp
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
@@ -25,6 +25,10 @@ import me.androidbox.presentation.utils.ViewModelProviderFactory
 
 @Module
 class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
+
+    @Reusable
+    @Provides
+    fun provideActivity(): Activity = forecastActivity
 
     @Reusable
     @Provides
@@ -57,6 +61,12 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
     @Provides
     fun provideLocationUtils(): LocationUtils {
         return LocationUtilsImp(forecastActivity)
+    }
+
+    @Reusable
+    @Provides
+    fun provideNetworkHelper(context: Context) : NetworkHelper {
+        return NetworkHelper(context)
     }
 
     @Reusable
