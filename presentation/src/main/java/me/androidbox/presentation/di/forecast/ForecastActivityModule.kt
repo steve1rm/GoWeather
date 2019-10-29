@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import io.reactivex.disposables.CompositeDisposable
 import me.androidbox.interactors.WeatherForecast
 import me.androidbox.interactors.WeatherForecastInteractor
@@ -14,6 +13,7 @@ import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsImp
 import me.androidbox.presentation.common.SchedulerProvider
+import me.androidbox.presentation.di.scopes.ActivityScope
 import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastPresenterImp
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
@@ -26,21 +26,23 @@ import me.androidbox.presentation.utils.ViewModelProviderFactory
 @Module
 class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
 
-    @Reusable
+    @ActivityScope
     @Provides
     fun provideActivity(): Activity = forecastActivity
 
-    @Reusable
+    @ActivityScope
     @Provides
-    fun provideContext(): Context = forecastActivity
+    fun provideContext(activity: Activity): Context {
+        return activity
+    }
 
-    @Reusable
+    @ActivityScope
     @Provides
     fun provideWeatherForecastInteractor(weatherForecast: WeatherForecast): WeatherForecastInteractor {
         return WeatherForecastInteractorImp(weatherForecast)
     }
 
-    @Reusable
+    @ActivityScope
     @Provides
     fun provideForecastPresenter(weatherForecastInteractor: WeatherForecastInteractor,
                                  weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
@@ -52,24 +54,18 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
             schedulerProvider
         )
 
-    @Reusable
+    @ActivityScope
     @Provides
     fun provideWeatherForecastPresentationMapper(): WeatherForecastPresentationMapper =
             WeatherForecastPresentationMapperImp()
 
-    @Reusable
+    @ActivityScope
     @Provides
     fun provideLocationUtils(): LocationUtils {
         return LocationUtilsImp(forecastActivity)
     }
 
-    @Reusable
-    @Provides
-    fun provideNetworkHelper(context: Context) : NetworkHelper {
-        return NetworkHelper(context)
-    }
-
-    @Reusable
+    @ActivityScope
     @Provides
     fun provideViewModel(compositeDisposable: CompositeDisposable, networkHelper: NetworkHelper): ForecastViewModel {
         return ViewModelProviders.of(
@@ -79,17 +75,17 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
         }).get(ForecastViewModel::class.java)
     }
 
-    @Reusable
+    @ActivityScope
     @Provides
     fun provideForecastFragmentRouter(): ForecastFragmentRouter =
         ForecastFragmentRouterImp(forecastActivity.supportFragmentManager)
 
-    @Reusable
+    @ActivityScope
     @Provides
     fun provideLoadingFragmentRouter(): LoadingFragmentRouter =
         LoadingFragmentRouterImp(forecastActivity.supportFragmentManager)
 
-    @Reusable
+    @ActivityScope
     @Provides
     fun provideRetryFragmentRouter(): RetryFragmentRouter =
         RetryFragmentRouterImp(forecastActivity.supportFragmentManager)

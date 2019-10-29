@@ -32,24 +32,22 @@ class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>, priv
     @Provides
     fun provideFragment(): Fragment = forecastFragment
 
-    @FragmentScope
-    @Provides
-    fun provideContext(): Context = context
-
     @Provides
     fun providesForecastAdapter(forecastDelegate: BaseDelegate<ForecastDay>): ForecastAdapter =
         ForecastAdapter(forecastDelegate)
 
+    @FragmentScope
     @Provides
     fun providesForecastDelegate(): BaseDelegate<ForecastDay> =
         ForecastDelegate(1)
 
-    @Reusable
+    @FragmentScope
     @Provides
     fun provideNetworkHelper(context: Context) : NetworkHelper {
         return NetworkHelper(context)
     }
 
+    @FragmentScope
     @Provides
     fun provideViewModel(compositeDisposable: CompositeDisposable, networkHelper: NetworkHelper): ForecastViewModel {
         return ViewModelProviders.of(
@@ -70,6 +68,7 @@ class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>, priv
     fun provideWeatherForecastPresentationMapper(): WeatherForecastPresentationMapper =
         WeatherForecastPresentationMapperImp()
 
+    @FragmentScope
     @Provides
     fun provideForecastPresenter(weatherForecastInteractor: WeatherForecastInteractor,
                                  weatherForecastPresentationMapper: WeatherForecastPresentationMapper,

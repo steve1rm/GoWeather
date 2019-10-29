@@ -1,8 +1,11 @@
 package me.androidbox.presentation.utils
 
 import android.content.Context
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NetworkHelper(private val context: Context) {
+@Singleton
+class NetworkHelper @Inject constructor(private val context: Context) {
 
     fun isNetworkConnected() = false
 }

@@ -1,6 +1,7 @@
 package me.androidbox.presentation.di.application
 
 import android.app.Application
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -14,6 +15,10 @@ class GoWeatherApplicationModule(private val application: Application) {
     @Provides
     @Singleton
     fun provideApplicationContext() = application
+
+    @Provides
+    @Singleton
+    fun provideContext(): Context = application
 
     @Provides
     @Singleton
