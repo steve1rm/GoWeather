@@ -3,13 +3,15 @@ package androidbox.me.mappers
 import androidbox.me.entities.*
 import me.androidbox.models.*
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
     override fun map(entity: WeatherForecastEntity): WeatherForecastModel {
         return WeatherForecastModel(
-            mapToLocationModel(entity.location),
-            mapToCurrentModel(entity.current),
-            mapToForecastModel(entity.forecast))
+            LocationModel("", "", ""),
+            CurrentModel(12),
+            ForecastModel(listOf())
+        )
     }
 
     private fun mapToLocationModel(location: LocationEntity): LocationModel {
@@ -23,12 +25,12 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
     private fun mapToForecastModel(forecast: ForecastEntity): ForecastModel {
         val forecastDayList = mutableListOf<ForecastDayModel>()
 
-        forecast.forecastDay.forEach {
+   /*     forecast.forecastDay.forEach {
             forecastDayList.add(ForecastDayModel(
                 it.date,
                 it.dateEpoch,
                 mapToForecastDay(it.day)))
-        }
+        }*/
 
         return ForecastModel(forecastDayList.toList())
     }

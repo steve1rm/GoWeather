@@ -9,9 +9,9 @@ import me.androidbox.models.WeatherForecastModel
 import java.util.concurrent.TimeUnit
 
 class ForecastRequestImp(private val weatherForecastService: WeatherForecastService,
-                                             private val apiKey: String,
-                                             private val forecastRequestEntityMapper: ForecastRequestEntityMapper,
-                                             private val forecastRequestDomainMapper: ForecastRequestDomainMapper) : WeatherForecast {
+                         private val apiKey: String,
+                         private val forecastRequestEntityMapper: ForecastRequestEntityMapper,
+                         private val forecastRequestDomainMapper: ForecastRequestDomainMapper) : WeatherForecast {
 
     override fun requestWeatherForecast(forecastRequestModel: ForecastRequestModel): Single<WeatherForecastModel> {
         val forecastRequestEntity = forecastRequestEntityMapper.map(forecastRequestModel)
