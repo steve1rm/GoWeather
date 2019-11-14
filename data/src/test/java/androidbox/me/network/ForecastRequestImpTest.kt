@@ -3,7 +3,7 @@ package androidbox.me.network
 import androidbox.me.entities.CurrrentEntity
 import androidbox.me.entities.ForecastEntity
 import androidbox.me.entities.LocationEntity
-import androidbox.me.entities.WeatherForecastEntity
+import androidbox.me.entities.WeatherForecastModel
 import androidbox.me.mappers.ForecastRequestDomainMapper
 import androidbox.me.mappers.ForecastRequestEntityMapper
 import androidbox.me.network.di.DaggerTestDataComponent
@@ -59,7 +59,7 @@ class ForecastRequestImpTest {
     fun `should request a 5 day forecast`() {
         whenever(weatherForecastService.forecast(apiKey, "34.858585,58.345345", 5))
             .thenReturn(Single.just(
-                WeatherForecastEntity(
+                WeatherForecastModel(
                     LocationEntity("", "", ""),
                     CurrrentEntity(45.5F),
                     ForecastEntity(emptyList()))))

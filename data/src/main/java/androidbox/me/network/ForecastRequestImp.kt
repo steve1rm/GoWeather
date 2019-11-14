@@ -2,7 +2,6 @@ package androidbox.me.network
 
 import androidbox.me.mappers.ForecastRequestDomainMapper
 import androidbox.me.mappers.ForecastRequestEntityMapper
-import androidbox.me.utils.LocationTransformer
 import io.reactivex.Single
 import me.androidbox.interactors.WeatherForecast
 import me.androidbox.models.ForecastRequestModel
@@ -16,7 +15,6 @@ class ForecastRequestImp(private val weatherForecastService: WeatherForecastServ
 
     override fun requestWeatherForecast(forecastRequestModel: ForecastRequestModel): Single<WeatherForecastModel> {
         val forecastRequestEntity = forecastRequestEntityMapper.map(forecastRequestModel)
-        val query = LocationTransformer.provideLocationCoordinates(forecastRequestEntity.latitude, forecastRequestEntity.longitude)
 
         return weatherForecastService.forecast(apiKey, forecastRequestEntity.latitude, forecastRequestEntity.longitude, forecastRequestEntity.days)
             .timeout(10, TimeUnit.SECONDS)

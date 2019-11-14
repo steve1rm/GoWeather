@@ -29,8 +29,8 @@ class ForecastRequestDomainMapperImpTest {
         }
     }
 
-    private fun createWeatherForecastEntity(): WeatherForecastEntity {
-        return WeatherForecastEntity(
+    private fun createWeatherForecastEntity(): WeatherForecastModel {
+        return WeatherForecastModel(
             createLocationEntity(),
             createCurrent(),
             createForecast())
