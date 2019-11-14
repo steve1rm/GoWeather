@@ -1,41 +1,37 @@
 package androidbox.me.mappers
 
-import androidbox.me.entities.*
 import androidbox.me.entities.ForecastEntity
-import me.androidbox.models.*
+import androidbox.me.entities.WeatherForecastEntity
+import me.androidbox.models.ForecastModel
+import me.androidbox.models.WeatherForecastModel
+import me.androidbox.models.WeatherModel
 
 class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
-    override fun map(model: WeatherForecastModel): WeatherForecastModel {
+
+    override fun map(entity: WeatherForecastEntity): WeatherForecastModel {
         return WeatherForecastModel(
-            LocationModel("", "", ""),
-            CurrentModel(12),
-            ForecastEntity(listOf())
-        )
+            mapToForecastModel(entity.forecast),
+            entity.cityName,
+            entity.timeZone,
+            entity.countryCode,
+            entity.stateCode)
     }
 
-    private fun mapToLocationModel(location: LocationEntity): LocationModel {
-        return LocationModel(location.name, location.region, location.country)
-    }
+    private fun mapToForecastModel(forecastEntityList: List<ForecastEntity>): List<ForecastModel> {
+        val forecastModelList: MutableList<ForecastModel> = mutableListOf()
 
-    private fun mapToCurrentModel(current: CurrrentEntity): CurrentModel {
-        return CurrentModel(current.temperatureInCelsius.toInt())
-    }
+        forecastEntityList.forEach {
+            forecastModelList.add(
+                ForecastModel(
+                    it.temp,
+                    it.highTemp,
+                    it.lowTemp,
+                    it.feelsLikeMinTemp,
+                    it.feelsLikeMaxTemp,
+                    WeatherModel(it.weather.icon, it.weather.code, it.weather.description)))
+        }
 
-    private fun mapToForecastModel(forecast: ForecastEntity): ForecastEntity {
-        val forecastDayList = mutableListOf<ForecastDayModel>()
-
-   /*     forecast.forecastDay.forEach {
-            forecastDayList.add(ForecastDayModel(
-                it.date,
-                it.dateEpoch,
-                mapToForecastDay(it.day)))
-        }*/
-
-        return ForecastEntity(forecastDayList.toList())
-    }
-
-    private fun mapToForecastDay(day: DayEntity): DayModel {
-        return DayModel(day.averageTemperatureInCelsius)
+        return forecastModelList.toList()
     }
 }
 

@@ -8,4 +8,3 @@ data class WeatherForecastEntity(
     @SerializedName("timezone") val timeZone: String,
     @SerializedName("country_code") val countryCode: String,
     @SerializedName("state_code") val stateCode: String)
-

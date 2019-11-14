@@ -1,6 +1,6 @@
 package androidbox.me.network
 
-import androidbox.me.entities.WeatherForecastModel
+import androidbox.me.entities.WeatherForecastEntity
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -10,5 +10,5 @@ interface WeatherForecastService {
     fun forecast(@Query("key") key: String,
                  @Query("lat") latitude: Double,
                  @Query("lon") longitude: Double,
-                 @Query("days") days: Int): Single<WeatherForecastModel>
+                 @Query("days") days: Int): Single<WeatherForecastEntity>
 }
