@@ -34,6 +34,15 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
     @Inject
     lateinit var forecastViewModel: ForecastViewModel
 
+
+    override fun onForecastSuccess(weatherForecast: WeatherForecast) {
+        displayWeather(weatherForecast)
+    }
+
+    override fun onForecastFailure(error: String) {
+        onFetchWeatherForecastFailure()
+    }
+    
     private fun displayWeather(weatherForecast: WeatherForecast) {
         tvLocationName.text = weatherForecast.cityName
         val temperatureWithDegrees = "${weatherForecast.forecast[0].temp}\u00B0"
@@ -51,10 +60,11 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
     private fun startSlideUpAnimation() {
         weather_forecast.post {
             val constraintSet1 = ConstraintSet()
-            constraintSet1.clone(weather_forecast)
             val constraintSet2 = ConstraintSet()
-            constraintSet2.clone(activity, R.layout.weather_forecast_slide)
             val transition = ChangeBounds()
+
+            constraintSet1.clone(weather_forecast)
+            constraintSet2.clone(activity, R.layout.weather_forecast_slide)
             transition.duration = 500
             transition.interpolator = AccelerateDecelerateInterpolator()
             TransitionManager.beginDelayedTransition(weather_forecast, transition)
@@ -82,13 +92,5 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
 
     override fun injectDependencies(forecastFragmentComponent: ForecastFragmentComponent) {
         forecastFragmentComponent.inject(this)
-    }
-
-    override fun onForecastSuccess(weatherForecast: WeatherForecast) {
-        displayWeather(weatherForecast)
-    }
-
-    override fun onForecastFailure(error: String) {
-        onFetchWeatherForecastFailure()
     }
 }
