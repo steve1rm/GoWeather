@@ -40,7 +40,7 @@ class ForecastDelegate(private val viewType: Int) : BaseDelegate<Forecast> {
         /* Create date object from string and format it to 'Sunday 17' */
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val localDate = LocalDate.parse(date, formatter)
-        val dayFormatter = DateTimeFormatter.ofPattern("EEEE dd")
+        val dayFormatter = DateTimeFormatter.ofPattern("EEEE, MMM dd")
 
         return localDate.format(dayFormatter)
     }

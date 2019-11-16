@@ -84,7 +84,7 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
 
             startSlideUpAnimation()
             forecastPresenter.initialize(this)
-            forecastPresenter.requestWeatherForecast(latitude, longitude, 5)
+            forecastPresenter.requestWeatherForecast(latitude, longitude, 16)
 
         } ?: Toast.makeText(activity, getString(R.string.failedToDisplayData), Toast.LENGTH_LONG).show()
 
