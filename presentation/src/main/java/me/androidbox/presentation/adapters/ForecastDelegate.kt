@@ -27,9 +27,11 @@ class ForecastDelegate(private val viewType: Int) : BaseDelegate<Forecast> {
     override fun bindViewHolder(holder: RecyclerView.ViewHolder, position: Int, items: List<Forecast>) {
         if(holder is ForecastViewHolder) {
             holder.run {
-                tvWeekDay.text = getWeekday(items[position].validDate)
                 val temperature = "${items[position].temp}\u00B0"
+
+                tvWeekDay.text = getWeekday(items[position].validDate)
                 tvAverageTemperature.text = temperature
+                tvWeatherDescription.text = items[position].weather.description
             }
         }
     }

@@ -42,7 +42,7 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
     override fun onForecastFailure(error: String) {
         onFetchWeatherForecastFailure()
     }
-    
+
     private fun displayWeather(weatherForecast: WeatherForecast) {
         tvLocationName.text = weatherForecast.cityName
         val temperatureWithDegrees = "${weatherForecast.forecast[0].temp}\u00B0"
