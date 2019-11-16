@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.androidbox.presentation.R
 import me.androidbox.presentation.models.Forecast
-import me.androidbox.presentation.models.ForecastDay
 import me.androidbox.presentation.viewholders.ForecastViewHolder
-import java.text.SimpleDateFormat
-import java.util.*
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
+
 
 class ForecastDelegate(private val viewType: Int) : BaseDelegate<Forecast> {
     override fun getViewType(): Int {
@@ -28,16 +28,18 @@ class ForecastDelegate(private val viewType: Int) : BaseDelegate<Forecast> {
         if(holder is ForecastViewHolder) {
             holder.run {
                 tvWeekDay.text = getWeekday(items[position].validDate)
-                tvAverageTemperature.text = items[position].temp.toString()
+                val temperature = "${items[position].temp}\u00B0"
+                tvAverageTemperature.text = temperature
             }
         }
     }
 
     private fun getWeekday(date: String): String {
-        val longDate = date.toLong()
-        val simpleDateFormat = SimpleDateFormat("EEEE", Locale.getDefault())
-        val dateFormat = Date(longDate * 1000)
+        /* Create date object from string and format it to 'Sunday 17' */
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        val localDate = LocalDate.parse(date, formatter)
+        val dayFormatter = DateTimeFormatter.ofPattern("EEEE dd")
 
-        return simpleDateFormat.format(dateFormat)
+        return localDate.format(dayFormatter)
     }
 }

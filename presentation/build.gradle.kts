@@ -116,4 +116,6 @@ dependencies {
     implementation(project(":data"))
 
     implementation("com.google.code.findbugs:jsr305:3.0.2")
+
+    implementation("com.jakewharton.threetenabp:threetenabp:1.2.1")
 }
