@@ -1,40 +1,37 @@
 package me.androidbox.presentation.mappers
 
-import me.androidbox.models.*
-import me.androidbox.presentation.models.*
-import javax.inject.Inject
+import me.androidbox.models.ForecastModel
+import me.androidbox.models.WeatherForecastModel
+import me.androidbox.presentation.models.Forecast
+import me.androidbox.presentation.models.Weather
+import me.androidbox.presentation.models.WeatherForecast
 
 class WeatherForecastPresentationMapperImp : WeatherForecastPresentationMapper {
     override fun map(domain: WeatherForecastModel): WeatherForecast {
         return WeatherForecast(
-            mapToLocation(domain.location),
-            mapToCurrent(domain.current),
-            mapToForecast(domain.forecast))
+            mapToForecast(domain.forecast),
+            domain.cityName,
+            domain.timeZone,
+            domain.countryCode,
+            domain.stateCode)
     }
 
-    private fun mapToLocation(location: LocationModel): Location {
-        return Location(location.name, location.region, location.country)
-    }
+    private fun mapToForecast(forecastModelList: List<ForecastModel>): List<Forecast> {
+        val forecastList = mutableListOf<Forecast>()
 
-    private fun mapToCurrent(current: CurrentModel): Current {
-        return Current(current.temperatureInCelsius)
-    }
-
-    private fun mapToForecast(forecast: ForecastModel): Forecast {
-        val forecastDayList = mutableListOf<ForecastDay>()
-
-        forecast.forecastDay.forEach {
-            forecastDayList.add(
-                ForecastDay(
-                    it.date,
-                    it.dateEpoch,
-                    mapToForecastDay(it.day)))
+        forecastModelList.forEach {
+            forecastList.add(
+                Forecast(
+                    it.temp,
+                    it.highTemp,
+                    it.lowTemp,
+                    it.feelsLikeMinTemp,
+                    it.feelsLikeMaxTemp,
+                    it.validDate,
+                    Weather(it.weather.icon, it.weather.code, it.weather.description)
+                ))
         }
 
-        return Forecast(forecastDayList.toList())
-    }
-
-    private fun mapToForecastDay(day: DayModel): Day {
-        return Day(day.averageTemperatureInCelsius)
+        return forecastList.toList()
     }
 }

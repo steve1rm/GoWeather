@@ -28,6 +28,7 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
                     it.lowTemp,
                     it.feelsLikeMinTemp,
                     it.feelsLikeMaxTemp,
+                    it.validDate,
                     WeatherModel(it.weather.icon, it.weather.code, it.weather.description)))
         }
 

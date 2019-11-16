@@ -5,6 +5,8 @@ import org.parceler.ParcelConstructor
 
 @Parcel(Parcel.Serialization.BEAN)
 data class WeatherForecast @ParcelConstructor constructor(
-    val location: Location,
-    val current: Current,
-    val forecast: Forecast)
+    val forecast: List<Forecast>,
+    val cityName: String,
+    val timeZone: String,
+    val countryCode: String,
+    val stateCode: String)

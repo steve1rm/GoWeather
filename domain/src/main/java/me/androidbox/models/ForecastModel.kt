@@ -6,4 +6,5 @@ data class ForecastModel(
     val lowTemp: Float,
     val feelsLikeMinTemp: Float,
     val feelsLikeMaxTemp: Float,
+    val validDate: String,
     val weather: WeatherModel)

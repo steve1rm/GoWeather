@@ -21,6 +21,7 @@ import me.androidbox.presentation.forecast.mvp.ForecastPresenterImp
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapperImp
+import me.androidbox.presentation.models.Forecast
 import me.androidbox.presentation.models.ForecastDay
 import me.androidbox.presentation.utils.NetworkHelper
 import me.androidbox.presentation.utils.ViewModelProviderFactory
@@ -33,12 +34,12 @@ class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>, priv
     fun provideFragment(): Fragment = forecastFragment
 
     @Provides
-    fun providesForecastAdapter(forecastDelegate: BaseDelegate<ForecastDay>): ForecastAdapter =
+    fun providesForecastAdapter(forecastDelegate: BaseDelegate<Forecast>): ForecastAdapter =
         ForecastAdapter(forecastDelegate)
 
     @FragmentScope
     @Provides
-    fun providesForecastDelegate(): BaseDelegate<ForecastDay> =
+    fun providesForecastDelegate(): BaseDelegate<Forecast> =
         ForecastDelegate(1)
 
     @FragmentScope

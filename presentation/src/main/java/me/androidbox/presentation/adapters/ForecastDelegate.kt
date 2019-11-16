@@ -4,17 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.androidbox.presentation.R
+import me.androidbox.presentation.models.Forecast
 import me.androidbox.presentation.models.ForecastDay
 import me.androidbox.presentation.viewholders.ForecastViewHolder
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ForecastDelegate(private val viewType: Int) : BaseDelegate<ForecastDay> {
+class ForecastDelegate(private val viewType: Int) : BaseDelegate<Forecast> {
     override fun getViewType(): Int {
         return viewType
     }
 
-    override fun isForViewType(items: ForecastDay, position: Int): Boolean {
+    override fun isForViewType(items: Forecast, position: Int): Boolean {
         return true
     }
 
@@ -23,11 +24,11 @@ class ForecastDelegate(private val viewType: Int) : BaseDelegate<ForecastDay> {
         return ForecastViewHolder(inflater.inflate(R.layout.weather_forecast_item, parent, false))
     }
 
-    override fun bindViewHolder(holder: RecyclerView.ViewHolder, position: Int, items: List<ForecastDay>) {
+    override fun bindViewHolder(holder: RecyclerView.ViewHolder, position: Int, items: List<Forecast>) {
         if(holder is ForecastViewHolder) {
             holder.run {
-                tvWeekDay.text = getWeekday(items[position].dateEpoch)
-                tvAverageTemperature.text = items[position].day.averageTemperatureInCelsius.toString()
+                tvWeekDay.text = getWeekday(items[position].validDate)
+                tvAverageTemperature.text = items[position].temp.toString()
             }
         }
     }

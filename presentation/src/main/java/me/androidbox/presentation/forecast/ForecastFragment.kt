@@ -35,11 +35,11 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
     lateinit var forecastViewModel: ForecastViewModel
 
     private fun displayWeather(weatherForecast: WeatherForecast) {
-        tvLocationName.text = weatherForecast.location.name
-        val temperatureWithDegrees = "${weatherForecast.current.temperatureInCelsius}\u00B0"
+        tvLocationName.text = weatherForecast.cityName
+        val temperatureWithDegrees = "${weatherForecast.forecast[0].temp}\u00B0"
         tvTemperatureDegrees.text = temperatureWithDegrees
 
-        forecastAdapter.populate(weatherForecast.forecast.forecastDay)
+        forecastAdapter.populate(weatherForecast.forecast)
         val forecastAdapter = forecastAdapter
         forecastAdapter.notifyDataSetChanged()
         rvDailyForecast.adapter = forecastAdapter
