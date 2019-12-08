@@ -1,4 +1,4 @@
-package me.androidbox.interactors.forecast.dropdays
+package me.androidbox.interactors.dropdays
 
 class DropInitialDaysImp : DropInitialDays {
     private companion object {
