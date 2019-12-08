@@ -1,5 +1,8 @@
 package me.androidbox.interactors.dropdays
 
-interface DropInitialDays {
-    fun numberOfInitialDaysToDrop(): Int
+object DropInitialDays {
+    private const val numberOfDays: Int = 1
+
+    @JvmStatic
+    fun numberOfDays() = numberOfDays
 }
