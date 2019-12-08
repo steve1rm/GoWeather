@@ -1,4 +1,4 @@
-package me.androidbox.interactors
+package me.androidbox.interactors.forecast
 
 import io.reactivex.Single
 import me.androidbox.models.ForecastRequestModel

@@ -4,9 +4,9 @@ import com.nhaarman.mockitokotlin2.mock
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
-import me.androidbox.interactors.WeatherForecast
-import me.androidbox.interactors.WeatherForecastInteractor
-import me.androidbox.interactors.WeatherForecastInteractorImp
+import me.androidbox.interactors.forecast.WeatherForecast
+import me.androidbox.interactors.forecast.WeatherForecastInteractor
+import me.androidbox.interactors.forecast.WeatherForecastInteractorImp
 import me.androidbox.presentation.common.AndroidTestSchedulerProviderImp
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.SchedulerProvider
@@ -20,7 +20,9 @@ class TestActivityModule {
     @Reusable
     @Provides
     fun provideWeatherForecastInteractor(weatherForecast: WeatherForecast): WeatherForecastInteractor {
-        return WeatherForecastInteractorImp(weatherForecast)
+        return WeatherForecastInteractorImp(
+            weatherForecast
+        )
     }
 
     @Reusable

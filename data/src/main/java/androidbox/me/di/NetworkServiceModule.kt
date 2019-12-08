@@ -9,7 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import me.androidbox.data.R
-import me.androidbox.interactors.WeatherForecast
+import me.androidbox.interactors.forecast.WeatherForecast
 import retrofit2.Retrofit
 import javax.inject.Named
 

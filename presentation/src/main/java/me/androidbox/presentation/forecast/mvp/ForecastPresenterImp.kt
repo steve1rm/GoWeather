@@ -1,7 +1,7 @@
 package me.androidbox.presentation.forecast.mvp
 
 import io.reactivex.disposables.CompositeDisposable
-import me.androidbox.interactors.WeatherForecastInteractor
+import me.androidbox.interactors.forecast.WeatherForecastInteractor
 import me.androidbox.models.ForecastRequestModel
 import me.androidbox.models.WeatherForecastModel
 import me.androidbox.presentation.base.BasePresenterImp

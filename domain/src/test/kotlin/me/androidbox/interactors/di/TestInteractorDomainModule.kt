@@ -4,7 +4,7 @@ import com.nhaarman.mockitokotlin2.mock
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
-import me.androidbox.interactors.WeatherForecast
+import me.androidbox.interactors.forecast.WeatherForecast
 
 @Module
 class TestInteractorDomainModule {

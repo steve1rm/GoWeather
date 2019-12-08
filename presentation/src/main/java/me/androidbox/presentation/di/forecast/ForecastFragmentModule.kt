@@ -5,11 +5,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import io.reactivex.disposables.CompositeDisposable
-import me.androidbox.interactors.WeatherForecast
-import me.androidbox.interactors.WeatherForecastInteractor
-import me.androidbox.interactors.WeatherForecastInteractorImp
+import me.androidbox.interactors.forecast.WeatherForecast
+import me.androidbox.interactors.forecast.WeatherForecastInteractor
+import me.androidbox.interactors.forecast.WeatherForecastInteractorImp
 import me.androidbox.presentation.adapters.BaseDelegate
 import me.androidbox.presentation.adapters.ForecastAdapter
 import me.androidbox.presentation.adapters.ForecastDelegate
@@ -22,7 +21,6 @@ import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapperImp
 import me.androidbox.presentation.models.Forecast
-import me.androidbox.presentation.models.ForecastDay
 import me.androidbox.presentation.utils.NetworkHelper
 import me.androidbox.presentation.utils.ViewModelProviderFactory
 
@@ -61,7 +59,9 @@ class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>, priv
     @FragmentScope
     @Provides
     fun provideWeatherForecastInteractor(weatherForecast: WeatherForecast): WeatherForecastInteractor {
-        return WeatherForecastInteractorImp(weatherForecast)
+        return WeatherForecastInteractorImp(
+            weatherForecast
+        )
     }
 
     @FragmentScope

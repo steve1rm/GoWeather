@@ -12,7 +12,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
-import me.androidbox.interactors.WeatherForecast
+import me.androidbox.interactors.forecast.WeatherForecast
 import me.androidbox.models.ForecastRequestModel
 import me.androidbox.models.ForecastRequestModelBuilder
 import okhttp3.HttpUrl

@@ -1,11 +1,14 @@
-package me.androidbox.interactors
+package me.androidbox.interactors.forecast
 
 import io.reactivex.Single
 import me.androidbox.extensions.removeDaysFromForecast
+import me.androidbox.interactors.forecast.WeatherForecast
+import me.androidbox.interactors.forecast.WeatherForecastInteractor
 import me.androidbox.models.ForecastRequestModel
 import me.androidbox.models.WeatherForecastModel
 
-class WeatherForecastInteractorImp(private val weatherForecast: WeatherForecast) : WeatherForecastInteractor {
+class WeatherForecastInteractorImp(private val weatherForecast: WeatherForecast) :
+    WeatherForecastInteractor {
     override fun requestWeatherForecast(forecastRequestModel: ForecastRequestModel): Single<WeatherForecastModel> {
         return weatherForecast.requestWeatherForecast(forecastRequestModel)
             .removeDaysFromForecast(1)

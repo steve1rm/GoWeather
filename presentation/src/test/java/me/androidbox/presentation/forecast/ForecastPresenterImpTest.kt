@@ -2,7 +2,7 @@ package me.androidbox.presentation.forecast
 
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Single
-import me.androidbox.interactors.WeatherForecastInteractor
+import me.androidbox.interactors.forecast.WeatherForecastInteractor
 import me.androidbox.models.*
 import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.common.TestSchedulerProviderImp

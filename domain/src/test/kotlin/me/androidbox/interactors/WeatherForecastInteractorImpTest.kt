@@ -4,6 +4,9 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
+import me.androidbox.interactors.forecast.WeatherForecast
+import me.androidbox.interactors.forecast.WeatherForecastInteractor
+import me.androidbox.interactors.forecast.WeatherForecastInteractorImp
 import me.androidbox.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -17,7 +20,10 @@ class WeatherForecastInteractorImpTest {
 
     @Before
     fun setup() {
-        weatherForecastInteractor = WeatherForecastInteractorImp(weatherForecast)
+        weatherForecastInteractor =
+            WeatherForecastInteractorImp(
+                weatherForecast
+            )
         assertThat(weatherForecastInteractor).isNotNull
     }
 

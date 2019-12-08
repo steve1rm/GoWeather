@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModelProviders
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
-import me.androidbox.interactors.WeatherForecast
-import me.androidbox.interactors.WeatherForecastInteractor
-import me.androidbox.interactors.WeatherForecastInteractorImp
+import me.androidbox.interactors.forecast.WeatherForecast
+import me.androidbox.interactors.forecast.WeatherForecastInteractor
+import me.androidbox.interactors.forecast.WeatherForecastInteractorImp
 import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsImp
@@ -39,7 +39,9 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
     @ActivityScope
     @Provides
     fun provideWeatherForecastInteractor(weatherForecast: WeatherForecast): WeatherForecastInteractor {
-        return WeatherForecastInteractorImp(weatherForecast)
+        return WeatherForecastInteractorImp(
+            weatherForecast
+        )
     }
 
     @ActivityScope
