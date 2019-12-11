@@ -37,6 +37,7 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
 
     override fun onForecastSuccess(weatherForecast: WeatherForecast) {
         displayWeather(weatherForecast)
+        startSlideUpAnimation()
     }
 
     override fun onForecastFailure(error: String) {
@@ -82,7 +83,6 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
             val latitude = bundle.getDouble(ForecastActivity.WEATHER_LATITUDE_KEY)
             val longitude = bundle.getDouble(ForecastActivity.WEATHER_LONGITUDE_KEY)
 
-            startSlideUpAnimation()
             forecastPresenter.initialize(this)
             forecastPresenter.requestWeatherForecast(latitude, longitude, 16)
 
