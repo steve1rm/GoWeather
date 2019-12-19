@@ -18,21 +18,18 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
     }
 
     private fun mapToForecastModel(forecastEntityList: List<ForecastEntity>): List<ForecastModel> {
-        val forecastModelList: MutableList<ForecastModel> = mutableListOf()
+        return forecastEntityList.map(::entityToDomain)
+    }
 
-        forecastEntityList.forEach {
-            forecastModelList.add(
-                ForecastModel(
-                    it.temp,
-                    it.highTemp,
-                    it.lowTemp,
-                    it.feelsLikeMinTemp,
-                    it.feelsLikeMaxTemp,
-                    it.validDate,
-                    WeatherModel(it.weather.icon, it.weather.code, it.weather.description)))
-        }
-
-        return forecastModelList.toList()
+    private fun entityToDomain(entity: ForecastEntity): ForecastModel {
+        return ForecastModel(
+            entity.temp,
+            entity.highTemp,
+            entity.lowTemp,
+            entity.feelsLikeMinTemp,
+            entity.feelsLikeMaxTemp,
+            entity.validDate,
+            WeatherModel(entity.weather.icon, entity.weather.code, entity.weather.description))
     }
 }
 
