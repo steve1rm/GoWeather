@@ -7,6 +7,8 @@ import me.androidbox.models.WeatherForecastModel
 import me.androidbox.presentation.base.BasePresenterImp
 import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
+import me.androidbox.presentation.wrappers.Latitude
+import me.androidbox.presentation.wrappers.Longitude
 import javax.inject.Inject
 
 class ForecastPresenterImp @Inject constructor(private val weatherForecastInteractor: WeatherForecastInteractor,
@@ -29,9 +31,9 @@ class ForecastPresenterImp @Inject constructor(private val weatherForecastIntera
         compositableDisposable.clear()
     }
 
-    override fun requestWeatherForecast(latitude: Double, longitude: Double, days: Int) {
+    override fun requestWeatherForecast(latitude: Latitude, longitude: Longitude, days: Int) {
         /* TODO should have mapper here */
-        compositableDisposable.add(weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, days))
+        compositableDisposable.add(weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude.value, longitude.value, days))
             .subscribeOn(schedulerProvider.backgroundScheduler())
             .observeOn(schedulerProvider.uiScheduler())
             .subscribe(

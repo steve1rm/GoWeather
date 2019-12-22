@@ -8,6 +8,8 @@ import android.location.LocationManager
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import me.androidbox.presentation.wrappers.Latitude
+import me.androidbox.presentation.wrappers.Longitude
 
 class LocationUtilsImp(private val activity: Activity) : LocationUtils {
 
@@ -38,7 +40,7 @@ class LocationUtilsImp(private val activity: Activity) : LocationUtils {
         else {
             fusedLocationProviderClient?.lastLocation?.addOnSuccessListener(activity) { location ->
                 if (location != null) {
-                    locationResultStatus(LocationStatus.Success(location.latitude, location.longitude))
+                    locationResultStatus(LocationStatus.Success(Latitude(location.latitude), Longitude(location.longitude)))
                 }
                 else {
                     locationResultStatus(LocationStatus.Failure("There are no location coordinates, try opening google maps and trying again"))
@@ -54,7 +56,7 @@ class LocationUtilsImp(private val activity: Activity) : LocationUtils {
                 if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     fusedLocationProviderClient?.lastLocation?.addOnSuccessListener(activity) { location ->
                         if(location != null) {
-                            locationResultStatus(LocationStatus.Success(location.latitude, location.longitude))
+                            locationResultStatus(LocationStatus.Success(Latitude(location.latitude), Longitude(location.longitude)))
                         }
                     }
                 }
@@ -66,7 +68,7 @@ class LocationUtilsImp(private val activity: Activity) : LocationUtils {
     }
 
     sealed class LocationStatus {
-        class Success(val latitude: Double, val longitude: Double) : LocationStatus()
+        class Success(val latitude: Latitude, val longitude: Longitude) : LocationStatus()
         class Failure(val errorMessage: String) : LocationStatus()
     }
 }
