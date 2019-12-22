@@ -6,7 +6,7 @@ import me.androidbox.models.WeatherForecastModel
 
 fun <T: WeatherForecastModel> Single<T>.removeDaysFromForecast(daysToRemove: Int): Single<WeatherForecastModel> {
     return map {
-        /* where not interested in the first one as we want the next 4 days */
+        /* where not interested in the first one as we want the next days of forecast */
         val forecastList = it.forecast.drop(daysToRemove)
         val weatherForecastModel = WeatherForecastModel(
             forecastList,

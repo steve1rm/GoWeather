@@ -31,23 +31,8 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
     @Inject
     lateinit var forecastAdapter: ForecastAdapter
 
-  /*  @Inject
-    lateinit var forecastPresenter: ForecastPresenter
-*/
     @Inject
     lateinit var forecastViewModel: ForecastViewModel
-
-/*
-
-    override fun onForecastSuccess(weatherForecast: WeatherForecast) {
-        displayWeather(weatherForecast)
-        startSlideUpAnimation()
-    }
-
-    override fun onForecastFailure(error: String) {
-        onFetchWeatherForecastFailure()
-    }
-*/
 
     private fun displayWeather(weatherForecast: WeatherForecast) {
         tvLocationName.text = weatherForecast.cityName
@@ -55,6 +40,7 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
         tvTemperatureDegrees.text = temperatureWithDegrees
 
         forecastAdapter.populate(weatherForecast.forecast)
+
         val forecastAdapter = forecastAdapter
         forecastAdapter.notifyDataSetChanged()
         rvDailyForecast.adapter = forecastAdapter
