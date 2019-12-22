@@ -5,6 +5,8 @@ import androidx.fragment.app.FragmentManager
 import me.androidbox.presentation.R
 import me.androidbox.presentation.forecast.ForecastActivity
 import me.androidbox.presentation.forecast.ForecastFragment
+import me.androidbox.presentation.models.WeatherForecast
+import org.parceler.Parcels
 
 class ForecastFragmentRouterImp(private val fragmentManager: FragmentManager) : ForecastFragmentRouter {
 
@@ -18,6 +20,21 @@ class ForecastFragmentRouterImp(private val fragmentManager: FragmentManager) : 
 
         fragmentManager.let {
             val fragmentTransaction = it.beginTransaction()
+            fragmentTransaction.replace(R.id.forecastActivityContainer, forecastFragment, "ForecastFragment")
+            fragmentTransaction.commit()
+        }
+    }
+
+    override fun goToForecastFragment(weatherForecast: WeatherForecast, statusCallback: () -> Unit) {
+        val forecastFragment = ForecastFragment(statusCallback)
+
+        forecastFragment.arguments = Bundle().let {
+            it.putParcelable(ForecastActivity.WEATHER_FORECAST_KEY, Parcels.wrap(weatherForecast))
+            it
+        }
+
+        fragmentManager.run {
+            val fragmentTransaction = beginTransaction()
             fragmentTransaction.replace(R.id.forecastActivityContainer, forecastFragment, "ForecastFragment")
             fragmentTransaction.commit()
         }

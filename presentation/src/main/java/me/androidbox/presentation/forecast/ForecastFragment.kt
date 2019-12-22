@@ -1,6 +1,7 @@
 package me.androidbox.presentation.forecast
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
@@ -20,20 +21,23 @@ import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastView
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.models.WeatherForecast
+import org.parceler.Parcel
+import org.parceler.Parcels
 import javax.inject.Inject
 
 class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
-    : BaseFragment<ForecastViewModel>(), ForecastView {
+    : BaseFragment<ForecastViewModel>() {
 
     @Inject
     lateinit var forecastAdapter: ForecastAdapter
 
-    @Inject
+  /*  @Inject
     lateinit var forecastPresenter: ForecastPresenter
-
+*/
     @Inject
     lateinit var forecastViewModel: ForecastViewModel
 
+/*
 
     override fun onForecastSuccess(weatherForecast: WeatherForecast) {
         displayWeather(weatherForecast)
@@ -43,6 +47,7 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
     override fun onForecastFailure(error: String) {
         onFetchWeatherForecastFailure()
     }
+*/
 
     private fun displayWeather(weatherForecast: WeatherForecast) {
         tvLocationName.text = weatherForecast.cityName
@@ -77,16 +82,22 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
         R.layout.weather_forecast
 
     override fun setupView(view: View, savedInstanceState: Bundle?) {
-        val bundle = arguments
 
-        bundle?.let {
-            val latitude = bundle.getDouble(ForecastActivity.WEATHER_LATITUDE_KEY)
-            val longitude = bundle.getDouble(ForecastActivity.WEATHER_LONGITUDE_KEY)
+        arguments?.let {
+    //        val latitude = bundle.getDouble(ForecastActivity.WEATHER_LATITUDE_KEY)
+    //        val longitude = bundle.getDouble(ForecastActivity.WEATHER_LONGITUDE_KEY)
 
-            forecastPresenter.initialize(this)
-            forecastPresenter.requestWeatherForecast(latitude, longitude, 16)
+    //        forecastPresenter.initialize(this)
+    //        forecastPresenter.requestWeatherForecast(latitude, longitude, 16)
 
-        } ?: Toast.makeText(activity, getString(R.string.failedToDisplayData), Toast.LENGTH_LONG).show()
+            val parcel: Parcelable? = it.getParcelable(ForecastActivity.WEATHER_FORECAST_KEY)
+            val weatherForecast = Parcels.unwrap<WeatherForecast>(parcel)
+
+            displayWeather(weatherForecast)
+        } ?: run {
+            Toast.makeText(activity, getString(R.string.failedToDisplayData), Toast.LENGTH_LONG).show()
+            onFetchWeatherForecastFailure()
+        }
 
     }
 

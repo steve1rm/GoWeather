@@ -16,9 +16,11 @@ class GoWeatherApplicationModule(private val application: Application) {
     @Singleton
     fun provideApplicationContext() = application
 
+/*
     @Provides
     @Singleton
     fun provideContext(): Context = application
+*/
 
     @Provides
     @Singleton

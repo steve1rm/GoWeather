@@ -42,8 +42,8 @@ class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>, priv
 
     @FragmentScope
     @Provides
-    fun provideNetworkHelper(context: Context) : NetworkHelper {
-        return NetworkHelper(context)
+    fun provideNetworkHelper() : NetworkHelper {
+        return NetworkHelper()
     }
 
     @FragmentScope

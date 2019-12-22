@@ -10,17 +10,21 @@ import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsImp.LocationStatus
 import me.androidbox.presentation.di.forecast.ForecastActivityComponent
+import me.androidbox.presentation.forecast.mvp.ForecastPresenter
+import me.androidbox.presentation.forecast.mvp.ForecastView
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
+import me.androidbox.presentation.models.WeatherForecast
 import me.androidbox.presentation.router.ForecastFragmentRouter
 import me.androidbox.presentation.router.LoadingFragmentRouter
 import me.androidbox.presentation.router.RetryFragmentRouter
 import javax.inject.Inject
 
-class ForecastActivity : BaseActivity<ForecastViewModel>() {
+class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
 
     companion object {
         const val WEATHER_LATITUDE_KEY = "weatherLatitudeKey"
         const val WEATHER_LONGITUDE_KEY = "weatherLongitudeKey"
+        const val WEATHER_FORECAST_KEY = "weatherforecastkey"
     }
 
     @Inject
@@ -34,6 +38,9 @@ class ForecastActivity : BaseActivity<ForecastViewModel>() {
 
     @Inject
     lateinit var loadingFragmentRouter: LoadingFragmentRouter
+
+    @Inject
+    lateinit var forecastPresenter: ForecastPresenter
 
     private fun displayLocationSettings() {
         Toast.makeText(this, "Please enable location on your device - and try again", Toast.LENGTH_LONG).show()
@@ -50,6 +57,10 @@ class ForecastActivity : BaseActivity<ForecastViewModel>() {
 
     private fun startForecastFragment(latitude: Double, longitude: Double) {
         forecastFragmentRouter.goToForecastFragment(latitude, longitude, ::onWeatherForecastFetchingFailure)
+    }
+
+    private fun startForecastFragment(weatherForecast: WeatherForecast) {
+        forecastFragmentRouter.goToForecastFragment(weatherForecast, ::onWeatherForecastFetchingFailure)
     }
 
     private fun onRetry() {
@@ -74,7 +85,8 @@ class ForecastActivity : BaseActivity<ForecastViewModel>() {
     private fun onLocationResult(locationStatus: LocationStatus) {
         when(locationStatus) {
             is LocationStatus.Success -> {
-                startForecastFragment(locationStatus.latitude, locationStatus.longitude)
+                forecastPresenter.initialize(this)
+                forecastPresenter.requestWeatherForecast(locationStatus.latitude, locationStatus.longitude)
             }
             is LocationStatus.Failure -> {
                 Toast.makeText(this, locationStatus.errorMessage, Toast.LENGTH_LONG).show()
@@ -92,6 +104,14 @@ class ForecastActivity : BaseActivity<ForecastViewModel>() {
             displayLocationSettings()
             startRetryFragment()
         }
+    }
+
+    override fun onForecastSuccess(weatherForecast: WeatherForecast) {
+        startForecastFragment(weatherForecast)
+    }
+
+    override fun onForecastFailure(error: String) {
+        startRetryFragment()
     }
 
     override fun setupObservers() {
