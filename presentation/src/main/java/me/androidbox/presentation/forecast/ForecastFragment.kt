@@ -84,17 +84,11 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
     override fun setupView(view: View, savedInstanceState: Bundle?) {
 
         arguments?.let {
-    //        val latitude = bundle.getDouble(ForecastActivity.WEATHER_LATITUDE_KEY)
-    //        val longitude = bundle.getDouble(ForecastActivity.WEATHER_LONGITUDE_KEY)
-
-    //        forecastPresenter.initialize(this)
-    //        forecastPresenter.requestWeatherForecast(latitude, longitude, 16)
-
-            val parcel: Parcelable? = it.getParcelable(ForecastActivity.WEATHER_FORECAST_KEY)
-            val weatherForecast = Parcels.unwrap<WeatherForecast>(parcel)
-
+            val weatherForecast: WeatherForecast = Parcels.unwrap<WeatherForecast>(it.getParcelable(ForecastActivity.WEATHER_FORECAST_KEY))
             displayWeather(weatherForecast)
-        } ?: run {
+            startSlideUpAnimation()
+        } ?:
+        run {
             Toast.makeText(activity, getString(R.string.failedToDisplayData), Toast.LENGTH_LONG).show()
             onFetchWeatherForecastFailure()
         }
