@@ -39,7 +39,7 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
         val temperatureWithDegrees = "${weatherForecast.forecast[0].temp}\u00B0"
         tvTemperatureDegrees.text = temperatureWithDegrees
 
-        forecastAdapter.populate(weatherForecast.forecast)
+        forecastAdapter.populate(weatherForecast.forecast.drop(1))
 
         val forecastAdapter = forecastAdapter
         forecastAdapter.notifyDataSetChanged()
