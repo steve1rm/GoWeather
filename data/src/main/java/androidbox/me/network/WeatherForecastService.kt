@@ -11,4 +11,7 @@ interface WeatherForecastService {
                  @Query("lat") latitude: Double,
                  @Query("lon") longitude: Double,
                  @Query("days") days: Int): Single<WeatherForecastEntity>
+
+    @GET("v2.0/current")
+    fun current()
 }
