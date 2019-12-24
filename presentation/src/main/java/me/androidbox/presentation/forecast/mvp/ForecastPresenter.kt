@@ -1,8 +1,8 @@
 package me.androidbox.presentation.forecast.mvp
 
 import me.androidbox.presentation.base.BasePresenter
-import me.androidbox.presentation.wrappers.Latitude
-import me.androidbox.presentation.wrappers.Longitude
+import me.androidbox.wrappers.Latitude
+import me.androidbox.wrappers.Longitude
 
 interface ForecastPresenter : BasePresenter<ForecastView> {
     fun initialize(forecastView: ForecastView)

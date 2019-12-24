@@ -7,8 +7,8 @@ import me.androidbox.models.WeatherForecastModel
 import me.androidbox.presentation.base.BasePresenterImp
 import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
-import me.androidbox.presentation.wrappers.Latitude
-import me.androidbox.presentation.wrappers.Longitude
+import me.androidbox.wrappers.Latitude
+import me.androidbox.wrappers.Longitude
 import javax.inject.Inject
 
 class ForecastPresenterImp @Inject constructor(private val weatherForecastInteractor: WeatherForecastInteractor,

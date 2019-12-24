@@ -1,6 +1,6 @@
 package androidbox.me.network
 
-import androidbox.me.entities.CurrrentEntity
+import androidbox.me.entities.CurrentEntity
 import androidbox.me.entities.ForecastEntity
 import androidbox.me.entities.LocationEntity
 import androidbox.me.entities.WeatherForecastModel
@@ -61,7 +61,7 @@ class ForecastRequestImpTest {
             .thenReturn(Single.just(
                 WeatherForecastModel(
                     LocationEntity("", "", ""),
-                    CurrrentEntity(45.5F),
+                    CurrentEntity(45.5F),
                     ForecastEntity(emptyList()))))
 
         forecastRequest.requestWeatherForecast(createForecastModel())

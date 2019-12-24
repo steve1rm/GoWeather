@@ -40,8 +40,8 @@ class ForecastRequestDomainMapperImpTest {
         return LocationEntity("name", "region", "country")
     }
 
-    private fun createCurrent(): CurrrentEntity {
-        return CurrrentEntity(45.98F)
+    private fun createCurrent(): CurrentEntity {
+        return CurrentEntity(45.98F)
     }
 
     private fun createForecast(): ForecastEntity {

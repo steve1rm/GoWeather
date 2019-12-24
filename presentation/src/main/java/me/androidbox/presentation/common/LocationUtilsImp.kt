@@ -8,8 +8,8 @@ import android.location.LocationManager
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import me.androidbox.presentation.wrappers.Latitude
-import me.androidbox.presentation.wrappers.Longitude
+import me.androidbox.wrappers.Latitude
+import me.androidbox.wrappers.Longitude
 
 class LocationUtilsImp(private val activity: Activity) : LocationUtils {
 
