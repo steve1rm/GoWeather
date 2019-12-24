@@ -1,7 +1,7 @@
 package androidbox.me.network
 
-import androidbox.me.entities.CurrentEntity
-import androidbox.me.entities.WeatherForecastEntity
+import androidbox.me.entities.response.CurrentEntity
+import androidbox.me.entities.response.WeatherForecastEntity
 import io.reactivex.Single
 import me.androidbox.wrappers.Latitude
 import me.androidbox.wrappers.Longitude

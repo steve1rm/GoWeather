@@ -1,4 +1,6 @@
-package me.androidbox.models
+package me.androidbox.models.response
+
+import me.androidbox.models.response.ForecastModel
 
 data class WeatherForecastModel(
     val forecast: List<ForecastModel>,

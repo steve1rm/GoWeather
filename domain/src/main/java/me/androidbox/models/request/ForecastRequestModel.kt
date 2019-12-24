@@ -1,4 +1,4 @@
-package me.androidbox.models
+package me.androidbox.models.request
 
 data class ForecastRequestModel(val latitude: Double,
                                 val longitude: Double,
@@ -11,5 +11,9 @@ class ForecastRequestModelBuilder {
     var days: Int = 0
 
     fun build(): ForecastRequestModel =
-        ForecastRequestModel(latitude, longitude, days)
+        ForecastRequestModel(
+            latitude,
+            longitude,
+            days
+        )
 }

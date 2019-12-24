@@ -3,8 +3,8 @@ package me.androidbox.interactors.forecast
 import io.reactivex.Single
 import me.androidbox.extensions.removeDaysFromForecast
 import me.androidbox.interactors.dropdays.DropInitialDays
-import me.androidbox.models.ForecastRequestModel
-import me.androidbox.models.WeatherForecastModel
+import me.androidbox.models.request.ForecastRequestModel
+import me.androidbox.models.response.WeatherForecastModel
 
 class WeatherForecastInteractorImp(private val weatherForecast: WeatherForecast) :
     WeatherForecastInteractor {

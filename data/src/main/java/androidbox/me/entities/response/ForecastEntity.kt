@@ -1,6 +1,5 @@
-package androidbox.me.entities
+package androidbox.me.entities.response
 
-import androidbox.me.entities.request.WeatherEntity
 import com.google.gson.annotations.SerializedName
 
 data class ForecastEntity(
@@ -10,4 +9,5 @@ data class ForecastEntity(
     @SerializedName("app_min_temp") val feelsLikeMinTemp: Float,
     @SerializedName("app_max_temp") val feelsLikeMaxTemp: Float,
     @SerializedName("valid_date") val validDate: String,
-    @SerializedName("weather") val weather: WeatherEntity)
+    @SerializedName("weather") val weather: WeatherEntity
+)

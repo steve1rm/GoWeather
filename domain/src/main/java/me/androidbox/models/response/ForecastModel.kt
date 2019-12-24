@@ -1,4 +1,4 @@
-package me.androidbox.models
+package me.androidbox.models.response
 
 data class ForecastModel(
     val temp: Float,
@@ -7,4 +7,5 @@ data class ForecastModel(
     val feelsLikeMinTemp: Float,
     val feelsLikeMaxTemp: Float,
     val validDate: String,
-    val weather: WeatherModel)
+    val weather: WeatherModel
+)

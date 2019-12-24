@@ -1,8 +1,8 @@
 package androidbox.me.network
 
-import androidbox.me.entities.CurrentEntity
-import androidbox.me.entities.ForecastEntity
-import androidbox.me.entities.LocationEntity
+import androidbox.me.entities.response.CurrentEntity
+import androidbox.me.entities.response.ForecastEntity
+import androidbox.me.entities.response.LocationEntity
 import androidbox.me.entities.WeatherForecastModel
 import androidbox.me.mappers.ForecastRequestDomainMapper
 import androidbox.me.mappers.ForecastRequestEntityMapper
@@ -13,8 +13,8 @@ import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import me.androidbox.interactors.forecast.WeatherForecast
-import me.androidbox.models.ForecastRequestModel
-import me.androidbox.models.ForecastRequestModelBuilder
+import me.androidbox.models.request.ForecastRequestModel
+import me.androidbox.models.request.ForecastRequestModelBuilder
 import okhttp3.HttpUrl
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -62,7 +62,8 @@ class ForecastRequestImpTest {
                 WeatherForecastModel(
                     LocationEntity("", "", ""),
                     CurrentEntity(45.5F),
-                    ForecastEntity(emptyList()))))
+                    ForecastEntity(emptyList())
+                )))
 
         forecastRequest.requestWeatherForecast(createForecastModel())
             .test()

@@ -1,4 +1,4 @@
-package androidbox.me.entities.request
+package androidbox.me.entities.response
 
 import com.google.gson.annotations.SerializedName
 

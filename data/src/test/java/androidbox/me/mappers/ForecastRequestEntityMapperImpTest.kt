@@ -1,6 +1,6 @@
 package androidbox.me.mappers
 
-import me.androidbox.models.ForecastRequestModel
+import me.androidbox.models.request.ForecastRequestModel
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -25,5 +25,9 @@ class ForecastRequestEntityMapperImpTest {
     }
 
     private fun createForecastRequestModel(): ForecastRequestModel =
-        ForecastRequestModel(34.9898453, -68.4786847, 4)
+        ForecastRequestModel(
+            34.9898453,
+            -68.4786847,
+            4
+        )
 }

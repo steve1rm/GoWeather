@@ -1,4 +1,4 @@
-package me.androidbox.models
+package me.androidbox.models.response
 
 data class WeatherModel(
     val icon: String,

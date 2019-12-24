@@ -4,8 +4,8 @@ import androidbox.me.mappers.ForecastRequestDomainMapper
 import androidbox.me.mappers.ForecastRequestEntityMapper
 import io.reactivex.Single
 import me.androidbox.interactors.forecast.WeatherForecast
-import me.androidbox.models.ForecastRequestModel
-import me.androidbox.models.WeatherForecastModel
+import me.androidbox.models.request.ForecastRequestModel
+import me.androidbox.models.response.WeatherForecastModel
 import java.util.concurrent.TimeUnit
 
 class ForecastRequestImp(private val weatherForecastService: WeatherForecastService,

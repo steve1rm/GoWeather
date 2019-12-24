@@ -3,7 +3,11 @@ package me.androidbox.presentation.forecast
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Single
 import me.androidbox.interactors.forecast.WeatherForecastInteractor
-import me.androidbox.models.*
+import me.androidbox.models.request.ForecastRequestModel
+import me.androidbox.models.request.ForecastRequestModelBuilder
+import me.androidbox.models.response.WeatherForecastModel
+import me.androidbox.models.response.ForecastModel
+import me.androidbox.models.response.LocationModel
 import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.common.TestSchedulerProviderImp
 import me.androidbox.presentation.forecast.mvp.ForecastPresenter
@@ -44,10 +48,20 @@ class ForecastPresenterImpTest {
             longitude = -89.0
             days = 4
         }
-        val locationModel = LocationModel("name", "region", "country")
+        val locationModel = LocationModel(
+            "name",
+            "region",
+            "country"
+        )
         val currentModel = CurrentModel(42)
-        val forecastModel = ForecastModel(emptyList())
-        val weatherForecastModel = WeatherForecastModel(locationModel, currentModel, forecastModel)
+        val forecastModel =
+            ForecastModel(emptyList())
+        val weatherForecastModel =
+            WeatherForecastModel(
+                locationModel,
+                currentModel,
+                forecastModel
+            )
         val weatherForecast = WeatherForecast(
             Location("name", "region", "country"),
             Current(42),
@@ -55,7 +69,13 @@ class ForecastPresenterImpTest {
 
         whenever(weatherForecastIntIterator
             .requestWeatherForecast(forecastRequestModel))
-            .thenReturn(Single.just(WeatherForecastModel(locationModel, currentModel, forecastModel)))
+            .thenReturn(Single.just(
+                WeatherForecastModel(
+                    locationModel,
+                    currentModel,
+                    forecastModel
+                )
+            ))
 
         whenever(weatherForecastPresentationMapper.map(weatherForecastModel))
             .thenReturn(weatherForecast)

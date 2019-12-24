@@ -1,7 +1,7 @@
 package me.androidbox.presentation.mappers
 
-import me.androidbox.models.ForecastModel
-import me.androidbox.models.WeatherForecastModel
+import me.androidbox.models.response.ForecastModel
+import me.androidbox.models.response.WeatherForecastModel
 import me.androidbox.presentation.models.Forecast
 import me.androidbox.presentation.models.Weather
 import me.androidbox.presentation.models.WeatherForecast

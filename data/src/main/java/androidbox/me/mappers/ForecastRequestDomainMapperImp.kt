@@ -1,10 +1,10 @@
 package androidbox.me.mappers
 
-import androidbox.me.entities.ForecastEntity
-import androidbox.me.entities.WeatherForecastEntity
-import me.androidbox.models.ForecastModel
-import me.androidbox.models.WeatherForecastModel
-import me.androidbox.models.WeatherModel
+import androidbox.me.entities.response.ForecastEntity
+import androidbox.me.entities.response.WeatherForecastEntity
+import me.androidbox.models.response.ForecastModel
+import me.androidbox.models.response.WeatherForecastModel
+import me.androidbox.models.response.WeatherModel
 
 class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
 
@@ -14,7 +14,8 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
             entity.cityName,
             entity.timeZone,
             entity.countryCode,
-            entity.stateCode)
+            entity.stateCode
+        )
     }
 
     private fun mapToForecastModel(forecastEntityList: List<ForecastEntity>): List<ForecastModel> {
@@ -29,7 +30,12 @@ class ForecastRequestDomainMapperImp : ForecastRequestDomainMapper {
             entity.feelsLikeMinTemp,
             entity.feelsLikeMaxTemp,
             entity.validDate,
-            WeatherModel(entity.weather.icon, entity.weather.code, entity.weather.description))
+            WeatherModel(
+                entity.weather.icon,
+                entity.weather.code,
+                entity.weather.description
+            )
+        )
     }
 }
 

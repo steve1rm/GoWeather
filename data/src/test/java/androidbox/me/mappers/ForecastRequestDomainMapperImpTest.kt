@@ -1,6 +1,6 @@
 package androidbox.me.mappers
 
-import androidbox.me.entities.*
+import androidbox.me.entities.response.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -37,7 +37,11 @@ class ForecastRequestDomainMapperImpTest {
     }
 
     private fun createLocationEntity(): LocationEntity {
-        return LocationEntity("name", "region", "country")
+        return LocationEntity(
+            "name",
+            "region",
+            "country"
+        )
     }
 
     private fun createCurrent(): CurrentEntity {
@@ -45,14 +49,29 @@ class ForecastRequestDomainMapperImpTest {
     }
 
     private fun createForecast(): ForecastEntity {
-        return ForecastEntity(createForecastDayList())
+        return ForecastEntity(
+            createForecastDayList()
+        )
     }
 
     private fun createForecastDayList(): List<ForecastDayEntity> {
         return listOf(
-            ForecastDayEntity("date", "dateEpoch", createDay()),
-            ForecastDayEntity("date", "dateEpoch", createDay()),
-            ForecastDayEntity("date", "dateEpoch", createDay()))
+            ForecastDayEntity(
+                "date",
+                "dateEpoch",
+                createDay()
+            ),
+            ForecastDayEntity(
+                "date",
+                "dateEpoch",
+                createDay()
+            ),
+            ForecastDayEntity(
+                "date",
+                "dateEpoch",
+                createDay()
+            )
+        )
     }
 
     private fun createDay(): DayEntity {
