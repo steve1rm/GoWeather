@@ -1,6 +1,7 @@
 package androidbox.me.network
 
 import androidbox.me.entities.response.CurrentEntity
+import androidbox.me.entities.response.DataEntity
 import androidbox.me.entities.response.WeatherForecastEntity
 import io.reactivex.Single
 import me.androidbox.wrappers.Latitude
@@ -18,5 +19,5 @@ interface WeatherForecastService {
     @GET("v2.0/current")
     fun current(@Query("key") key: String,
                 @Query("lat") latitude: Latitude,
-                @Query("lon") longitude: Longitude): Single<CurrentEntity>
+                @Query("lon") longitude: Longitude): Single<DataEntity>
 }
