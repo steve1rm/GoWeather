@@ -86,6 +86,7 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
         when(locationStatus) {
             is LocationStatus.Success -> {
                 forecastPresenter.initialize(this)
+                forecastPresenter.requestCurrentWeather(locationStatus.latitude, locationStatus.longitude)
                 forecastPresenter.requestWeatherForecast(locationStatus.latitude, locationStatus.longitude)
             }
             is LocationStatus.Failure -> {

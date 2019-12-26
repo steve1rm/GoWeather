@@ -1,14 +1,18 @@
 package androidbox.me.di
 
 import android.content.Context
+import androidbox.me.mappers.CurrentRequestEntityMapper
+import androidbox.me.mappers.CurrentResponseDomainMapper
 import androidbox.me.mappers.ForecastRequestDomainMapper
 import androidbox.me.mappers.ForecastRequestEntityMapper
+import androidbox.me.network.CurrentWeatherRequestImp
 import androidbox.me.network.ForecastRequestImp
 import androidbox.me.network.WeatherForecastService
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import me.androidbox.data.R
+import me.androidbox.interactors.current.CurrentWeatherRequest
 import me.androidbox.interactors.forecast.WeatherForecast
 import retrofit2.Retrofit
 import javax.inject.Named
@@ -34,4 +38,12 @@ class NetworkServiceModule {
                                   forecastRequestEntityMapper: ForecastRequestEntityMapper,
                                   forecastRequestDomainMapper: ForecastRequestDomainMapper): WeatherForecast =
         ForecastRequestImp(weatherForecastService, apiKey, forecastRequestEntityMapper, forecastRequestDomainMapper)
+
+    @Reusable
+    @Provides
+    fun provideCurrentWeatherRequest(weatherForecastService: WeatherForecastService,
+                                     @Named("ApiKey") apiKey: String,
+                                     currentRequestEntityMapper: CurrentRequestEntityMapper,
+                                     currentResponseDomainMapper: CurrentResponseDomainMapper): CurrentWeatherRequest =
+        CurrentWeatherRequestImp(weatherForecastService, apiKey, currentRequestEntityMapper, currentResponseDomainMapper)
 }

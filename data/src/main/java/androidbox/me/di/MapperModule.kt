@@ -1,9 +1,6 @@
 package androidbox.me.di
 
-import androidbox.me.mappers.ForecastRequestDomainMapper
-import androidbox.me.mappers.ForecastRequestDomainMapperImp
-import androidbox.me.mappers.ForecastRequestEntityMapper
-import androidbox.me.mappers.ForecastRequestEntityMapperImp
+import androidbox.me.mappers.*
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -20,4 +17,14 @@ class MapperModule {
     @Provides
     fun provideForecastRequestEntityMapper(): ForecastRequestEntityMapper =
             ForecastRequestEntityMapperImp()
+    
+    @Reusable
+    @Provides
+    fun provideCurrentRequestEntityMapper(): CurrentRequestEntityMapper =
+        CurrentRequestEntityMapperImp()
+
+    @Reusable
+    @Provides
+    fun provideCurrentResponseDomainMapper(): CurrentResponseDomainMapper =
+        CurrentResponseDomainMapperImp()
 }

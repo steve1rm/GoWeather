@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
+import me.androidbox.interactors.current.CurrentWeatherInteractor
 import me.androidbox.interactors.forecast.WeatherForecast
 import me.androidbox.interactors.forecast.WeatherForecastInteractor
 import me.androidbox.interactors.forecast.WeatherForecastInteractorImp
@@ -73,8 +74,9 @@ class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>, priv
     @Provides
     fun provideForecastPresenter(weatherForecastInteractor: WeatherForecastInteractor,
                                  weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
-                                 schedulerProvider: SchedulerProvider): ForecastPresenter {
+                                 schedulerProvider: SchedulerProvider,
+                                 currentWeatherInteractor: CurrentWeatherInteractor): ForecastPresenter {
         return ForecastPresenterImp(
-            weatherForecastInteractor, weatherForecastPresentationMapper, schedulerProvider)
+            weatherForecastInteractor, weatherForecastPresentationMapper, schedulerProvider, currentWeatherInteractor)
     }
 }
