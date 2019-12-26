@@ -1,13 +1,13 @@
 package androidbox.me.mappers
 
 import androidbox.me.entities.response.CurrentWeatherEntity
-import me.androidbox.models.response.CurrentModel
+import me.androidbox.models.response.CurrentWeatherModel
 import me.androidbox.models.response.WeatherModel
 
 class CurrentResponseDomainMapperImp : CurrentResponseDomainMapper {
-    override fun map(entity: CurrentWeatherEntity): CurrentModel {
+    override fun map(entity: CurrentWeatherEntity): CurrentWeatherModel {
        return entity.currentWeatherData.map {
-            CurrentModel(it.cityName,
+            CurrentWeatherModel(it.cityName,
             it.stateCode,
             it.feelsLikeTemperature,
             it.temperature,

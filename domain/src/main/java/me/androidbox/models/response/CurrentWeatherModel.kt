@@ -1,7 +1,7 @@
 package me.androidbox.models.response
 
 
-data class CurrentModel(
+data class CurrentWeatherModel(
     val cityName: String,
     val stateCode: String,
     val feelsLikeTemperature: String,

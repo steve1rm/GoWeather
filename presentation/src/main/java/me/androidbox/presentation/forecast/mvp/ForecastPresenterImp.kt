@@ -6,7 +6,7 @@ import me.androidbox.interactors.current.CurrentWeatherInteractor
 import me.androidbox.interactors.forecast.WeatherForecastInteractor
 import me.androidbox.models.request.CurrentRequestModel
 import me.androidbox.models.request.ForecastRequestModel
-import me.androidbox.models.response.CurrentModel
+import me.androidbox.models.response.CurrentWeatherModel
 import me.androidbox.models.response.WeatherForecastModel
 import me.androidbox.presentation.base.BasePresenterImp
 import me.androidbox.presentation.common.SchedulerProvider
@@ -73,8 +73,8 @@ class ForecastPresenterImp @Inject constructor(private val weatherForecastIntera
             ))
     }
 
-    private fun onCurrentWeatherSuccess(currentModel: CurrentModel) {
-        println(currentModel.cityName)
+    private fun onCurrentWeatherSuccess(currentWeatherModel: CurrentWeatherModel) {
+        println(currentWeatherModel.cityName)
     }
 
     private fun onCurrentWeatherFailure(error: Throwable) {

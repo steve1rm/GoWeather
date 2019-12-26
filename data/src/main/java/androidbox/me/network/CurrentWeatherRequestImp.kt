@@ -5,7 +5,7 @@ import androidbox.me.mappers.CurrentRequestEntityMapper
 import io.reactivex.Single
 import me.androidbox.interactors.current.CurrentWeatherRequest
 import me.androidbox.models.request.CurrentRequestModel
-import me.androidbox.models.response.CurrentModel
+import me.androidbox.models.response.CurrentWeatherModel
 import java.util.concurrent.TimeUnit
 
 class CurrentWeatherRequestImp(private val weatherForecastService: WeatherForecastService,
@@ -13,7 +13,7 @@ class CurrentWeatherRequestImp(private val weatherForecastService: WeatherForeca
                                private val currentRequestEntityMapper: CurrentRequestEntityMapper,
                                private val currentRequestDomainMapper: CurrentResponseDomainMapper) : CurrentWeatherRequest {
 
-    override fun requestCurrentWeather(currentRequestModel: CurrentRequestModel): Single<CurrentModel> {
+    override fun requestCurrentWeather(currentRequestModel: CurrentRequestModel): Single<CurrentWeatherModel> {
         val currentRequestEntity = currentRequestEntityMapper.map(currentRequestModel)
 
         return weatherForecastService.current(apiKey, currentRequestEntity.latitude, currentRequestEntity.longitude)

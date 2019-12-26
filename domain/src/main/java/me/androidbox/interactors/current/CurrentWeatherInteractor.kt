@@ -2,8 +2,8 @@ package me.androidbox.interactors.current
 
 import io.reactivex.Single
 import me.androidbox.models.request.CurrentRequestModel
-import me.androidbox.models.response.CurrentModel
+import me.androidbox.models.response.CurrentWeatherModel
 
 interface CurrentWeatherInteractor {
-    fun requestCurrentWeather(currentRequestModel: CurrentRequestModel): Single<CurrentModel>
+    fun requestCurrentWeather(currentRequestModel: CurrentRequestModel): Single<CurrentWeatherModel>
 }
