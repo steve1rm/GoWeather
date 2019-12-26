@@ -1,7 +1,6 @@
 package androidbox.me.mappers
 
-import androidbox.me.entities.response.CurrentEntity
-import androidbox.me.entities.response.DataEntity
+import androidbox.me.entities.response.CurrentWeatherEntity
 import me.androidbox.models.response.CurrentModel
 
-interface CurrentResponseDomainMapper : MapperToDomain<DataEntity, CurrentModel>
+interface CurrentResponseDomainMapper : MapperToDomain<CurrentWeatherEntity, CurrentModel>

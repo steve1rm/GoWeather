@@ -44,8 +44,8 @@ class ForecastRequestDomainMapperImpTest {
         )
     }
 
-    private fun createCurrent(): CurrentEntity {
-        return CurrentEntity(45.98F)
+    private fun createCurrent(): CurrentWeatherEntity {
+        return CurrentWeatherEntity(45.98F)
     }
 
     private fun createForecast(): ForecastEntity {
