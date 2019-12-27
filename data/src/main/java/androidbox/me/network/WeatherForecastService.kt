@@ -11,8 +11,8 @@ import retrofit2.http.Query
 interface WeatherForecastService {
     @GET("v2.0/forecast/daily")
     fun forecast(@Query("key") key: String,
-                 @Query("lat") latitude: Double,
-                 @Query("lon") longitude: Double,
+                 @Query("lat") latitude: Latitude,
+                 @Query("lon") longitude: Longitude,
                  @Query("days") days: Int): Single<WeatherForecastEntity>
 
     @GET("v2.0/current")

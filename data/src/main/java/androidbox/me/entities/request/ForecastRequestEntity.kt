@@ -1,7 +1,10 @@
 package androidbox.me.entities.request
 
-data class ForecastRequestEntity(val latitude: Double,
-                                 val longitude: Double,
+import me.androidbox.wrappers.Latitude
+import me.androidbox.wrappers.Longitude
+
+data class ForecastRequestEntity(val latitude: Latitude,
+                                 val longitude: Longitude,
                                  val days: Int)
 
 

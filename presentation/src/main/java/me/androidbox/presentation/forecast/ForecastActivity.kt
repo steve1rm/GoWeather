@@ -86,8 +86,9 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
         when(locationStatus) {
             is LocationStatus.Success -> {
                 forecastPresenter.initialize(this)
-                forecastPresenter.requestCurrentWeather(locationStatus.latitude, locationStatus.longitude)
-                forecastPresenter.requestWeatherForecast(locationStatus.latitude, locationStatus.longitude)
+             //   forecastPresenter.requestCurrentWeather(locationStatus.latitude, locationStatus.longitude)
+             //   forecastPresenter.requestWeatherForecast(locationStatus.latitude, locationStatus.longitude)
+                forecastPresenter.requestForecastAndCurrentWeather(locationStatus.latitude, locationStatus.longitude, 20)
             }
             is LocationStatus.Failure -> {
                 Toast.makeText(this, locationStatus.errorMessage, Toast.LENGTH_LONG).show()

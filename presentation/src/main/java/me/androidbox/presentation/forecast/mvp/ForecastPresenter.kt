@@ -9,4 +9,5 @@ interface ForecastPresenter : BasePresenter<ForecastView> {
     fun release()
     fun requestWeatherForecast(latitude: Latitude, longitude: Longitude, days: Int = 20)
     fun requestCurrentWeather(latitude: Latitude, longitude: Longitude)
+    fun requestForecastAndCurrentWeather(latitude: Latitude, longitude: Longitude, days: Int)
 }

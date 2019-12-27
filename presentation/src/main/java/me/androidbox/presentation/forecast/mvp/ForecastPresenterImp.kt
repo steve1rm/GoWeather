@@ -1,12 +1,16 @@
 package me.androidbox.presentation.forecast.mvp
 
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.BiFunction
 import io.reactivex.rxkotlin.subscribeBy
 import me.androidbox.interactors.current.CurrentWeatherInteractor
 import me.androidbox.interactors.forecast.WeatherForecastInteractor
 import me.androidbox.models.request.CurrentRequestModel
 import me.androidbox.models.request.ForecastRequestModel
 import me.androidbox.models.response.CurrentWeatherModel
+import me.androidbox.models.response.ForecastModel
 import me.androidbox.models.response.WeatherForecastModel
 import me.androidbox.presentation.base.BasePresenterImp
 import me.androidbox.presentation.common.SchedulerProvider
@@ -36,12 +40,31 @@ class ForecastPresenterImp @Inject constructor(private val weatherForecastIntera
         compositableDisposable.clear()
     }
 
+    override fun requestForecastAndCurrentWeather(latitude: Latitude, longitude: Longitude, days: Int) {
+        val disposable = Single.concat(
+            weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, 20)),
+            currentWeatherInteractor.requestCurrentWeather(CurrentRequestModel(latitude, longitude))
+        ).subscribeOn(schedulerProvider.backgroundScheduler())
+            .observeOn(schedulerProvider.backgroundScheduler())
+            .subscribeBy(
+                onNext = {
+                    when(it) {
+                        is WeatherForecastModel -> { onWeatherForecastSuccess(it) }
+                        is CurrentWeatherModel -> { onCurrentWeatherSuccess(it) }
+                    }
+                },
+                onError = {
+                    println(it.message)
+                }
+            )
+    }
+
     override fun requestWeatherForecast(latitude: Latitude, longitude: Longitude, days: Int) {
         /* TODO should have mapper here */
         compositableDisposable.add(weatherForecastInteractor.requestWeatherForecast(
             ForecastRequestModel(
-                latitude.value,
-                longitude.value,
+                latitude,
+                longitude,
                 days
             )
         )
