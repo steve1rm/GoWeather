@@ -43,7 +43,6 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
 
         forecastAdapter.populate(weatherForecast.forecast)
 
-        val forecastAdapter = forecastAdapter
         forecastAdapter.notifyDataSetChanged()
         rvDailyForecast.adapter = forecastAdapter
         rvDailyForecast.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
