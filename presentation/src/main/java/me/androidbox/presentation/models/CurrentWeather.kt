@@ -7,6 +7,6 @@ import org.parceler.ParcelConstructor
 data class CurrentWeather @ParcelConstructor constructor(
     val cityName: String,
     val stateCode: String,
-    val feelsLikeTemperature: String,
+    val feelsLikeTemperature: Float,
     val temperature: Float,
     val weather: Weather)

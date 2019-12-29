@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.androidbox.presentation.R
 import me.androidbox.presentation.models.Forecast
+import me.androidbox.presentation.utils.appendSymbol
 import me.androidbox.presentation.viewholders.ForecastViewHolder
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-
 
 class ForecastDelegate(private val viewType: Int) : BaseDelegate<Forecast> {
     override fun getViewType(): Int {
@@ -34,8 +34,6 @@ class ForecastDelegate(private val viewType: Int) : BaseDelegate<Forecast> {
             }
         }
     }
-
-    private fun Float.appendSymbol() = "$this\u00B0"
 
     private fun getWeekday(date: String): String {
         /* Create date object from string and format it to 'Sunday 17' */

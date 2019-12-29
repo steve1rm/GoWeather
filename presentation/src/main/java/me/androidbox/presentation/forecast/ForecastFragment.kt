@@ -22,6 +22,7 @@ import me.androidbox.presentation.forecast.mvp.ForecastView
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.models.CurrentWeather
 import me.androidbox.presentation.models.WeatherForecast
+import me.androidbox.presentation.utils.appendSymbol
 import org.parceler.Parcel
 import org.parceler.Parcels
 import javax.inject.Inject
@@ -36,9 +37,9 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
     lateinit var forecastViewModel: ForecastViewModel
 
     private fun displayWeather(weatherForecast: WeatherForecast, currentWeather: CurrentWeather) {
-        tvLocationName.text = weatherForecast.cityName
-        val temperatureWithDegrees = "${weatherForecast.forecast[0].temp}\u00B0"
-        tvTemperatureDegrees.text = temperatureWithDegrees
+        tvLocationName.text = currentWeather.cityName
+        tvTemperatureDegrees.text = currentWeather.temperature.appendSymbol()
+        tvFeelsLikeTemperatureDegrees.text = String.format("Feels like %s", currentWeather.feelsLikeTemperature.appendSymbol())
 
         forecastAdapter.populate(weatherForecast.forecast)
 
@@ -65,8 +66,7 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
         }
     }
 
-    override fun provideLayoutId() =
-        R.layout.weather_forecast
+    override fun provideLayoutId() = R.layout.weather_forecast
 
     override fun setupView(view: View, savedInstanceState: Bundle?) {
 
