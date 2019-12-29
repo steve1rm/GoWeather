@@ -23,6 +23,7 @@
     <style name="temperature_subtitle">
         <item name="android:textSize">26sp</item>
         <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">italic</item>
         <item name="android:textColor">@color/colorForecast</item>
     </style>
 
