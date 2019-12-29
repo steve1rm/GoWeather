@@ -36,6 +36,12 @@
         <item name="android:textColor">@color/colorForecast</item>
     </style>
 
+    <style name="daily_forecast_style_light">
+        <item name="android:textSize">17sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/colorForecast</item>
+    </style>
+
     <style name="daily_forecast_description_style">
         <item name="android:textSize">17sp</item>
         <item name="android:fontFamily">sans-serif-light</item>

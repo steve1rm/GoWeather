@@ -53,6 +53,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="23 C"
-        style="@style/daily_forecast_description_style"/>
+        style="@style/daily_forecast_style_light"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

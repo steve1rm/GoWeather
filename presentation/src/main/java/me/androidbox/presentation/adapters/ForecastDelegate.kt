@@ -29,19 +29,13 @@ class ForecastDelegate(private val viewType: Int) : BaseDelegate<Forecast> {
             holder.run {
                 tvWeekDay.text = getWeekday(items[position].validDate)
                 tvHighTemperature.text = items[position].highTemp.appendSymbol()
-                tvLowTemperature.text = appendTemperatureSymbol(items[position].lowTemp)
+                tvLowTemperature.text = items[position].lowTemp.appendSymbol()
                 tvWeatherDescription.text = items[position].weather.description
             }
         }
     }
 
-    private fun Float.appendSymbol(): String {
-        return "$this\u00B0"
-    }
-
-    private fun appendTemperatureSymbol(temperature: Float): String {
-        return "$temperature\u00B0"
-    }
+    private fun Float.appendSymbol() = "$this\u00B0"
 
     private fun getWeekday(date: String): String {
         /* Create date object from string and format it to 'Sunday 17' */
