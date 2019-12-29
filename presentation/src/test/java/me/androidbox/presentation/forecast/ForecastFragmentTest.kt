@@ -33,7 +33,7 @@ class ForecastFragmentTest {
         val bundle = Bundle()
         val weatherForecast = WeatherForecast(
             Location("name", "region", "country"),
-            Current(42),
+            CurrentWeather(42),
             Forecast(createForecastList()))
         val parcelable = Parcels.wrap(weatherForecast)
 

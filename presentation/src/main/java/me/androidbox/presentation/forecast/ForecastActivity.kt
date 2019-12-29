@@ -13,6 +13,7 @@ import me.androidbox.presentation.di.forecast.ForecastActivityComponent
 import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastView
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
+import me.androidbox.presentation.models.CurrentWeather
 import me.androidbox.presentation.models.WeatherForecast
 import me.androidbox.presentation.router.ForecastFragmentRouter
 import me.androidbox.presentation.router.LoadingFragmentRouter
@@ -25,6 +26,7 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
         const val WEATHER_LATITUDE_KEY = "weatherLatitudeKey"
         const val WEATHER_LONGITUDE_KEY = "weatherLongitudeKey"
         const val WEATHER_FORECAST_KEY = "weatherforecastkey"
+        const val CURRENT_WEATHER_KEY = "currentWeatherkey"
     }
 
     @Inject
@@ -59,8 +61,8 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
         forecastFragmentRouter.goToForecastFragment(latitude, longitude, ::onWeatherForecastFetchingFailure)
     }
 
-    private fun startForecastFragment(weatherForecast: WeatherForecast) {
-        forecastFragmentRouter.goToForecastFragment(weatherForecast, ::onWeatherForecastFetchingFailure)
+    private fun startForecastFragment(weatherForecast: WeatherForecast, currentWeather: CurrentWeather) {
+        forecastFragmentRouter.goToForecastFragment(weatherForecast, currentWeather, ::onWeatherForecastFetchingFailure)
     }
 
     private fun onRetry() {
@@ -108,8 +110,8 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
         }
     }
 
-    override fun onForecastSuccess(weatherForecast: WeatherForecast) {
-        startForecastFragment(weatherForecast)
+    override fun onForecastSuccess(weatherForecast: WeatherForecast, currentWeather: CurrentWeather) {
+        startForecastFragment(weatherForecast, currentWeather)
     }
 
     override fun onForecastFailure(error: String) {

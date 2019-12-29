@@ -1,6 +1,5 @@
 package me.androidbox.presentation.forecast.mvp
 
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
@@ -10,10 +9,10 @@ import me.androidbox.interactors.forecast.WeatherForecastInteractor
 import me.androidbox.models.request.CurrentRequestModel
 import me.androidbox.models.request.ForecastRequestModel
 import me.androidbox.models.response.CurrentWeatherModel
-import me.androidbox.models.response.ForecastModel
 import me.androidbox.models.response.WeatherForecastModel
 import me.androidbox.presentation.base.BasePresenterImp
 import me.androidbox.presentation.common.SchedulerProvider
+import me.androidbox.presentation.mappers.CurrentWeatherPresentationMapper
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import me.androidbox.wrappers.Latitude
 import me.androidbox.wrappers.Longitude
@@ -22,7 +21,8 @@ import javax.inject.Inject
 class ForecastPresenterImp @Inject constructor(private val weatherForecastInteractor: WeatherForecastInteractor,
                                                private val weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
                                                private val schedulerProvider: SchedulerProvider,
-                                               private val currentWeatherInteractor: CurrentWeatherInteractor)
+                                               private val currentWeatherInteractor: CurrentWeatherInteractor,
+                                               private val currentWeatherPresentationMapper: CurrentWeatherPresentationMapper)
     :
     BasePresenterImp<ForecastView>(),
     ForecastPresenter {
@@ -40,12 +40,27 @@ class ForecastPresenterImp @Inject constructor(private val weatherForecastIntera
         compositableDisposable.clear()
     }
 
+    private fun resultsFromCurrentAndForecastWeather(weatherForecastModel: WeatherForecastModel,
+                                                     currentWeatherModel: CurrentWeatherModel) {
+        val weatherForecast = weatherForecastPresentationMapper.map(weatherForecastModel)
+        val currentWeather = currentWeatherPresentationMapper.map(currentWeatherModel)
+
+        getView()?.onForecastSuccess(weatherForecast, currentWeather)
+    }
+
     override fun requestForecastAndCurrentWeather(latitude: Latitude, longitude: Longitude, days: Int) {
-        val disposable = Single.concat(
-            weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, 20)),
-            currentWeatherInteractor.requestCurrentWeather(CurrentRequestModel(latitude, longitude))
-        ).subscribeOn(schedulerProvider.backgroundScheduler())
-            .observeOn(schedulerProvider.backgroundScheduler())
+        compositableDisposable.add(Single.zip(
+            weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, 20)).subscribeOn(schedulerProvider.backgroundScheduler()),
+            currentWeatherInteractor.requestCurrentWeather(CurrentRequestModel(latitude, longitude)).subscribeOn(schedulerProvider.backgroundScheduler()),
+            BiFunction { weatherForecastModel: WeatherForecastModel,
+                         currentWeatherModel: CurrentWeatherModel -> resultsFromCurrentAndForecastWeather(weatherForecastModel, currentWeatherModel)
+            })
+            .subscribeOn(schedulerProvider.backgroundScheduler())
+            .subscribeBy(
+                onError = { onWeatherForecastFailure(it) }
+            ))
+
+            /*.observeOn(schedulerProvider.backgroundScheduler())
             .subscribeBy(
                 onNext = {
                     when(it) {
@@ -56,7 +71,7 @@ class ForecastPresenterImp @Inject constructor(private val weatherForecastIntera
                 onError = {
                     println(it.message)
                 }
-            )
+            )*/
     }
 
     override fun requestWeatherForecast(latitude: Latitude, longitude: Longitude, days: Int) {
@@ -78,7 +93,7 @@ class ForecastPresenterImp @Inject constructor(private val weatherForecastIntera
     private fun onWeatherForecastSuccess(weatherForecastModel: WeatherForecastModel) {
         val weatherForecast = weatherForecastPresentationMapper.map(weatherForecastModel)
 
-        getView()?.onForecastSuccess(weatherForecast)
+        //getView()?.onForecastSuccess(weatherForecast)
     }
 
     private fun onWeatherForecastFailure(error: Throwable) {

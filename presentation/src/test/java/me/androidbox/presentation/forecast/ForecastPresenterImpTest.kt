@@ -14,7 +14,7 @@ import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastPresenterImp
 import me.androidbox.presentation.forecast.mvp.ForecastView
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
-import me.androidbox.presentation.models.Current
+import me.androidbox.presentation.models.CurrentWeather
 import me.androidbox.presentation.models.Forecast
 import me.androidbox.presentation.models.Location
 import me.androidbox.presentation.models.WeatherForecast
@@ -64,7 +64,7 @@ class ForecastPresenterImpTest {
             )
         val weatherForecast = WeatherForecast(
             Location("name", "region", "country"),
-            Current(42),
+            CurrentWeather(42),
             Forecast(emptyList()))
 
         whenever(weatherForecastIntIterator

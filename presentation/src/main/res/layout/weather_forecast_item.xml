@@ -32,15 +32,27 @@
         style="@style/daily_forecast_description_style" />
 
     <TextView
-        android:id="@+id/tvAverageTemperature"
+        android:id="@+id/tvHighTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvLowTemperature"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="28 C"
         style="@style/daily_forecast_style"/>
+
+    <TextView
+        android:id="@+id/tvLowTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tvHighTemperature"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="23 C"
+        style="@style/daily_forecast_description_style"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

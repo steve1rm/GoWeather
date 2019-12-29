@@ -7,6 +7,7 @@ import me.androidbox.presentation.R
 
 class ForecastViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     val tvWeekDay: TextView = itemView.findViewById(R.id.tvWeekDay)
-    val tvAverageTemperature: TextView = itemView.findViewById(R.id.tvAverageTemperature)
+    val tvHighTemperature: TextView = itemView.findViewById(R.id.tvHighTemperature)
+    val tvLowTemperature: TextView = itemView.findViewById(R.id.tvLowTemperature)
     val tvWeatherDescription: TextView = itemView.findViewById(R.id.tvWeatherDescription)
 }

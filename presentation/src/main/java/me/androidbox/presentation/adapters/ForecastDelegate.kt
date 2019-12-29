@@ -27,13 +27,20 @@ class ForecastDelegate(private val viewType: Int) : BaseDelegate<Forecast> {
     override fun bindViewHolder(holder: RecyclerView.ViewHolder, position: Int, items: List<Forecast>) {
         if(holder is ForecastViewHolder) {
             holder.run {
-                val temperature = "${items[position].temp}\u00B0"
-
                 tvWeekDay.text = getWeekday(items[position].validDate)
-                tvAverageTemperature.text = temperature
+                tvHighTemperature.text = items[position].highTemp.appendSymbol()
+                tvLowTemperature.text = appendTemperatureSymbol(items[position].lowTemp)
                 tvWeatherDescription.text = items[position].weather.description
             }
         }
+    }
+
+    private fun Float.appendSymbol(): String {
+        return "$this\u00B0"
+    }
+
+    private fun appendTemperatureSymbol(temperature: Float): String {
+        return "$temperature\u00B0"
     }
 
     private fun getWeekday(date: String): String {

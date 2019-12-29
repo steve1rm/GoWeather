@@ -20,6 +20,8 @@ import me.androidbox.presentation.di.scopes.ActivityScope
 import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastPresenterImp
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
+import me.androidbox.presentation.mappers.CurrentWeatherPresentationMapper
+import me.androidbox.presentation.mappers.CurrentWeatherPresentationMapperImp
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapperImp
 import me.androidbox.presentation.router.*
@@ -51,19 +53,25 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
         return CurrentWeatherInteractorImp(currentWeatherRequest)
     }
 
+    @ActivityScope
+    @Provides
+    fun provideCurrentWeatherPresentationMapper(): CurrentWeatherPresentationMapper =
+        CurrentWeatherPresentationMapperImp()
 
     @ActivityScope
     @Provides
     fun provideForecastPresenter(weatherForecastInteractor: WeatherForecastInteractor,
                                  weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
                                  schedulerProvider: SchedulerProvider,
-                                 currentWeatherInteractor: CurrentWeatherInteractor
+                                 currentWeatherInteractor: CurrentWeatherInteractor,
+                                 currentWeatherPresentationMapper: CurrentWeatherPresentationMapper
     ): ForecastPresenter =
         ForecastPresenterImp(
             weatherForecastInteractor,
             weatherForecastPresentationMapper,
             schedulerProvider,
-            currentWeatherInteractor)
+            currentWeatherInteractor,
+            currentWeatherPresentationMapper)
 
     @ActivityScope
     @Provides

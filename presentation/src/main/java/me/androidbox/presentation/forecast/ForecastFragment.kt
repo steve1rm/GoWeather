@@ -20,6 +20,7 @@ import me.androidbox.presentation.di.forecast.ForecastFragmentComponent
 import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastView
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
+import me.androidbox.presentation.models.CurrentWeather
 import me.androidbox.presentation.models.WeatherForecast
 import org.parceler.Parcel
 import org.parceler.Parcels
@@ -34,12 +35,12 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
     @Inject
     lateinit var forecastViewModel: ForecastViewModel
 
-    private fun displayWeather(weatherForecast: WeatherForecast) {
+    private fun displayWeather(weatherForecast: WeatherForecast, currentWeather: CurrentWeather) {
         tvLocationName.text = weatherForecast.cityName
         val temperatureWithDegrees = "${weatherForecast.forecast[0].temp}\u00B0"
         tvTemperatureDegrees.text = temperatureWithDegrees
 
-        forecastAdapter.populate(weatherForecast.forecast.drop(1))
+        forecastAdapter.populate(weatherForecast.forecast)
 
         val forecastAdapter = forecastAdapter
         forecastAdapter.notifyDataSetChanged()
@@ -71,7 +72,8 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
 
         arguments?.let {
             val weatherForecast: WeatherForecast = Parcels.unwrap<WeatherForecast>(it.getParcelable(ForecastActivity.WEATHER_FORECAST_KEY))
-            displayWeather(weatherForecast)
+            val currentWeather: CurrentWeather = Parcels.unwrap<CurrentWeather>(it.getParcelable(ForecastActivity.CURRENT_WEATHER_KEY))
+            displayWeather(weatherForecast, currentWeather)
             startSlideUpAnimation()
         } ?:
         run {

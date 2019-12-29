@@ -19,6 +19,8 @@ import me.androidbox.presentation.di.scopes.FragmentScope
 import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastPresenterImp
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
+import me.androidbox.presentation.mappers.CurrentWeatherPresentationMapper
+import me.androidbox.presentation.mappers.CurrentWeatherPresentationMapperImp
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapperImp
 import me.androidbox.presentation.models.Forecast
@@ -72,11 +74,21 @@ class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>, priv
 
     @FragmentScope
     @Provides
+    fun provideCurrentWeatherPresentationMapper(): CurrentWeatherPresentationMapper =
+        CurrentWeatherPresentationMapperImp()
+
+    @FragmentScope
+    @Provides
     fun provideForecastPresenter(weatherForecastInteractor: WeatherForecastInteractor,
                                  weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
                                  schedulerProvider: SchedulerProvider,
-                                 currentWeatherInteractor: CurrentWeatherInteractor): ForecastPresenter {
+                                 currentWeatherInteractor: CurrentWeatherInteractor,
+                                 currentWeatherPresentationMapper: CurrentWeatherPresentationMapper): ForecastPresenter {
         return ForecastPresenterImp(
-            weatherForecastInteractor, weatherForecastPresentationMapper, schedulerProvider, currentWeatherInteractor)
+            weatherForecastInteractor,
+            weatherForecastPresentationMapper,
+            schedulerProvider,
+            currentWeatherInteractor,
+            currentWeatherPresentationMapper)
     }
 }
