@@ -57,10 +57,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
         retryFragmentRouter.gotoRetryFragment(::onRetry)
     }
 
-    private fun startForecastFragment(latitude: Double, longitude: Double) {
-        forecastFragmentRouter.goToForecastFragment(latitude, longitude, ::onWeatherForecastFetchingFailure)
-    }
-
     private fun startForecastFragment(weatherForecast: WeatherForecast, currentWeather: CurrentWeather) {
         forecastFragmentRouter.goToForecastFragment(weatherForecast, currentWeather, ::onWeatherForecastFetchingFailure)
     }
@@ -88,8 +84,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
         when(locationStatus) {
             is LocationStatus.Success -> {
                 forecastPresenter.initialize(this)
-             //   forecastPresenter.requestCurrentWeather(locationStatus.latitude, locationStatus.longitude)
-             //   forecastPresenter.requestWeatherForecast(locationStatus.latitude, locationStatus.longitude)
                 forecastPresenter.requestForecastAndCurrentWeather(locationStatus.latitude, locationStatus.longitude, 20)
             }
             is LocationStatus.Failure -> {
