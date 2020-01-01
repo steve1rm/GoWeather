@@ -1,5 +1,6 @@
 package me.androidbox.presentation.di
 
+import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
@@ -11,7 +12,7 @@ class TestGoWeatherApplicationModule(private val goWeatherApplication: GoWeather
 
     @Singleton
     @Provides
-    fun providesContext(): Context {
+    fun providesContext(): Application {
         return goWeatherApplication
     }
 

@@ -43,11 +43,14 @@ class ForecastActivityAndroidTest {
     @field:[Inject Named("TestBaseUrl")]
     lateinit var baseUrl: String
 
-    @Inject
+ /*   @Inject
     lateinit var locationUtils: LocationUtils
+*/
 
+/*
     @Inject
     lateinit var presenter: ForecastPresenter
+*/
 
     @Inject
     lateinit var okHttpClient: OkHttpClient
@@ -111,25 +114,25 @@ class ForecastActivityAndroidTest {
         onView(childAtPosition(withId(R.id.rvDailyForecast), 0))
             .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Sunday"), withEffectiveVisibility(VISIBLE)))))
         onView(childAtPosition(withId(R.id.rvDailyForecast), 0))
-            .check(matches(hasDescendant(allOf(withId(R.id.tvAverageTemperature), withText("33.6"), withEffectiveVisibility(VISIBLE)))))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvHighTemperature), withText("33.6"), withEffectiveVisibility(VISIBLE)))))
 
         /* Should display the correct day and average temperature at position 1 */
         onView(childAtPosition(withId(R.id.rvDailyForecast), 1))
             .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Monday"), withEffectiveVisibility(VISIBLE)))))
         onView(childAtPosition(withId(R.id.rvDailyForecast), 1))
-            .check(matches(hasDescendant(allOf(withId(R.id.tvAverageTemperature), withText("33.4"), withEffectiveVisibility(VISIBLE)))))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvHighTemperature), withText("33.4"), withEffectiveVisibility(VISIBLE)))))
 
         /* Should display the correct day and average temperature at position 2 */
         onView(childAtPosition(withId(R.id.rvDailyForecast), 2))
             .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Tuesday"), withEffectiveVisibility(VISIBLE)))))
         onView(childAtPosition(withId(R.id.rvDailyForecast), 2))
-            .check(matches(hasDescendant(allOf(withId(R.id.tvAverageTemperature), withText("34.1"), withEffectiveVisibility(VISIBLE)))))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvHighTemperature), withText("34.1"), withEffectiveVisibility(VISIBLE)))))
 
         /* Should display the correct day and average temperature at position 3 */
         onView(childAtPosition(withId(R.id.rvDailyForecast), 3))
             .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Wednesday"), withEffectiveVisibility(VISIBLE)))))
         onView(childAtPosition(withId(R.id.rvDailyForecast), 3))
-            .check(matches(hasDescendant(allOf(withId(R.id.tvAverageTemperature), withText("34.4"), withEffectiveVisibility(VISIBLE)))))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvHighTemperature), withText("34.4"), withEffectiveVisibility(VISIBLE)))))
     }
 
     @Test

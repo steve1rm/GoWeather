@@ -34,6 +34,7 @@ class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>, priv
     @Provides
     fun provideFragment(): Fragment = forecastFragment
 
+    @FragmentScope
     @Provides
     fun providesForecastAdapter(forecastDelegate: BaseDelegate<Forecast>): ForecastAdapter =
         ForecastAdapter(forecastDelegate)
