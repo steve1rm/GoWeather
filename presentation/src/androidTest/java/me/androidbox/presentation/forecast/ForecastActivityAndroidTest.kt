@@ -1,6 +1,5 @@
 package me.androidbox.presentation.forecast
 
-import android.app.Activity
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
@@ -12,12 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.DispatchingAndroidInjector_Factory
 import me.androidbox.presentation.R
-import me.androidbox.presentation.common.LocationUtils
-import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.rules.TestComponentRule
 import me.androidbox.presentation.viewAssertions.childAtPosition
 import okhttp3.HttpUrl
@@ -28,32 +22,17 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.startsWith
-import org.junit.*
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import java.lang.Thread.sleep
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
-import javax.inject.Named
-import javax.inject.Provider
 
 @RunWith(AndroidJUnit4::class)
 class ForecastActivityAndroidTest {
-
-    @field:[Inject Named("TestBaseUrl")]
-    lateinit var baseUrl: String
-
- /*   @Inject
-    lateinit var locationUtils: LocationUtils
-*/
-
-/*
-    @Inject
-    lateinit var presenter: ForecastPresenter
-*/
-
-    @Inject
-    lateinit var okHttpClient: OkHttpClient
 
     @get:Rule
     val activityRule = ActivityTestRule(ForecastActivity::class.java, false, false)
@@ -92,7 +71,6 @@ class ForecastActivityAndroidTest {
         onView((withId(R.id.action_bar)))
             .check(matches(allOf(hasDescendant(withText(R.string.app_name)), isDisplayed())))
 
-        Thread.sleep(1000)
         /* should display the initial loading screen */
         onView(withId(R.id.ivProgress)).check(matches(isDisplayed()))
 
@@ -220,21 +198,5 @@ class ForecastActivityAndroidTest {
         } ?: run {
             return ""
         }
-    }
-
-    private fun createFakeMainActivityInjector(block : ForecastActivity.() -> Unit)
-            : DispatchingAndroidInjector<Activity> {
-        val injector = AndroidInjector<Activity> { instance ->
-            if (instance is ForecastActivity) {
-                instance.block()
-            }
-        }
-        val factory = AndroidInjector.Factory<Activity> { injector }
-        val map = mapOf(Pair<Class <*>,
-                Provider<AndroidInjector.Factory<*>>>(ForecastActivity::class.java, Provider { factory } ))
-
-        val stringMap : Map<String, Provider<AndroidInjector.Factory<*>>> = emptyMap()
-
-        return DispatchingAndroidInjector_Factory.newDispatchingAndroidInjector(map, stringMap)
     }
 }

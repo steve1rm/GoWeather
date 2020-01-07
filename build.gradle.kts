@@ -1,3 +1,5 @@
+import dev.arunkumar.scabbard.gradle.ScabbardSpec
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
@@ -27,6 +29,7 @@ tasks.register("clean", Delete::class) {
 
 plugins {
     id("com.gradle.build-scan") version "2.1"
+    id("scabbard.gradle") version "0.1.0"
 }
 
 buildScan {
@@ -36,3 +39,7 @@ buildScan {
   //  publishAlways()
 }
 
+
+scabbard.configure(closureOf<ScabbardSpec> {
+    enabled(true)
+})
