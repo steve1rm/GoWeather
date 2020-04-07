@@ -14,6 +14,9 @@ import me.androidbox.presentation.base.BasePresenterImp
 import me.androidbox.presentation.common.SchedulerProvider
 import me.androidbox.presentation.mappers.CurrentWeatherPresentationMapper
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
+import me.androidbox.presentation.models.CurrentWeather
+import me.androidbox.presentation.models.WeatherForecast
+import me.androidbox.presentation.utils.EspressoIdlingResource
 import me.androidbox.wrappers.Latitude
 import me.androidbox.wrappers.Longitude
 import javax.inject.Inject
@@ -40,24 +43,33 @@ class ForecastPresenterImp @Inject constructor(private val weatherForecastIntera
         compositableDisposable.clear()
     }
 
-    private fun resultsFromCurrentAndForecastWeather(weatherForecastModel: WeatherForecastModel,
-                                                     currentWeatherModel: CurrentWeatherModel) {
-        val weatherForecast = weatherForecastPresentationMapper.map(weatherForecastModel)
-        val currentWeather = currentWeatherPresentationMapper.map(currentWeatherModel)
+    private fun getResultsFromCurrentAndForecastWeather(weatherForecastModel: WeatherForecastModel,
+                                                        currentWeatherModel: CurrentWeatherModel): Pair<WeatherForecast, CurrentWeather> {
 
-        getView()?.onForecastSuccess(weatherForecast, currentWeather)
+        return Pair(
+            weatherForecastPresentationMapper.map(weatherForecastModel),
+            currentWeatherPresentationMapper.map(currentWeatherModel))
     }
 
     override fun requestForecastAndCurrentWeather(latitude: Latitude, longitude: Longitude, days: Int) {
         compositableDisposable.add(Single.zip(
-            weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, 20)).subscribeOn(schedulerProvider.backgroundScheduler()),
-            currentWeatherInteractor.requestCurrentWeather(CurrentRequestModel(latitude, longitude)).subscribeOn(schedulerProvider.backgroundScheduler()),
+            weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, 20))
+                .subscribeOn(schedulerProvider.backgroundScheduler()),
+            currentWeatherInteractor.requestCurrentWeather(CurrentRequestModel(latitude, longitude))
+                .subscribeOn(schedulerProvider.backgroundScheduler()),
             BiFunction { weatherForecastModel: WeatherForecastModel,
-                         currentWeatherModel: CurrentWeatherModel -> resultsFromCurrentAndForecastWeather(weatherForecastModel, currentWeatherModel)
+                         currentWeatherModel: CurrentWeatherModel ->
+                getResultsFromCurrentAndForecastWeather(weatherForecastModel, currentWeatherModel)
             })
             .subscribeOn(schedulerProvider.backgroundScheduler())
+            .observeOn(schedulerProvider.uiScheduler())
             .subscribeBy(
-                onError = { onWeatherForecastFailure(it) }
+                onSuccess = {
+                    getView()?.onForecastSuccess(it.first, it.second)
+                },
+                onError = {
+                    onWeatherForecastFailure(it)
+                }
             ))
     }
 
