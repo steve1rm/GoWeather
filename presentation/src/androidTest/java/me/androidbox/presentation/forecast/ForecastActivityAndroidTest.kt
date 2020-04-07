@@ -3,6 +3,7 @@ package me.androidbox.presentation.forecast
 import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.rule.IntentsTestRule
@@ -13,6 +14,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import me.androidbox.presentation.R
 import me.androidbox.presentation.rules.TestComponentRule
+import me.androidbox.presentation.utils.EspressoIdlingResource
 import me.androidbox.presentation.viewAssertions.childAtPosition
 import okhttp3.HttpUrl
 import okhttp3.MediaType
@@ -28,7 +30,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
-import java.lang.Thread.sleep
 import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
@@ -50,12 +51,14 @@ class ForecastActivityAndroidTest {
 
     @Before
     fun setUp() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
         mockWebserver.start(8080)
     }
 
     @After
     fun tearDown() {
         mockWebserver.shutdown()
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
     }
 
     @Test
@@ -137,8 +140,6 @@ class ForecastActivityAndroidTest {
 
         /* Should display loading */
         onView(withId(R.id.ivProgress)).check(matches(isDisplayed()))
-
-        sleep(6000L)
 
         /* should go back to the failure screen */
         onView(withId(R.id.tvFailureMessage))
