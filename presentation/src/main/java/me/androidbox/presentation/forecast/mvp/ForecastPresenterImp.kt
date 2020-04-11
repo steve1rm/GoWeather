@@ -52,13 +52,11 @@ class ForecastPresenterImp @Inject constructor(private val weatherForecastIntera
     }
 
     override fun requestForecastAndCurrentWeather(latitude: Latitude, longitude: Longitude, days: Int) {
-        EspressoIdlingResource.increament()
+    //    EspressoIdlingResource.increment()
 
         compositableDisposable.add(Single.zip(
-            weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, 20))
-                .subscribeOn(schedulerProvider.backgroundScheduler()),
-            currentWeatherInteractor.requestCurrentWeather(CurrentRequestModel(latitude, longitude))
-                .subscribeOn(schedulerProvider.backgroundScheduler()),
+            weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, 20)),
+            currentWeatherInteractor.requestCurrentWeather(CurrentRequestModel(latitude, longitude)),
             BiFunction { weatherForecastModel: WeatherForecastModel,
                          currentWeatherModel: CurrentWeatherModel ->
                 getResultsFromCurrentAndForecastWeather(weatherForecastModel, currentWeatherModel)
@@ -68,11 +66,11 @@ class ForecastPresenterImp @Inject constructor(private val weatherForecastIntera
             .subscribeBy(
                 onSuccess = {
                     getView()?.onForecastSuccess(it.first, it.second)
-                    EspressoIdlingResource.decrement()
+      //              EspressoIdlingResource.decrement()
                 },
                 onError = {
                     onWeatherForecastFailure(it)
-                    EspressoIdlingResource.decrement()
+//                    EspressoIdlingResource.decrement()
                 }
             ))
     }

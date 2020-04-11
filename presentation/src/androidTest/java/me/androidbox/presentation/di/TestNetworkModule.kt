@@ -1,6 +1,5 @@
 package me.androidbox.presentation.di
 
-import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
 import com.jakewharton.espresso.OkHttp3IdlingResource
 import dagger.Module
@@ -11,7 +10,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -38,8 +36,8 @@ class TestNetworkModule {
     fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
-            .connectTimeout(2, TimeUnit.SECONDS)
-            .readTimeout(2, TimeUnit.SECONDS)
+//            .connectTimeout(4, TimeUnit.SECONDS)
+     //       .readTimeout(4, TimeUnit.SECONDS)
             .build()
     }
 
@@ -52,10 +50,10 @@ class TestNetworkModule {
     @Singleton
     @Provides
     fun provideRetrofit(@Named("TestBaseUrl") baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
-        val idlingResource = OkHttp3IdlingResource.create("okhttp", okHttpClient)
+   /*     val idlingResource = OkHttp3IdlingResource.create("okhttp", okHttpClient)
 
         IdlingRegistry.getInstance().register(idlingResource)
-
+*/
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)

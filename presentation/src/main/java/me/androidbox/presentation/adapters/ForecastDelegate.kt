@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.androidbox.presentation.R
 import me.androidbox.presentation.models.Forecast
-import me.androidbox.presentation.utils.appendSymbol
+import me.androidbox.presentation.utils.appendDegreesSymbol
 import me.androidbox.presentation.viewholders.ForecastViewHolder
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
@@ -28,8 +28,8 @@ class ForecastDelegate(private val viewType: Int) : BaseDelegate<Forecast> {
         if(holder is ForecastViewHolder) {
             holder.run {
                 tvWeekDay.text = getWeekday(items[position].validDate)
-                tvHighTemperature.text = items[position].highTemp.appendSymbol()
-                tvLowTemperature.text = items[position].lowTemp.appendSymbol()
+                tvHighTemperature.text = items[position].highTemp.appendDegreesSymbol()
+                tvLowTemperature.text = items[position].lowTemp.appendDegreesSymbol()
                 tvWeatherDescription.text = items[position].weather.description
             }
         }

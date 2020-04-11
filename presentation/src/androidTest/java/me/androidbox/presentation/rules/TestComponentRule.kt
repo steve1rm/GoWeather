@@ -2,6 +2,7 @@ package me.androidbox.presentation.rules
 
 import android.content.Context
 import me.androidbox.presentation.di.*
+import me.androidbox.presentation.di.application.DaggerGoWeatherApplicationComponent
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement

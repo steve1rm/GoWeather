@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
+import androidx.core.os.BuildCompat
 import androidx.lifecycle.Observer
 import me.androidbox.presentation.R
 import me.androidbox.presentation.base.BaseActivity
@@ -18,6 +19,7 @@ import me.androidbox.presentation.models.WeatherForecast
 import me.androidbox.presentation.router.ForecastFragmentRouter
 import me.androidbox.presentation.router.LoadingFragmentRouter
 import me.androidbox.presentation.router.RetryFragmentRouter
+import me.androidbox.presentation.utils.EspressoIdlingResource
 import javax.inject.Inject
 
 class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
@@ -51,6 +53,7 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
 
     private fun startLoadingFragment() {
         loadingFragmentRouter.gotoLoadingFragment()
+        EspressoIdlingResource.increment()
     }
 
     private fun startRetryFragment() {
@@ -106,10 +109,12 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
 
     override fun onForecastSuccess(weatherForecast: WeatherForecast, currentWeather: CurrentWeather) {
         startForecastFragment(weatherForecast, currentWeather)
+        EspressoIdlingResource.decrement()
     }
 
     override fun onForecastFailure(error: String) {
         startRetryFragment()
+        EspressoIdlingResource.decrement()
     }
 
     override fun setupObservers() {

@@ -1,7 +1,6 @@
 package me.androidbox.presentation.forecast
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
@@ -17,13 +16,10 @@ import me.androidbox.presentation.R
 import me.androidbox.presentation.adapters.ForecastAdapter
 import me.androidbox.presentation.base.BaseFragment
 import me.androidbox.presentation.di.forecast.ForecastFragmentComponent
-import me.androidbox.presentation.forecast.mvp.ForecastPresenter
-import me.androidbox.presentation.forecast.mvp.ForecastView
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.models.CurrentWeather
 import me.androidbox.presentation.models.WeatherForecast
-import me.androidbox.presentation.utils.appendSymbol
-import org.parceler.Parcel
+import me.androidbox.presentation.utils.appendDegreesSymbol
 import org.parceler.Parcels
 import javax.inject.Inject
 
@@ -38,8 +34,8 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
 
     private fun displayWeather(weatherForecast: WeatherForecast, currentWeather: CurrentWeather) {
         tvLocationName.text = currentWeather.cityName
-        tvTemperatureDegrees.text = currentWeather.temperature.appendSymbol()
-        tvFeelsLikeTemperatureDegrees.text = String.format("Feels like %s", currentWeather.feelsLikeTemperature.appendSymbol())
+        tvTemperatureDegrees.text = currentWeather.temperature.appendDegreesSymbol()
+        tvFeelsLikeTemperatureDegrees.text = String.format("Feels like %s", currentWeather.feelsLikeTemperature.appendDegreesSymbol())
 
         forecastAdapter.populate(weatherForecast.forecast)
 
