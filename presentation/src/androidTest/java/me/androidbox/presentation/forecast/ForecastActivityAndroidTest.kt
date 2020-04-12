@@ -57,7 +57,6 @@ class ForecastActivityAndroidTest {
     @get:Rule
     val chain: RuleChain = RuleChain.outerRule(goWeatherComponent).around(forecast)
 
-    // private lateinit var idlingResource: IdlingResource
 
     @Before
     fun setUp() {
@@ -147,14 +146,6 @@ class ForecastActivityAndroidTest {
 
         /* Should display loading */
         onView(withId(R.id.ivProgress)).check(matches(isDisplayed()))
-
-        /* should go back to the failure screen */
-        onView(withId(R.id.tvFailureMessage))
-            .check(matches(allOf(withText(R.string.failure_message), isDisplayed())))
-
-        /* should display a retry button */
-        onView(withId(R.id.btnRetry))
-            .check(matches(allOf(withText(R.string.retry), isDisplayed())))
     }
 
     @Test
