@@ -1,4 +1,4 @@
 package me.androidbox.presentation.utils
 
-fun Float.appendDegreesSymbol() = "$this\u00B0"
+val Float.appendDegreesSymbol get() = "$this\u00B0"
 

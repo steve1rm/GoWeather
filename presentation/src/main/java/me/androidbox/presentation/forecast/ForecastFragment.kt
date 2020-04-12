@@ -34,8 +34,8 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
 
     private fun displayWeather(weatherForecast: WeatherForecast, currentWeather: CurrentWeather) {
         tvLocationName.text = currentWeather.cityName
-        tvTemperatureDegrees.text = currentWeather.temperature.appendDegreesSymbol()
-        tvFeelsLikeTemperatureDegrees.text = String.format("Feels like %s", currentWeather.feelsLikeTemperature.appendDegreesSymbol())
+        tvTemperatureDegrees.text = currentWeather.temperature.appendDegreesSymbol
+        tvFeelsLikeTemperatureDegrees.text = String.format("Feels like %s", currentWeather.feelsLikeTemperature.appendDegreesSymbol)
 
         forecastAdapter.populate(weatherForecast.forecast)
 
@@ -66,8 +66,8 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
     override fun setupView(view: View, savedInstanceState: Bundle?) {
 
         arguments?.let {
-            val weatherForecast: WeatherForecast = Parcels.unwrap<WeatherForecast>(it.getParcelable(ForecastActivity.WEATHER_FORECAST_KEY))
-            val currentWeather: CurrentWeather = Parcels.unwrap<CurrentWeather>(it.getParcelable(ForecastActivity.CURRENT_WEATHER_KEY))
+            val weatherForecast: WeatherForecast = Parcels.unwrap(it.getParcelable(ForecastActivity.WEATHER_FORECAST_KEY))
+            val currentWeather: CurrentWeather = Parcels.unwrap(it.getParcelable(ForecastActivity.CURRENT_WEATHER_KEY))
             displayWeather(weatherForecast, currentWeather)
             startSlideUpAnimation()
         } ?:

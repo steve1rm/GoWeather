@@ -16,7 +16,6 @@ import me.androidbox.presentation.mappers.CurrentWeatherPresentationMapper
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import me.androidbox.presentation.models.CurrentWeather
 import me.androidbox.presentation.models.WeatherForecast
-import me.androidbox.presentation.utils.EspressoIdlingResource
 import me.androidbox.wrappers.Latitude
 import me.androidbox.wrappers.Longitude
 import javax.inject.Inject
@@ -52,8 +51,6 @@ class ForecastPresenterImp @Inject constructor(private val weatherForecastIntera
     }
 
     override fun requestForecastAndCurrentWeather(latitude: Latitude, longitude: Longitude, days: Int) {
-    //    EspressoIdlingResource.increment()
-
         compositableDisposable.add(Single.zip(
             weatherForecastInteractor.requestWeatherForecast(ForecastRequestModel(latitude, longitude, 20)),
             currentWeatherInteractor.requestCurrentWeather(CurrentRequestModel(latitude, longitude)),
@@ -66,11 +63,9 @@ class ForecastPresenterImp @Inject constructor(private val weatherForecastIntera
             .subscribeBy(
                 onSuccess = {
                     getView()?.onForecastSuccess(it.first, it.second)
-      //              EspressoIdlingResource.decrement()
                 },
                 onError = {
                     onWeatherForecastFailure(it)
-//                    EspressoIdlingResource.decrement()
                 }
             ))
     }

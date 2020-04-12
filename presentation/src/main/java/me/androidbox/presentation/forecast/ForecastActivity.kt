@@ -53,7 +53,6 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
 
     private fun startLoadingFragment() {
         loadingFragmentRouter.gotoLoadingFragment()
-        EspressoIdlingResource.increment()
     }
 
     private fun startRetryFragment() {
@@ -62,6 +61,7 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
 
     private fun startForecastFragment(weatherForecast: WeatherForecast, currentWeather: CurrentWeather) {
         forecastFragmentRouter.goToForecastFragment(weatherForecast, currentWeather, ::onWeatherForecastFetchingFailure)
+
     }
 
     private fun onRetry() {
@@ -108,8 +108,8 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
     }
 
     override fun onForecastSuccess(weatherForecast: WeatherForecast, currentWeather: CurrentWeather) {
+        EspressoIdlingResource.increment()
         startForecastFragment(weatherForecast, currentWeather)
-        EspressoIdlingResource.decrement()
     }
 
     override fun onForecastFailure(error: String) {

@@ -9,7 +9,7 @@ import org.junit.runners.model.Statement
 
 class TestComponentRule(private val context: Context): TestRule {
 
-    private lateinit var androidTestGoWeatherPresentationComponent: AndroidTestGoWeatherPresentationComponent
+    lateinit var androidTestGoWeatherPresentationComponent: AndroidTestGoWeatherPresentationComponent
     fun getContext() = context
 
     private fun setupDaggerTestComponentInApplication() {
@@ -23,6 +23,8 @@ class TestComponentRule(private val context: Context): TestRule {
                 .build()
 
         application.goWeatherApplicationComponent = androidTestGoWeatherPresentationComponent
+
+
     }
 
     override fun apply(base: Statement, description: Description): Statement {

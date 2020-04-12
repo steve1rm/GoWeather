@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.IdlingResource
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.rule.IntentsTestRule
@@ -12,7 +13,9 @@ import androidx.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import com.jakewharton.espresso.OkHttp3IdlingResource
 import me.androidbox.presentation.R
+import me.androidbox.presentation.rules.OkHttpIdingResourceRule
 import me.androidbox.presentation.rules.TestComponentRule
 import me.androidbox.presentation.utils.EspressoIdlingResource
 import me.androidbox.presentation.utils.appendDegreesSymbol
@@ -32,9 +35,13 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 class ForecastActivityAndroidTest {
+
+    @Inject
+    lateinit var okHttpClient: OkHttpClient
 
     @get:Rule
     val activityRule = ActivityTestRule(ForecastActivity::class.java, false, false)
@@ -50,15 +57,12 @@ class ForecastActivityAndroidTest {
     @get:Rule
     val chain: RuleChain = RuleChain.outerRule(goWeatherComponent).around(forecast)
 
+    private lateinit var idlingResource: IdlingResource
+
     @Before
     fun setUp() {
+        mockWebserver.start(8080)
         IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
-        try {
-            mockWebserver.start(8080)
-        }
-        catch (error: Exception) {
-            println(error.stackTrace)
-        }
     }
 
     @After
@@ -69,7 +73,6 @@ class ForecastActivityAndroidTest {
 
     @Test
     fun should_load_five_day_forecast() {
-        loadFromResources("json/fivedayforecast.json")
         mockWebserver.enqueue(MockResponse().setBody(loadFromResources("json/fivedayforecast.json")))
         mockWebserver.enqueue(MockResponse().setBody(loadFromResources("json/currentWeather.json")))
 
@@ -78,21 +81,29 @@ class ForecastActivityAndroidTest {
         /* should display Title of app in the toolbar */
         onView((withId(R.id.action_bar)))
             .check(matches(allOf(hasDescendant(withText(R.string.app_name)), isDisplayed())))
+/*
 
-        /* should display the initial loading screen */
-   /*     onView(withId(R.id.ivProgress))
-            .check(matches(isDisplayed()))*/
+        */
+/* should display the initial loading screen *//*
+
+        onView(withId(R.id.ivProgress))
+            .check(matches(isDisplayed()))
+*/
 
         /* should display the current temperature */
-    /*    onView(withId(R.id.tvTemperatureDegrees))
-            .check(matches(allOf(withText(startsWith("35.6")), isDisplayed())))
-*/
+        onView(withId(R.id.tvTemperatureDegrees))
+            .check(matches(allOf(withText(32.8F.appendDegreesSymbol), isDisplayed())))
+
+        /* should display the feels like temperature */
+        onView(withId(R.id.tvFeelsLikeTemperatureDegrees))
+            .check(matches(allOf(withText(startsWith("Feels like 35.6")), isDisplayed())))
+
         /* should display the current location */
         onView(withId(R.id.tvLocationName))
             .check(matches(allOf(withText("Watthana"), isDisplayed())))
 
         /* should display the daily forecast */
-//        onView(withId(R.id.rvDailyForecast)).check(matches(isDisplayed()))
+        onView(withId(R.id.rvDailyForecast)).check(matches(isDisplayed()))
 
         /* should display the number of forecast days */
         onView(withId(R.id.rvDailyForecast)).check(matches(hasChildCount(4)))
@@ -101,25 +112,25 @@ class ForecastActivityAndroidTest {
         onView(childAtPosition(withId(R.id.rvDailyForecast), 0))
             .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Tuesday, Dec 31"), withEffectiveVisibility(VISIBLE)))))
         onView(childAtPosition(withId(R.id.rvDailyForecast), 0))
-            .check(matches(hasDescendant(allOf(withId(R.id.tvHighTemperature), withText(34.6F.appendDegreesSymbol()), withEffectiveVisibility(VISIBLE)))))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvHighTemperature), withText(34.6F.appendDegreesSymbol), withEffectiveVisibility(VISIBLE)))))
 
         /* Should display the correct day and average temperature at position 1 */
         onView(childAtPosition(withId(R.id.rvDailyForecast), 1))
             .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Wednesday, Jan 01"), withEffectiveVisibility(VISIBLE)))))
         onView(childAtPosition(withId(R.id.rvDailyForecast), 1))
-            .check(matches(hasDescendant(allOf(withId(R.id.tvHighTemperature), withText(34.5F.appendDegreesSymbol()), withEffectiveVisibility(VISIBLE)))))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvHighTemperature), withText(34.5F.appendDegreesSymbol), withEffectiveVisibility(VISIBLE)))))
 
         /* Should display the correct day and average temperature at position 2 */
         onView(childAtPosition(withId(R.id.rvDailyForecast), 2))
             .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Thursday, Jan 02"), withEffectiveVisibility(VISIBLE)))))
         onView(childAtPosition(withId(R.id.rvDailyForecast), 2))
-            .check(matches(hasDescendant(allOf(withId(R.id.tvHighTemperature), withText(34.8F.appendDegreesSymbol()), withEffectiveVisibility(VISIBLE)))))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvHighTemperature), withText(34.8F.appendDegreesSymbol), withEffectiveVisibility(VISIBLE)))))
 
         /* Should display the correct day and average temperature at position 3 */
         onView(childAtPosition(withId(R.id.rvDailyForecast), 3))
             .check(matches(hasDescendant(allOf(withId(R.id.tvWeekDay), withText("Friday, Jan 03"), withEffectiveVisibility(VISIBLE)))))
         onView(childAtPosition(withId(R.id.rvDailyForecast), 3))
-            .check(matches(hasDescendant(allOf(withId(R.id.tvHighTemperature), withText(35.1F.appendDegreesSymbol()), withEffectiveVisibility(VISIBLE)))))
+            .check(matches(hasDescendant(allOf(withId(R.id.tvHighTemperature), withText(35.1F.appendDegreesSymbol), withEffectiveVisibility(VISIBLE)))))
     }
 
     @Test

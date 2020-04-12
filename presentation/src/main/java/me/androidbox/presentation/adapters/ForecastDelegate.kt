@@ -28,8 +28,8 @@ class ForecastDelegate(private val viewType: Int) : BaseDelegate<Forecast> {
         if(holder is ForecastViewHolder) {
             holder.run {
                 tvWeekDay.text = getWeekday(items[position].validDate)
-                tvHighTemperature.text = items[position].highTemp.appendDegreesSymbol()
-                tvLowTemperature.text = items[position].lowTemp.appendDegreesSymbol()
+                tvHighTemperature.text = items[position].highTemp.appendDegreesSymbol
+                tvLowTemperature.text = items[position].lowTemp.appendDegreesSymbol
                 tvWeatherDescription.text = items[position].weather.description
             }
         }
