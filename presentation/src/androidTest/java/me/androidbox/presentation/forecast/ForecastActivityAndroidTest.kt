@@ -57,7 +57,7 @@ class ForecastActivityAndroidTest {
     @get:Rule
     val chain: RuleChain = RuleChain.outerRule(goWeatherComponent).around(forecast)
 
-    private lateinit var idlingResource: IdlingResource
+    // private lateinit var idlingResource: IdlingResource
 
     @Before
     fun setUp() {
@@ -81,14 +81,6 @@ class ForecastActivityAndroidTest {
         /* should display Title of app in the toolbar */
         onView((withId(R.id.action_bar)))
             .check(matches(allOf(hasDescendant(withText(R.string.app_name)), isDisplayed())))
-/*
-
-        */
-/* should display the initial loading screen *//*
-
-        onView(withId(R.id.ivProgress))
-            .check(matches(isDisplayed()))
-*/
 
         /* should display the current temperature */
         onView(withId(R.id.tvTemperatureDegrees))
@@ -136,8 +128,6 @@ class ForecastActivityAndroidTest {
     @Test
     fun return_404_error_response() {
         mockWebserver.enqueue(MockResponse().setResponseCode(404))
-
-   //     ActivityScenario.launch(ForecastActivity::class.java)
 
         forecast.launchActivity(Intent(goWeatherComponent.getContext(), ForecastActivity::class.java))
 

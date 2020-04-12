@@ -98,23 +98,25 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
 
     override fun setupView(savedInstanceState: Bundle?) {
         if(location.isLocationServicesEnabled()) {
+            EspressoIdlingResource.increment()
             startLoadingFragment()
             location.getLocationCoordinates(::onLocationResult)
         }
         else {
             displayLocationSettings()
+            EspressoIdlingResource.increment()
             startRetryFragment()
         }
     }
 
     override fun onForecastSuccess(weatherForecast: WeatherForecast, currentWeather: CurrentWeather) {
-        EspressoIdlingResource.increment()
+        EspressoIdlingResource.decrement()
         startForecastFragment(weatherForecast, currentWeather)
     }
 
     override fun onForecastFailure(error: String) {
-        startRetryFragment()
         EspressoIdlingResource.decrement()
+        startRetryFragment()
     }
 
     override fun setupObservers() {
