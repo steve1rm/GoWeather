@@ -9,14 +9,12 @@ object EspressoIdlingResource {
     val countingIdlingResource = CountingIdlingResource(RESOURCE)
 
     fun increment() {
-        countingIdlingResource.increment()
-        println("########## increment")
+       countingIdlingResource.increment()
     }
 
     fun decrement() {
         if(!countingIdlingResource.isIdleNow) {
             countingIdlingResource.decrement()
-            println("########## decrement")
         }
     }
 }
