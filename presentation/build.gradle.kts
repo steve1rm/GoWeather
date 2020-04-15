@@ -3,6 +3,8 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("kotlin-android-extensions")
+    id("com.google.firebase.crashlytics")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -14,6 +16,7 @@ android {
         targetSdkVersion(Versions.targetSdkVersion)
         versionCode = Versions.versionCode
         versionName = Versions.versionName
+        multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -53,6 +56,8 @@ dependencies {
     kapt(Libraries.paraceler)
     implementation(Libraries.supportTransition)
     implementation(Libraries.loggingInterceptor)
+    implementation(Libraries.firebaseCrashlytics)
+    implementation("com.google.firebase:firebase-analytics:17.3.0")
 
     testImplementation("androidx.fragment:fragment-testing:1.1.0-alpha09")
     debugImplementation("androidx.fragment:fragment-testing:1.1.0-alpha09")

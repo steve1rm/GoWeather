@@ -15,6 +15,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.jakewharton.espresso.OkHttp3IdlingResource
 import me.androidbox.presentation.R
+import me.androidbox.presentation.rules.MockWebServerRule
 import me.androidbox.presentation.rules.OkHttpIdingResourceRule
 import me.androidbox.presentation.rules.TestComponentRule
 import me.androidbox.presentation.utils.EspressoIdlingResource
