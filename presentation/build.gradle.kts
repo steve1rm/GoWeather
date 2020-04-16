@@ -5,6 +5,7 @@ plugins {
     id("kotlin-android-extensions")
     id("com.google.firebase.crashlytics")
     id("com.google.gms.google-services")
+    id("com.facebook.testing.screenshot")
 }
 
 android {
@@ -18,7 +19,7 @@ android {
         versionName = Versions.versionName
         multiDexEnabled = true
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "me.androidbox.presentation.testrunner.GoWeatherTestRunner"
     }
 
     buildTypes {
