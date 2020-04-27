@@ -22,7 +22,8 @@ class ForecastLoadingTest {
 
         ViewHelpers
             .setupView(loadingView)
-            .setExactWidthDp(360)
+            .setExactWidthPx(1080)
+            .setExactHeightPx(1920)
             .layout()
 
         // Snap
@@ -40,8 +41,8 @@ class ForecastLoadingTest {
 
         ViewHelpers
             .setupView(retryView)
-            .guessListViewHeight()
-            .setExactWidthDp(360)
+            .setExactWidthPx(1080)
+            .setExactHeightPx(1920)
             .layout()
 
         // Snap

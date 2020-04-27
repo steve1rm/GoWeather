@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.failurecase_layout.*
 import me.androidbox.presentation.R
+import org.threeten.bp.Duration
+import org.threeten.bp.LocalDate
+import org.threeten.bp.Period
+import org.threeten.bp.temporal.ChronoUnit
 
 class RetryFragment(private val retryListener: () -> Unit) : Fragment() {
 
