@@ -8,7 +8,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include
-        android:id="@+id/include_weather_forecast_header"
         layout="@layout/weather_forecast_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

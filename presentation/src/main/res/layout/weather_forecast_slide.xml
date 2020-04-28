@@ -8,7 +8,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include
-        android:id="@+id/include_weather_forecast_header"
         layout="@layout/weather_forecast_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -20,7 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/include_weather_forecast_header"
+        app:layout_constraintTop_toBottomOf="@id/weather_forecast_header"
         tools:listitem="@layout/weather_forecast_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

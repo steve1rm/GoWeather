@@ -47,4 +47,5 @@ object TestLibraries {
     const val idlingConcurrent = "com.android.support.test.espresso.idling:idling-concurrent:${Versions.idlingConcurrentVersion}"
     const val espressoIdlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.espressoIdlingResourceVersion}"
     const val fragmentTesting = "androidx.fragment:fragment-testing:${Versions.fragmentTestingVersion}"
+    const val kakao = "com.agoda.kakao:kakao:${Versions.kakaoVersion}"
 }

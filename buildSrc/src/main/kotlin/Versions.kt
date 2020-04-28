@@ -43,4 +43,5 @@ object Versions {
     const val fragmentTestingVersion = "1.1.0"
     const val idlingConcurrentVersion = "3.1.0"
     const val espressoIdlingResourceVersion = "3.1.1"
+    const val kakaoVersion = "2.3.0"
 }

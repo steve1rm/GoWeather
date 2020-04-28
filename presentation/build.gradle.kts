@@ -114,7 +114,8 @@ dependencies {
     androidTestImplementation(Libraries.converterGson)
     implementation(Libraries.retrofit2)
     androidTestImplementation(Libraries.adapterRxjava2)
-
+    androidTestImplementation(TestLibraries.kakao)
+    
     kaptAndroidTest(Libraries.daggerCompiler)
     kaptAndroidTest(Libraries.daggerProcessor)
 
