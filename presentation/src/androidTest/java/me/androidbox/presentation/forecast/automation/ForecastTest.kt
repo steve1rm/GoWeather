@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import me.androidbox.presentation.forecast.ForecastActivity
 import me.androidbox.presentation.pages.ForecastHeaderPage
+import me.androidbox.presentation.pages.ForecastListPage
 import me.androidbox.presentation.rules.TestComponentRule
 import me.androidbox.presentation.screens.ForecastHeaderScreen
 import me.androidbox.presentation.utils.EspressoIdlingResource
@@ -34,8 +35,6 @@ class ForecastTest {
     @get:Rule
     val chain: RuleChain = RuleChain.outerRule(goWeatherComponent).around(forecast)
 
-    private val forecastScreen = ForecastHeaderScreen()
-
     @Before
     fun setup() {
         mockWebServer.start(8080)
@@ -60,6 +59,16 @@ class ForecastTest {
             .shouldDisplayCurrentTemperature(32.8F.appendDegreesSymbol)
             .shouldDisplayFeelsLikeTemperature("Feels like 35.6")
             .shouldDisplayLocation("Watthana")
+
+        ForecastListPage
+            .shouldBeVisible()
+            .shouldHaveSize(17)
+            .shouldWeatherItemAtPosition(
+                0,
+                "Tuesday, Dec 31",
+                "Broken clouds",
+                34.6F.appendDegreesSymbol,
+                27.2F.appendDegreesSymbol)
 
     }
 
