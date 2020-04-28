@@ -27,9 +27,7 @@ class ForecastTest {
     private val mockWebServer: MockWebServer by lazy {
         MockWebServer()
     }
-
     private val goWeatherComponent = TestComponentRule(InstrumentationRegistry.getInstrumentation().targetContext)
-
     private val forecast = IntentsTestRule(ForecastActivity::class.java, false, false)
 
     @get:Rule
