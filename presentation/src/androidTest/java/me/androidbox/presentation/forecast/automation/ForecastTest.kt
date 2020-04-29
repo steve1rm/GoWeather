@@ -61,12 +61,22 @@ class ForecastTest {
         ForecastListPage
             .shouldBeVisible()
             .shouldHaveSize(17)
-            .shouldWeatherItemAtPosition(
-                0,
+            .shouldWeatherItemAtFirstPosition(
                 "Tuesday, Dec 31",
                 "Broken clouds",
                 34.6F.appendDegreesSymbol,
                 27.2F.appendDegreesSymbol)
+            .shouldWeatherItemAtPosition(1,
+                "Wednesday, Jan 01",
+                "Scattered rain",
+                34.5F.appendDegreesSymbol,
+                27.4F.appendDegreesSymbol)
+            .shouldWeatherItemAtLastPosition(
+                "Thursday, Jan 16",
+                "Clear sky",
+                26.7F.appendDegreesSymbol,
+                23.4F.appendDegreesSymbol)
+
 
     }
 

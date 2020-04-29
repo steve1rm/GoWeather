@@ -69,7 +69,7 @@
         "weather": {
             "icon": "c03d",
             "code": 803,
-            "description": "Broken clouds"
+            "description": "Scattered rain"
         },
         "wind_dir": 69,
         "max_dhi": null,
@@ -699,7 +699,7 @@
         "weather": {
             "icon": "c03d",
             "code": 803,
-            "description": "Broken clouds"
+            "description": "Clear sky"
         },
         "wind_dir": 174,
         "max_dhi": null,
@@ -710,7 +710,7 @@
         "moonset_ts": 1579150889,
         "datetime": "2020-01-16",
         "temp": 26.7,
-        "min_temp": 26.7,
+        "min_temp": 23.4,
         "clouds_mid": 0,
         "clouds_low": 0
     }],
