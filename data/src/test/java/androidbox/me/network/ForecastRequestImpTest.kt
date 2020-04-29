@@ -2,7 +2,6 @@ package androidbox.me.network
 
 import androidbox.me.entities.response.CurrentWeatherEntity
 import androidbox.me.entities.response.ForecastEntity
-import androidbox.me.entities.response.LocationEntity
 import androidbox.me.entities.WeatherForecastModel
 import androidbox.me.mappers.ForecastRequestDomainMapper
 import androidbox.me.mappers.ForecastRequestEntityMapper
