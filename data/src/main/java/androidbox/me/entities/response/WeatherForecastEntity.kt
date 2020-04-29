@@ -1,6 +1,5 @@
 package androidbox.me.entities.response
 
-import androidbox.me.entities.response.ForecastEntity
 import com.google.gson.annotations.SerializedName
 
 data class WeatherForecastEntity(
