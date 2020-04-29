@@ -27,6 +27,9 @@ dependencies {
     implementation(Libraries.loggingInterceptor)
     implementation(Libraries.retrofit2)
     implementation(Libraries.converterGson)
+    implementation(Libraries.roomRuntime)
+    implementation(Libraries.roomRxJava)
+    kapt(Libraries.roomCompiler)
 
     implementation("com.google.android.gms:play-services-location:16.0.0")
 

@@ -26,6 +26,9 @@ object Libraries {
     const val supportTransition = "com.android.support:transition:${Versions.androidLibraryVersion}"
     const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleVersion}"
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics:${Versions.firebaseCrashlyticsVersion}"
+    const val roomRuntime = "androidx.room:room-runtime:${Versions.roomVersion}"
+    const val roomRxJava = "androidx.room:room-rxjava2:${Versions.roomVersion}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.roomVersion}"
 }
 
 object TestLibraries {
