@@ -1,5 +1,6 @@
 package androidbox.me.local
 
+import androidbox.me.local.tables.ForecastTable
 import androidx.room.*
 import io.reactivex.Single
 

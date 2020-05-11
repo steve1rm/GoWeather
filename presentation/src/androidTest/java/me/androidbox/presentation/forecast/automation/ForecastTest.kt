@@ -76,8 +76,6 @@ class ForecastTest {
                 "Clear sky",
                 26.7F.appendDegreesSymbol,
                 23.4F.appendDegreesSymbol)
-
-
     }
 
     /* TODO make this common */
