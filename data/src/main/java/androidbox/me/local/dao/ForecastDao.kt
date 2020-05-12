@@ -1,23 +1,19 @@
-package androidbox.me.local
+package androidbox.me.local.dao
 
 import androidbox.me.local.tables.ForecastTable
 import androidx.room.*
 import io.reactivex.Single
 
 @Dao
-interface ForecastDao {
+interface ForecastDao : BaseDao<ForecastTable> {
 
-    @Insert
-    fun insert(forecastTable: ForecastTable): Single<Long>
+    override fun insert(table: ForecastTable): Single<Long>
 
-    @Update
-    fun update(forecastTable: ForecastTable): Single<Int>
+    override fun insert(vararg table: ForecastTable): Single<List<Long>>
 
-    @Delete
-    fun delete(forecastTable: ForecastTable): Single<Int>
+    override fun update(table: ForecastTable): Single<Int>
 
-    @Insert
-    fun insertMany(vararg table: ForecastTable): Single<List<Long>>
+    override fun delete(table: ForecastTable): Single<Long>
 
     @Query("SELECT * FROM forecastTable")
     fun getAllForecast(): Single<List<ForecastTable>>

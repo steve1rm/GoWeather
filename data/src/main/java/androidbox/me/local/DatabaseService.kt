@@ -1,12 +1,18 @@
 package androidbox.me.local
 
-import androidbox.me.local.tables.ForecastTable
+import androidbox.me.local.dao.ForecastDao
+import androidbox.me.local.dao.WeatherDao
+import androidbox.me.local.tables.*
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
 @Database(
     entities = [
-        ForecastTable::class
+        ForecastTable::class,
+        WeatherTable::class,
+        CurrentWeatherDataTable::class,
+        CurrentWeatherTable::class,
+        WeatherForecastTable::class
     ],
     version = 1,
     exportSchema = false
@@ -14,4 +20,6 @@ import androidx.room.RoomDatabase
 abstract class DatabaseService : RoomDatabase() {
 
     abstract fun forecastDao(): ForecastDao
+
+    abstract fun weatherDao(): WeatherDao
 }
