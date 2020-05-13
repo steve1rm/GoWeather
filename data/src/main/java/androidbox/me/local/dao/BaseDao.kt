@@ -18,5 +18,5 @@ interface BaseDao<T> {
     fun update(table: T): Single<Int>
 
     @Delete
-    fun delete(table: T): Single<Long>
+    fun delete(table: T): Single<Int>
 }

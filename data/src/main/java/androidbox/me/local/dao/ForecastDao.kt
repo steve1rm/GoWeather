@@ -5,16 +5,7 @@ import androidx.room.*
 import io.reactivex.Single
 
 @Dao
-interface ForecastDao : BaseDao<ForecastTable> {
-
-    override fun insert(table: ForecastTable): Single<Long>
-
-    override fun insert(vararg table: ForecastTable): Single<List<Long>>
-
-    override fun update(table: ForecastTable): Single<Int>
-
-    override fun delete(table: ForecastTable): Single<Long>
-
+interface ForecastDao : BaseDao<ForecastTable>{
     @Query("SELECT * FROM forecastTable")
     fun getAllForecast(): Single<List<ForecastTable>>
 
