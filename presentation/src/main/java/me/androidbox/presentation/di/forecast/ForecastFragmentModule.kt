@@ -7,6 +7,8 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
 import me.androidbox.interactors.current.CurrentWeatherInteractor
+import me.androidbox.interactors.current.CurrentWeatherInteractorImp
+import me.androidbox.interactors.current.CurrentWeatherRequest
 import me.androidbox.interactors.forecast.WeatherForecast
 import me.androidbox.interactors.forecast.WeatherForecastInteractor
 import me.androidbox.interactors.forecast.WeatherForecastInteractorImp
@@ -15,6 +17,7 @@ import me.androidbox.presentation.adapters.ForecastAdapter
 import me.androidbox.presentation.adapters.ForecastDelegate
 import me.androidbox.presentation.base.BaseFragment
 import me.androidbox.presentation.common.SchedulerProvider
+import me.androidbox.presentation.di.scopes.ActivityScope
 import me.androidbox.presentation.di.scopes.FragmentScope
 import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastPresenterImp
@@ -52,11 +55,20 @@ class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>, priv
 
     @FragmentScope
     @Provides
-    fun provideViewModel(compositeDisposable: CompositeDisposable, networkHelper: NetworkHelper): ForecastViewModel {
+    fun provideViewModel(weatherForecastInteractor: WeatherForecastInteractor,
+                         weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
+                         schedulerProvider: SchedulerProvider,
+                         currentWeatherInteractor: CurrentWeatherInteractor,
+                         currentWeatherPresentationMapper: CurrentWeatherPresentationMapper): ForecastViewModel {
         return ViewModelProviders.of(
             forecastFragment,
             ViewModelProviderFactory(ForecastViewModel::class) {
-            ForecastViewModel(compositeDisposable, networkHelper)
+            ForecastViewModel(
+                weatherForecastInteractor,
+                weatherForecastPresentationMapper,
+                schedulerProvider,
+                currentWeatherInteractor,
+                currentWeatherPresentationMapper)
         }).get(ForecastViewModel::class.java)
     }
 
@@ -91,5 +103,11 @@ class ForecastFragmentModule(private val forecastFragment: BaseFragment<*>, priv
             schedulerProvider,
             currentWeatherInteractor,
             currentWeatherPresentationMapper)
+    }
+
+    @FragmentScope
+    @Provides
+    fun provideCurrentWeatherInteractor(currentWeatherRequest: CurrentWeatherRequest): CurrentWeatherInteractor {
+        return CurrentWeatherInteractorImp(currentWeatherRequest)
     }
 }

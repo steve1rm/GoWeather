@@ -4,13 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
-import androidx.core.os.BuildCompat
 import androidx.lifecycle.Observer
 import me.androidbox.presentation.R
 import me.androidbox.presentation.base.BaseActivity
 import me.androidbox.presentation.common.LocationUtils
 import me.androidbox.presentation.common.LocationUtilsImp.LocationStatus
-import me.androidbox.presentation.di.forecast.ForecastActivityComponent
+import me.androidbox.presentation.di.forecast.ForecastActivitySubComponent
 import me.androidbox.presentation.forecast.mvp.ForecastPresenter
 import me.androidbox.presentation.forecast.mvp.ForecastView
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
@@ -126,8 +125,8 @@ class ForecastActivity : BaseActivity<ForecastViewModel>(), ForecastView {
         })
     }
 
-    override fun injectDependencies(forecastActivityComponent: ForecastActivityComponent) =
-        forecastActivityComponent.inject(this@ForecastActivity)
+    override fun injectDependencies(forecastActivitySubComponent: ForecastActivitySubComponent) =
+        forecastActivitySubComponent.inject(this@ForecastActivity)
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

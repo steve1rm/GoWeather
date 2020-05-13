@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import me.androidbox.presentation.di.GoWeatherApplication
 import me.androidbox.presentation.di.application.GoWeatherApplicationComponent
-import me.androidbox.presentation.di.forecast.ForecastActivityComponent
+import me.androidbox.presentation.di.forecast.ForecastActivitySubComponent
 import me.androidbox.presentation.di.forecast.ForecastActivityModule
 import javax.inject.Inject
 
@@ -23,7 +23,8 @@ abstract class BaseActivity<VM: BaseViewModel> : AppCompatActivity() {
         setContentView(provideLayoutId())
         setupObservers()
         setupView(savedInstanceState)
-        viewModel.onCreate()
+        /** TODO fix this in the BaseViewModel */
+        // viewModel.onCreate()
     }
 
     protected open fun setupObservers() {
@@ -36,7 +37,7 @@ abstract class BaseActivity<VM: BaseViewModel> : AppCompatActivity() {
         })
     }
 
-    private fun buildActivityComponent(): ForecastActivityComponent {
+    private fun buildActivityComponent(): ForecastActivitySubComponent {
         return getGoWeatherApplicationComponent()
             .newForecastActivityComponent(ForecastActivityModule(this))
     }
@@ -52,7 +53,7 @@ abstract class BaseActivity<VM: BaseViewModel> : AppCompatActivity() {
 
     protected abstract fun setupView(savedInstanceState: Bundle?)
 
-    protected abstract fun injectDependencies(forecastActivityComponent: ForecastActivityComponent)
+    protected abstract fun injectDependencies(forecastActivitySubComponent: ForecastActivitySubComponent)
 
     private fun getGoWeatherApplicationComponent(): GoWeatherApplicationComponent {
         return (application as GoWeatherApplication).goWeatherApplicationComponent

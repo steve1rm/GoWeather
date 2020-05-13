@@ -12,7 +12,13 @@ class TestGoWeatherApplicationModule(private val goWeatherApplication: GoWeather
 
     @Singleton
     @Provides
-    fun providesContext(): Application {
+    fun providesApplication(): Application {
+        return goWeatherApplication
+    }
+
+    @Singleton
+    @Provides
+    fun providesContext(): Context {
         return goWeatherApplication
     }
 

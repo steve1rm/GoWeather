@@ -2,6 +2,8 @@ package me.androidbox.presentation.di.application
 
 import android.app.Application
 import android.content.Context
+import androidbox.me.local.DatabaseService
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -14,13 +16,12 @@ class GoWeatherApplicationModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideApplicationContext() = application
+    fun provideApplicationContext(): Application = application
 
-/*
+
     @Provides
     @Singleton
     fun provideContext(): Context = application
-*/
 
     @Provides
     @Singleton
@@ -29,5 +30,15 @@ class GoWeatherApplicationModule(private val application: Application) {
     @Provides
     @Singleton
     fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
+
+    @Provides
+    @Singleton
+    fun provideDatabaseService(): DatabaseService {
+        return Room.databaseBuilder(
+            application,
+            DatabaseService::class.java,
+            "goweather-database"
+        ).build()
+    }
 }
 

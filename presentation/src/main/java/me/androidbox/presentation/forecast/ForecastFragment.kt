@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.weather_forecast_header.*
 import me.androidbox.presentation.R
 import me.androidbox.presentation.adapters.ForecastAdapter
 import me.androidbox.presentation.base.BaseFragment
-import me.androidbox.presentation.di.forecast.ForecastFragmentComponent
+import me.androidbox.presentation.di.forecast.ForecastFragmentSubComponent
 import me.androidbox.presentation.forecast.mvvm.ForecastViewModel
 import me.androidbox.presentation.models.CurrentWeather
 import me.androidbox.presentation.models.WeatherForecast
@@ -78,7 +78,7 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
 
     }
 
-    override fun injectDependencies(forecastFragmentComponent: ForecastFragmentComponent) {
-        forecastFragmentComponent.inject(this)
+    override fun injectDependencies(forecastFragmentSubComponent: ForecastFragmentSubComponent) {
+        forecastFragmentSubComponent.inject(this)
     }
 }

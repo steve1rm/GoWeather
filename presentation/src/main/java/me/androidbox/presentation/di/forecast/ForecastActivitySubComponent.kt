@@ -1,6 +1,5 @@
 package me.androidbox.presentation.di.forecast
 
-import android.content.Context
 import dagger.Subcomponent
 import me.androidbox.presentation.di.scopes.ActivityScope
 import me.androidbox.presentation.forecast.ForecastActivity
@@ -8,7 +7,7 @@ import me.androidbox.presentation.forecast.RetryFragment
 
 @ActivityScope
 @Subcomponent(modules = [ForecastActivityModule::class])
-interface ForecastActivityComponent {
+interface ForecastActivitySubComponent {
     fun inject(forecastActivity: ForecastActivity)
     fun inject(retryFragment: RetryFragment)
 }

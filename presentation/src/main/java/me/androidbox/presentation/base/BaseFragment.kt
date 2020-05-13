@@ -9,7 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import me.androidbox.presentation.di.forecast.ForecastFragmentComponent
+import me.androidbox.presentation.di.forecast.ForecastFragmentSubComponent
 import me.androidbox.presentation.di.forecast.ForecastFragmentModule
 import me.androidbox.presentation.di.GoWeatherApplication
 import me.androidbox.presentation.di.application.GoWeatherApplicationComponent
@@ -24,7 +24,8 @@ abstract class BaseFragment<VM: BaseViewModel> : Fragment() {
         injectDependencies(buildFragmentComponent())
         super.onCreate(savedInstanceState)
         setupObservers()
-        viewModel.onCreate()
+        /* TODO Fix this in the BaseViewModel */
+      //  viewModel.onCreate()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -55,9 +56,9 @@ abstract class BaseFragment<VM: BaseViewModel> : Fragment() {
 
     protected abstract fun setupView(view: View, savedInstanceState: Bundle?)
 
-    protected abstract fun injectDependencies(forecastFragmentComponent: ForecastFragmentComponent)
+    protected abstract fun injectDependencies(forecastFragmentSubComponent: ForecastFragmentSubComponent)
 
-    private fun buildFragmentComponent(): ForecastFragmentComponent {
+    private fun buildFragmentComponent(): ForecastFragmentSubComponent {
         return getGoWeatherApplicationComponent()
             .newForecastFragmentComponent(ForecastFragmentModule(this, context!!))
     }

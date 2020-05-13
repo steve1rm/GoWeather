@@ -34,12 +34,12 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
     @ActivityScope
     @Provides
     fun provideActivity(): Activity = forecastActivity
-
+/*
     @ActivityScope
     @Provides
     fun provideContext(activity: Activity): Context {
         return activity
-    }
+    }*/
 
     @ActivityScope
     @Provides
@@ -86,12 +86,20 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
 
     @ActivityScope
     @Provides
-    fun provideViewModel(compositeDisposable: CompositeDisposable, networkHelper: NetworkHelper): ForecastViewModel {
+    fun provideViewModel(weatherForecastInteractor: WeatherForecastInteractor,
+                         weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
+                         schedulerProvider: SchedulerProvider,
+                         currentWeatherInteractor: CurrentWeatherInteractor,
+                         currentWeatherPresentationMapper: CurrentWeatherPresentationMapper): ForecastViewModel {
         return ViewModelProviders.of(
             forecastActivity,
             ViewModelProviderFactory(ForecastViewModel::class) {
-                ForecastViewModel(compositeDisposable, networkHelper)
-        }).get(ForecastViewModel::class.java)
+                ForecastViewModel(weatherForecastInteractor,
+                    weatherForecastPresentationMapper,
+                    schedulerProvider,
+                    currentWeatherInteractor,
+                    currentWeatherPresentationMapper)
+            }).get(ForecastViewModel::class.java)
     }
 
     @ActivityScope

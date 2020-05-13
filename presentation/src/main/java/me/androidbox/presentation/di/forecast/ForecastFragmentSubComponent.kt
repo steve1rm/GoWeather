@@ -7,7 +7,7 @@ import me.androidbox.presentation.forecast.RetryFragment
 
 @FragmentScope
 @Subcomponent(modules = [ForecastFragmentModule::class])
-interface ForecastFragmentComponent {
+interface ForecastFragmentSubComponent {
     fun inject(forecastFragment: ForecastFragment)
     fun inject(retryFragment: RetryFragment)
 }

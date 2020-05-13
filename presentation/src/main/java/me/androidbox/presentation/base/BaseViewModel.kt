@@ -5,16 +5,15 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import me.androidbox.presentation.utils.NetworkHelper
 
-abstract class BaseViewModel(
-    protected val compositeDisposable: CompositeDisposable,
-    protected val networkHelper: NetworkHelper)
+/** TODO: Fix this base view model */
+abstract class BaseViewModel
     : ViewModel() {
 
     internal val messageStringId = MutableLiveData<Int>()
     internal val messageString = MutableLiveData<String>()
 
     override fun onCleared() {
-        compositeDisposable.dispose()
+   //     compositeDisposable.dispose()
         super.onCleared()
     }
 
@@ -22,8 +21,8 @@ abstract class BaseViewModel(
         TODO("handle network error")
     }
 
-    protected fun checkInternetConnection(): Boolean =
-        networkHelper.isNetworkConnected()
+    // protected fun checkInternetConnection(): Boolean =
+ //       networkHelper.isNetworkConnected()
 
-    abstract fun onCreate()
+//    abstract fun onCreate()
 }

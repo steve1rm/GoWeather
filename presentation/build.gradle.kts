@@ -58,6 +58,8 @@ dependencies {
     implementation(Libraries.supportTransition)
     implementation(Libraries.loggingInterceptor)
     implementation(Libraries.firebaseCrashlytics)
+    implementation(Libraries.roomRuntime)
+
     implementation("com.google.firebase:firebase-analytics:17.3.0")
 
     testImplementation("androidx.fragment:fragment-testing:1.1.0-alpha09")
