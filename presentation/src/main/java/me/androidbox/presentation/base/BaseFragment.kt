@@ -25,7 +25,7 @@ abstract class BaseFragment<VM: BaseViewModel> : Fragment() {
         super.onCreate(savedInstanceState)
         setupObservers()
         /* TODO Fix this in the BaseViewModel */
-      //  viewModel.onCreate()
+        viewModel.onCreate()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =

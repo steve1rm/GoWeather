@@ -37,7 +37,7 @@ class GoWeatherApplicationModule(private val application: Application) {
         return Room.databaseBuilder(
             application,
             DatabaseService::class.java,
-            "goweather-database"
+            "goweather-database.db"
         ).build()
     }
 }

@@ -24,5 +24,5 @@ abstract class BaseViewModel
     // protected fun checkInternetConnection(): Boolean =
  //       networkHelper.isNetworkConnected()
 
-//    abstract fun onCreate()
+    abstract fun onCreate()
 }

@@ -2,6 +2,7 @@ package me.androidbox.presentation.di.forecast
 
 import android.app.Activity
 import android.content.Context
+import androidbox.me.local.DatabaseService
 import androidx.lifecycle.ViewModelProviders
 import dagger.Module
 import dagger.Provides
@@ -90,7 +91,8 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
                          weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
                          schedulerProvider: SchedulerProvider,
                          currentWeatherInteractor: CurrentWeatherInteractor,
-                         currentWeatherPresentationMapper: CurrentWeatherPresentationMapper): ForecastViewModel {
+                         currentWeatherPresentationMapper: CurrentWeatherPresentationMapper,
+                         databaseService: DatabaseService): ForecastViewModel {
         return ViewModelProviders.of(
             forecastActivity,
             ViewModelProviderFactory(ForecastViewModel::class) {
@@ -98,7 +100,8 @@ class ForecastActivityModule(private val forecastActivity: BaseActivity<*>) {
                     weatherForecastPresentationMapper,
                     schedulerProvider,
                     currentWeatherInteractor,
-                    currentWeatherPresentationMapper)
+                    currentWeatherPresentationMapper,
+                    databaseService)
             }).get(ForecastViewModel::class.java)
     }
 

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -64,6 +65,13 @@ class ForecastFragment(private val onFetchWeatherForecastFailure: () -> Unit)
     override fun provideLayoutId() = R.layout.weather_forecast
 
     override fun setupView(view: View, savedInstanceState: Bundle?) {
+        forecastViewModel.forecastDataList.observe(this, Observer { forecastTableList ->
+            println("ForecastFragment $forecastTableList")
+        })
+
+        forecastViewModel.weatherList.observe(this, Observer { weatherTable ->
+            println("WeatherTable: $weatherTable")
+        })
 
         arguments?.let {
             val weatherForecast: WeatherForecast = Parcels.unwrap(it.getParcelable(ForecastActivity.WEATHER_FORECAST_KEY))

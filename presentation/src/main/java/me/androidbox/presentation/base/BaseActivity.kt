@@ -24,7 +24,7 @@ abstract class BaseActivity<VM: BaseViewModel> : AppCompatActivity() {
         setupObservers()
         setupView(savedInstanceState)
         /** TODO fix this in the BaseViewModel */
-        // viewModel.onCreate()
+         viewModel.onCreate()
     }
 
     protected open fun setupObservers() {
