@@ -59,6 +59,7 @@ dependencies {
     implementation(Libraries.loggingInterceptor)
     implementation(Libraries.firebaseCrashlytics)
     implementation(Libraries.roomRuntime)
+    implementation(Libraries.timber)
 
     implementation("com.google.firebase:firebase-analytics:17.3.0")
 

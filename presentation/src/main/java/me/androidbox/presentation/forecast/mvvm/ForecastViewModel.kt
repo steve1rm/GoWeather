@@ -15,6 +15,7 @@ import me.androidbox.presentation.mappers.CurrentWeatherPresentationMapper
 import me.androidbox.presentation.mappers.WeatherForecastPresentationMapper
 import me.androidbox.presentation.models.Forecast
 import me.androidbox.presentation.models.WeatherForecast
+import timber.log.Timber
 
 class ForecastViewModel(private val weatherForecastInteractor: WeatherForecastInteractor,
                         private val weatherForecastPresentationMapper: WeatherForecastPresentationMapper,
@@ -61,10 +62,10 @@ class ForecastViewModel(private val weatherForecastInteractor: WeatherForecastIn
             .observeOn(schedulerProvider.uiScheduler())
             .subscribeBy(
                 onSuccess = {
-                    println("Weather forecast $it")
+                    Timber.d("Weather forecast $it")
                     weatherList.postValue(it)
                 },
-                onError = { println(it.message) }
+                onError = { Timber.e(it, it.localizedMessage) }
             )
     }
 

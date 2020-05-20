@@ -25,6 +25,7 @@ object Versions {
     const val firebaseCrashlyticsGradleVersion = "2.0.0-beta04"
     const val firebaseCrashlyticsVersion = "17.0.0-beta04"
     const val roomVersion = "2.2.5"
+    const val timberVersion = "4.7.1"
 
     /** Testing */
     const val jUnitVersion = "4.12"

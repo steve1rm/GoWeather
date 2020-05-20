@@ -3,6 +3,7 @@ package me.androidbox.presentation.di.application
 import android.app.Application
 import android.content.Context
 import androidbox.me.local.DatabaseService
+import androidbox.me.local.migrations.MIGRATION_1_2
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
