@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "currentWeatherDataTable",
     foreignKeys = [
         ForeignKey(
-            entity = CurrentWeatherTable::class,
+            entity = WeatherTable::class,
             parentColumns = ["id"],
-            childColumns = ["currentWeatherId"],
+            childColumns = ["weatherId"],
             onDelete = ForeignKey.CASCADE
         )])
 class CurrentWeatherDataTable(
@@ -26,7 +26,7 @@ class CurrentWeatherDataTable(
     @ColumnInfo(name = "temperature")
     val temperature: Float,
 
-    @ColumnInfo(name = "currentWeatherId")
-    val currentWeatherId: Long
+    @ColumnInfo(name = "weatherId")
+    val weatherId: Long
 )
 

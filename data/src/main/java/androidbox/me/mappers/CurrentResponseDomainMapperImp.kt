@@ -6,7 +6,7 @@ import me.androidbox.models.response.WeatherModel
 
 class CurrentResponseDomainMapperImp : CurrentResponseDomainMapper {
     override fun map(entity: CurrentWeatherEntity): CurrentWeatherModel {
-       return entity.currentWeatherData.map {
+       return entity.currentWeatherDataEntityList.map {
             CurrentWeatherModel(it.cityName,
             it.stateCode,
             it.feelsLikeTemperature,
