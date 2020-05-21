@@ -167,4 +167,24 @@ class WeatherDaoTest {
             .assertComplete()
             .assertValue(1)
     }
+
+    @Test
+    fun `should update a record in the weather table`() {
+        // Arrange
+        val weatherTableOne = WeatherFactory.createWeather()
+        val weatherTableTwo = WeatherFactory.createWeather()
+        val weatherTableThree = WeatherFactory.createWeather()
+        val weatherTableTwoUpdated = WeatherFactory.createWeather()
+
+        database.weatherDao().insert(weatherTableOne, weatherTableTwo, weatherTableThree).test()
+
+        // Act
+        val testObserver = database.weatherDao()
+            .update(weatherTableTwoUpdated.copy(id = 2, description = "This has been updated")).test()
+
+        // Assert
+        testObserver
+            .assertComplete()
+            .assertValue(1)
+    }
 }
