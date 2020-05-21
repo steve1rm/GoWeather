@@ -41,7 +41,8 @@ class ForecastDaoTest {
         database.weatherDao().insert(weatherTable).test()
 
         // Act
-        val testObserver = database.forecastDao().insert(forecastTable.copy(weatherId = 1L)).test()
+        val testObserver =
+            database.forecastDao().insert(forecastTable.copy(weatherId = 1L)).test()
 
         // Assert
         testObserver

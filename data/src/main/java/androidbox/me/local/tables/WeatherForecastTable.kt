@@ -29,4 +29,4 @@ data class WeatherForecastTable(
     val stateCode: String,
 
     @ColumnInfo(name = "forecastId")
-    val forecastId: Long)
+    val forecastId: Long = 0)
