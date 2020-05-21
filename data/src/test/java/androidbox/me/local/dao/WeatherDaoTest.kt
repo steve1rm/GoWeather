@@ -42,9 +42,29 @@ class WeatherDaoTest {
         // Assert
         testObserver
             .assertComplete()
-            .assertValueCount(1)
             .assertValue(1)
     }
+
+    @Test
+    fun `should insert many weather tables`() {
+        // Arrange
+        val weatherTableOne = WeatherFactory.createWeather()
+        val weatherTableTwo = WeatherFactory.createWeather()
+        val weatherTableThree = WeatherFactory.createWeather()
+        val countList = listOf<Long>(1, 2, 3)
+
+        // Act
+        val testObserver = database.weatherDao().insert(
+            weatherTableOne,
+            weatherTableTwo,
+            weatherTableThree).test()
+
+        // Assert
+        testObserver
+            .assertComplete()
+            .assertValue(countList)
+    }
+
 
     @Test
     fun `should insert a list of weather`() {
@@ -58,10 +78,8 @@ class WeatherDaoTest {
         // Assert
         testObserver
             .assertComplete()
-            .assertValueCount(1)
             .assertValue(countList)
     }
-
 
     @Test
     fun `should retrieve weather`() {
@@ -69,14 +87,84 @@ class WeatherDaoTest {
         val weatherTable = WeatherFactory.createWeather()
         val weatherList = listOf(weatherTable.copy(id = 1))
 
-        // Act
         database.weatherDao().insert(weatherTable).test()
+
+        // Act
         val testObserver = database.weatherDao().getAllWeather().test()
 
         // Assert
         testObserver
             .assertComplete()
-            .assertValueCount(1)
             .assertValue(weatherList)
+    }
+
+    @Test
+    fun `should get weather with specific ID`() {
+        // Arrange
+        val weatherTableOne = WeatherFactory.createWeather()
+        val weatherTableTwo = WeatherFactory.createWeather()
+        val weatherTableThree = WeatherFactory.createWeather()
+
+        database.weatherDao().insert(weatherTableOne, weatherTableTwo, weatherTableThree).test()
+
+        // Act
+        val testObserver = database.weatherDao().getWeatherById(2).test()
+
+        // Assert
+        testObserver
+            .assertComplete()
+            .assertValue(weatherTableTwo.copy(2))
+    }
+
+    @Test
+    fun `should count the correct number of record in the weather table`() {
+        // Arrange
+        val weatherTableList = WeatherFactory.createWeatherList(10)
+        database.weatherDao().insert(weatherTableList).test()
+
+        // Act
+        val testObserver = database.weatherDao().count().test()
+
+        // Assert
+        testObserver
+            .assertComplete()
+            .assertValue(10)
+    }
+
+    @Test
+    fun `should delete a weather record from the weather table and return the correct count`() {
+        // Arrange
+        val weatherTableOne = WeatherFactory.createWeather()
+        val weatherTableTwo = WeatherFactory.createWeather()
+        val weatherTableThree = WeatherFactory.createWeather()
+
+        database.weatherDao().insert(weatherTableOne, weatherTableTwo, weatherTableThree).test()
+        database.weatherDao().delete(weatherTableTwo.copy(id = 2)).test()
+
+        // Act
+        val testObserver = database.weatherDao().count().test()
+
+        // Assert
+        testObserver
+            .assertComplete()
+            .assertValue(2)
+    }
+
+    @Test
+    fun `should delete a record from the weather table`() {
+        // Arrange
+        val weatherTableOne = WeatherFactory.createWeather()
+        val weatherTableTwo = WeatherFactory.createWeather()
+        val weatherTableThree = WeatherFactory.createWeather()
+
+        database.weatherDao().insert(weatherTableOne, weatherTableTwo, weatherTableThree).test()
+
+        // Act
+        val testObserver = database.weatherDao().delete(weatherTableTwo.copy(id = 2)).test()
+
+        // Assert
+        testObserver
+            .assertComplete()
+            .assertValue(1)
     }
 }
