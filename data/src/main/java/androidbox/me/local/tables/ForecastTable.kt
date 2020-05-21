@@ -32,5 +32,5 @@ data class ForecastTable(
     val validDate: String,
 
     @ColumnInfo(name = "weatherId")
-    val weatherId: Long
+    val weatherId: Long = 0
 )

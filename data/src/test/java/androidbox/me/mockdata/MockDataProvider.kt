@@ -10,4 +10,6 @@ object MockDataProvider {
     fun getLong(): Long = getInt().toLong()
 
     fun getString(): String = UUID.randomUUID().toString()
+
+    fun getFloat(): Float = getInt().toFloat()
 }

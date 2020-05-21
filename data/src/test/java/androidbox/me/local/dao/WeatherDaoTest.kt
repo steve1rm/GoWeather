@@ -19,8 +19,7 @@ class WeatherDaoTest {
 
 
     private val database: DatabaseService by lazy {
-        Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(),
-        DatabaseService::class.java)
+        Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), DatabaseService::class.java)
             .allowMainThreadQueries()
             .build()
     }
