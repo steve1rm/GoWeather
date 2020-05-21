@@ -14,6 +14,9 @@ interface BaseDao<T> {
     @Insert
     fun insert(vararg table: T): Single<List<Long>>
 
+    @Insert
+    fun insert(table: List<T>): Single<List<Long>>
+
     @Update
     fun update(table: T): Single<Int>
 

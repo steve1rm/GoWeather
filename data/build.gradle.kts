@@ -39,6 +39,10 @@ dependencies {
     testImplementation(Libraries.daggerAndroid)
     testImplementation(Libraries.daggerSupport)
     testImplementation(TestLibraries.mockWebServer)
+    testImplementation(TestLibraries.robolectric)
+    testImplementation(TestLibraries.coreTesting)
+    testImplementation(TestLibraries.androidxJunit)
+    testImplementation(TestLibraries.androidxCore)
 
     kaptTest(Libraries.daggerCompiler)
     kaptTest(Libraries.daggerProcessor)

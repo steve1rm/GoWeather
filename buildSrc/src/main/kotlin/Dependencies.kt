@@ -52,4 +52,5 @@ object TestLibraries {
     const val espressoIdlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.espressoIdlingResourceVersion}"
     const val fragmentTesting = "androidx.fragment:fragment-testing:${Versions.fragmentTestingVersion}"
     const val kakao = "com.agoda.kakao:kakao:${Versions.kakaoVersion}"
+    const val coreTesting = "androidx.arch.core:core-testing:${Versions.coreTestingVersion}"
 }
