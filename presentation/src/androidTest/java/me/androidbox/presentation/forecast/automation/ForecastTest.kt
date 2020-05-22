@@ -8,6 +8,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import me.androidbox.presentation.forecast.ForecastActivity
 import me.androidbox.presentation.pages.ForecastHeaderPage
 import me.androidbox.presentation.pages.ForecastListPage
+import me.androidbox.presentation.pages.InProgressPage
+import me.androidbox.presentation.pages.RetryFailurePage
 import me.androidbox.presentation.rules.TestComponentRule
 import me.androidbox.presentation.screens.ForecastHeaderScreen
 import me.androidbox.presentation.utils.EspressoIdlingResource
@@ -76,6 +78,23 @@ class ForecastTest {
                 "Clear sky",
                 26.7F.appendDegreesSymbol,
                 23.4F.appendDegreesSymbol)
+    }
+
+    @Test
+    fun shouldDisplayRetryFailureScreen_when_404_error() {
+        mockWebServer.enqueue(MockResponse().setResponseCode(404))
+
+        ActivityScenario.launch(ForecastActivity::class.java)
+
+        RetryFailurePage
+            .shouldBeVisible()
+            .shouldDisplayFailureMessge()
+            .shouldDisplayRetryButton()
+            .tapRetryButton()
+
+        InProgressPage
+            .shouldBeVisible()
+            .shouldDisplayProgress()
     }
 
     /* TODO make this common */
