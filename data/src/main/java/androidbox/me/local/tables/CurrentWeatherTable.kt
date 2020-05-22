@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
         parentColumns = ["id"],
         childColumns = ["currentWeatherDataId"],
         onDelete = ForeignKey.CASCADE)])
-class CurrentWeatherTable(
+data class CurrentWeatherTable(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
 
