@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey
             childColumns = ["weatherId"],
             onDelete = ForeignKey.CASCADE
         )])
-class CurrentWeatherDataTable(
+data class CurrentWeatherDataTable(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
 
@@ -27,6 +27,5 @@ class CurrentWeatherDataTable(
     val temperature: Float,
 
     @ColumnInfo(name = "weatherId")
-    val weatherId: Long
-)
+    val weatherId: Long)
 
