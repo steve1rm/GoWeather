@@ -47,8 +47,6 @@ object RetryFailurePage {
     }
 
     fun waitIdle(): RetryFailurePage = apply {
-        retryFailureScreen {
-            idle()
-        }
+        idle(2000)
     }
 }

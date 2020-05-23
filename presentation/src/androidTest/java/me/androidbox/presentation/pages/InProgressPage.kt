@@ -1,5 +1,6 @@
 package me.androidbox.presentation.pages
 
+import com.agoda.kakao.screen.Screen.Companion.idle
 import me.androidbox.presentation.screens.InProgressScreen
 
 object InProgressPage {
@@ -22,5 +23,9 @@ object InProgressPage {
                 isDisplayed()
             }
         }
+    }
+
+    fun wait(duration: Long): InProgressPage = apply {
+        idle(duration)
     }
 }

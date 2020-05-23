@@ -22,6 +22,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
+import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class ForecastTest {
@@ -83,6 +84,42 @@ class ForecastTest {
     @Test
     fun shouldDisplayRetryFailureScreen_when_404_error() {
         mockWebServer.enqueue(MockResponse().setResponseCode(404))
+
+        ActivityScenario.launch(ForecastActivity::class.java)
+
+        RetryFailurePage
+            .shouldBeVisible()
+            .shouldDisplayFailureMessge()
+            .shouldDisplayRetryButton()
+            .tapRetryButton()
+
+        InProgressPage
+            .shouldBeVisible()
+            .shouldDisplayProgress()
+    }
+
+    @Test
+    fun shouldDisplayRetryFailureScreen_when_malformed_json() {
+        mockWebServer.enqueue(MockResponse().setBody("malformed json response"))
+
+        ActivityScenario.launch(ForecastActivity::class.java)
+
+        RetryFailurePage
+            .shouldBeVisible()
+            .shouldDisplayFailureMessge()
+            .shouldDisplayRetryButton()
+            .tapRetryButton()
+
+        InProgressPage
+            .shouldBeVisible()
+            .shouldDisplayProgress()
+    }
+
+    @Test
+    fun shouldDisplayRetryFailureScreen_when_timeoutOccurs() {
+        mockWebServer.enqueue(MockResponse()
+            .setBody(loadFromResources("json/fivedayforecast.json"))
+            .throttleBody(1, 1, TimeUnit.MILLISECONDS))
 
         ActivityScenario.launch(ForecastActivity::class.java)
 
